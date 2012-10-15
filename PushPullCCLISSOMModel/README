@@ -1,0 +1,9 @@
+The CCLISSOM model architecture translated in the spiking simulation and extended with Push-Pull connectivity
+from Jen Kremkow model.
+
+Under heavy constructions.
+Missing features:
+
+Realistic lateral arborization extents in L4 and L2/3.
+Realistic propagation constants.
+Orienataion specific lateral connectivity in L2/3.
