@@ -5,13 +5,11 @@
         'background_luminance': 45.0, # cd/m²
     },
     'retina_lgn': url("param/SpatioTemporalFilterRetinaLGN_defaults"),
-    'l4_cortex_exc': url("param/l4_cortex_exc"),
-    'l4_cortex_inh': url("param/l4_cortex_inh"),
     'visual_field': {
         'centre': (0.0, 0.0), # degrees (x,y)
         'size': (6.8, 6.8), # degrees (width, height)
     },
-    'results_dir': '/home/jan/projects/mozaik/contrib/KremkowModel/',
+    'results_dir': '/home/jan/projects/mozaik/contrib/TestStimuli/',
     'name' : 'Jens Model',
     'reset' : False,
     'null_stimulus_period' : 140.0,
