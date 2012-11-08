@@ -43,7 +43,6 @@
             'probabilistic' : True,
     	    'or_sigma' : 0.26,
             'phase_sigma' : 0.52,
-            'arborization_constant' : 0.0,            
             'propagation_constant' : 2.0,                                    
             'specific_arborization' : {
                         'weight_factor': 0.04,
@@ -57,7 +56,6 @@
 	    'probabilistic' : True,
         'or_sigma' : 0.26,
 	    'phase_sigma' : 0.52,
-	    'arborization_constant' : 0.0,
         'propagation_constant' : 2.0,	    
 	    'specific_arborization' : {
 				        'weight_factor': 0.04,

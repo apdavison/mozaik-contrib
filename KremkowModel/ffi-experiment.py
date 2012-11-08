@@ -14,6 +14,7 @@ from mozaik.visualization.Kremkow_plots import *
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from NeuroTools.parameters import ParameterSet
 from mozaik.storage.queries import *
+from mozaik.storage.ads_queries import *
 from mozaik.tools.circ_stat import circular_dist
 import mozaik
 
@@ -36,7 +37,7 @@ if True:
                            #MeasureSpontaneousActivity(jens_model,duration=10*7,num_trials=15),
                            
                            #SHORT ORIENTATION TUNING
-                           MeasureOrientationTuningFullfield(jens_model,num_orientations=6,spatial_frequency=0.8,temporal_frequency=2,grating_duration=148*7,contrasts=[1.0],num_trials=3),
+                           MeasureOrientationTuningFullfield(jens_model,num_orientations=1,spatial_frequency=0.8,temporal_frequency=2,grating_duration=148*7,contrasts=[1.0],num_trials=3),
                         ]
 
     data_store = run_experiments(jens_model,experiment_list)
@@ -44,20 +45,13 @@ if True:
     #jens_model.connectors['V1L4ExcL4InhConnection'].store_connections(data_store)    
     #jens_model.connectors['V1L4InhL4ExcConnection'].store_connections(data_store)    
     #jens_model.connectors['V1L4InhL4InhConnection'].store_connections(data_store)    
-    
-    #jens_model.connectors['V1ExcL23ExcL23Connection'].store_connections(data_store)    
-    #jens_model.connectors['V1ExcL23InhL23Connection'].store_connections(data_store)    
-    #jens_model.connectors['V1InhL23ExcL23Connection'].store_connections(data_store)    
-    #jens_model.connectors['V1InhL23InhL23Connection'].store_connections(data_store)    
 
-    #jens_model.connectors['V1ExcL4ExcL23Connection'].store_connections(data_store)    
-    
     logger.info('Saving Datastore')
     if (not MPI) or (mpi_comm.rank == MPI_ROOT):
         data_store.save()
 else:
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'B'}))
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'A'}))
     #SingleStimulus
     #NIWEM
     logger.info('Loaded data store')
@@ -100,10 +94,10 @@ if (not MPI) or (mpi_comm.rank == MPI_ROOT):
     l4_inh = 10
     
     
-    #ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_exc,'sheet_name' : 'V1_Exc_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
-    #ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_exc,'sheet_name' : 'V1_Exc_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentPhase')).plot()
-    #ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_inh,'sheet_name' : 'V1_Inh_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
-    #ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_inh,'sheet_name' : 'V1_Inh_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentPhase')).plot()
+    ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_exc,'sheet_name' : 'V1_Exc_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
+    ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_exc,'sheet_name' : 'V1_Exc_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentPhase')).plot()
+    ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_inh,'sheet_name' : 'V1_Inh_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
+    ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_inh,'sheet_name' : 'V1_Inh_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentPhase')).plot()
     #ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_exc,'sheet_name' : 'V1_Exc_L2/3','reversed' : True})).plot()
     
     GSTA(select_result_sheet_query(data_store,"V1_Exc_L4"),ParameterSet({'neurons' : [l4_exc], 'length' : 50.0 }),tags=['GSTA']).analyse()
