@@ -40,35 +40,51 @@
     },
 
     'L4ExcL4ExcConnection': {
-	    'probabilistic' : True,
-	    'or_sigma' : 0.26,
-	    'phase_sigma' : 0.52,
-        'propagation_constant' : 2.0,				        	    
-	    'specific_arborization' : {
-				        'weight_factor': 0.04,
-				        'num_samples' : 72,
-				        'target_synapses' : 'excitatory',     
-				        'short_term_plasticity': {
+        'target_synapses' : 'excitatory',             
+        'short_term_plasticity': {
 				            'u': 0.5, 
 				            'tau_rec': 1100.0, 
 		                    'tau_psc': 3.0,
 				            'tau_fac': 50.0,
-                        },
-
-        },              
+                        },        
+    
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
+                                         'params' : {
+                                                	    'or_sigma' : 0.26,
+                                                        'phase_sigma' : 0.52,
+                                                        'target_synapses' : 'excitatory',             
+                                         }
+                                       }, 
+                                       
+                             },
+        'delay_functions' : {},
+        'weight_expression' : 'f1',
+        'delay_expression' : '2', 
+        
+        'base_weight': 0.04,
+		'num_samples' : 72,
     },
 
     'L4ExcL4InhConnection': {
-	    'probabilistic' : True,
-	    'or_sigma' : 0.26,
-	    'phase_sigma' : 0.52,
-	    'propagation_constant' : 2.0,	    
-	    'specific_arborization' : {
-					    'weight_factor': 0.04,
-					    'num_samples' : 72,
-					    'target_synapses' : 'excitatory',
-					    'short_term_plasticity': None
-            },
+        'target_synapses' : 'excitatory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
+                                         'params' : {
+                                                	    'or_sigma' : 0.26,
+                                                        'phase_sigma' : 0.52,
+                                                        'target_synapses' : 'excitatory',             
+                                         }
+                                       }, 
+                                       
+                             },
+        'delay_functions' : {},
+        'weight_expression' : 'f1',
+        'delay_expression' : '2', 
+        
+        'base_weight': 0.04,
+		'num_samples' : 72,
     },
 
     'AfferentConnection': {

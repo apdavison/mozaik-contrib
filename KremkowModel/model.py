@@ -3,7 +3,8 @@ sys.path.append('/home/jan/projects/mozaik/')
 import numpy
 from NeuroTools.parameters import ParameterSet
 from mozaik.models.model import Model
-from mozaik.framework.connectors import ExponentialProbabilisticArborization,UniformProbabilisticArborization,GaborConnector, V1PushPullProbabilisticArborization
+from mozaik.connectors.meta_connectors import GaborConnector
+from mozaik.connectors.modular_connectors import ModularProbabilisticConnector
 from mozaik.framework import load_component
 from mozaik.framework.space import VisualRegion
 
@@ -53,7 +54,7 @@ class PushPullCCModel(Model):
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_exc_l4,self.parameters.l4_cortex_exc.AfferentConnection,'V1AffConnection')
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_inh_l4,self.parameters.l4_cortex_inh.AfferentConnection,'V1AffInhConnection')
         
-        V1PushPullProbabilisticArborization(self,cortex_exc_l4,cortex_exc_l4,self.parameters.l4_cortex_exc.L4ExcL4ExcConnection,'V1L4ExcL4ExcConnection')
-        V1PushPullProbabilisticArborization(self,cortex_exc_l4,cortex_inh_l4,self.parameters.l4_cortex_exc.L4ExcL4InhConnection,'V1L4ExcL4InhConnection')
-        V1PushPullProbabilisticArborization(self,cortex_inh_l4,cortex_exc_l4,self.parameters.l4_cortex_inh.L4InhL4ExcConnection,'V1L4InhL4ExcConnection')
-        V1PushPullProbabilisticArborization(self,cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnection,'V1L4InhL4InhConnection')
+        ModularProbabilisticConnector(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.l4_cortex_exc.L4ExcL4ExcConnection).connect()
+        ModularProbabilisticConnector(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.l4_cortex_exc.L4ExcL4InhConnection).connect()
+        ModularProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.l4_cortex_inh.L4InhL4ExcConnection).connect()
+        ModularProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnection).connect()

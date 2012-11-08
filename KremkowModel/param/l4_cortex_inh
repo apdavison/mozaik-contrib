@@ -40,31 +40,47 @@
     },
     
     'L4InhL4ExcConnection': {
-            'probabilistic' : True,
-    	    'or_sigma' : 0.26,
-            'phase_sigma' : 0.52,
-            'propagation_constant' : 2.0,                                    
-            'specific_arborization' : {
-                        'weight_factor': 0.04,
-                        'num_samples' : 18,
-                        'target_synapses' : 'inhibitory',
-                        'short_term_plasticity' : None,
-            },
-    },        
-
-    'L4InhL4InhConnection': {
-	    'probabilistic' : True,
-        'or_sigma' : 0.26,
-	    'phase_sigma' : 0.52,
-        'propagation_constant' : 2.0,	    
-	    'specific_arborization' : {
-				        'weight_factor': 0.04,
-				        'num_samples' : 18,
-			            'target_synapses' : 'inhibitory',
-            		    'short_term_plasticity': None
-        },
+        'target_synapses' : 'inhibitory',             
+        'short_term_plasticity': None ,
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
+                                         'params' : {
+                                                	    'or_sigma' : 0.26,
+                                                        'phase_sigma' : 0.52,
+                                                        'target_synapses' : 'inhibitory',             
+                                         }
+                                       }, 
+                                       
+                             },
+        'delay_functions' : {},
+        'weight_expression' : 'f1',
+        'delay_expression' : '2', 
+        
+        'base_weight': 0.04,
+		'num_samples' : 18,
     },
-
+    
+    'L4InhL4InhConnection': {
+        'target_synapses' : 'inhibitory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
+                                         'params' : {
+                                                	    'or_sigma' : 0.26,
+                                                        'phase_sigma' : 0.52,
+                                                        'target_synapses' : 'inhibitory',             
+                                         }
+                                       }, 
+                                       
+                             },
+        'delay_functions' : {},
+        'weight_expression' : 'f1',
+        'delay_expression' : '2', 
+        
+        'base_weight': 0.04,
+		'num_samples' : 18,
+    },
+    
     'AfferentConnection': {
             'aspect_ratio':            UniformDist(min=0.33333333, max=0.3333333),
             'size':                    UniformDist(min=0.7, max=0.7),
