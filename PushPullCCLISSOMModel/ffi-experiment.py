@@ -14,11 +14,11 @@ from mozaik.visualization.Kremkow_plots import *
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from NeuroTools.parameters import ParameterSet
 from mozaik.storage.queries import *
+from mozaik.storage.ads_queries import *
 from mozaik.tools.circ_stat import circular_dist
 import mozaik
 
 logger = mozaik.getMozaikLogger("Mozaik")
-
 
 try:
     from mpi4py import MPI
@@ -35,16 +35,16 @@ if True:
     jens_model = PushPullCCModel(sim,params)
     experiment_list =   [
                            #Spontaneous Activity 
-                           MeasureSpontaneousActivity(jens_model,duration=148*7,num_trials=3),
+                           #MeasureSpontaneousActivity(jens_model,duration=148*7,num_trials=3),
                            
                            #IMAGES WITH EYEMOVEMENT
                            #MeasureNaturalImagesWithEyeMovement(jens_model,stimulus_duration=2*148*7,num_trials=10)
 
                            #SHORT ORIENTATION TUNING
-			   #MeasureOrientationTuningFullfield(jens_model,num_orientations=1,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*148*7,contrasts=[1.0],num_trials=10),
+                           #MeasureOrientationTuningFullfield(jens_model,num_orientations=1,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*148*7,contrasts=[1.0],num_trials=10),
                           
                            #SINGLE STIMULUS
-                           #MeasureOrientationTuningFullfield(jens_model,num_orientations=1,spatial_frequency=0.8,temporal_frequency=2,grating_duration=50*7,contrasts=[1.0],num_trials=3),
+                           MeasureOrientationTuningFullfield(jens_model,num_orientations=1,spatial_frequency=0.8,temporal_frequency=2,grating_duration=148*7,contrasts=[1.0],num_trials=3),
                            
                            # SIZE TUNING
                            #MeasureOrientationTuningFullfield(jens_model,num_orientations=6,spatial_frequency=0.8,temporal_frequency=2,grating_duration=148*7,contrasts=[1.0],num_trials=2),
@@ -113,8 +113,8 @@ if (not MPI) or (mpi_comm.rank == MPI_ROOT):
         print "Prefered phase of plotted inh neurons:"
         print l4_inh_phase[0].values[l4_inh]
         
-    l4_exc = 11
-    l4_inh = 6
+    l4_exc = 13
+    l4_inh = 10
     l23_exc = l4_exc
     l23_inh = l4_inh
 
@@ -130,13 +130,13 @@ if (not MPI) or (mpi_comm.rank == MPI_ROOT):
     GSTA(select_result_sheet_query(data_store,"V1_Exc_L4"),ParameterSet({'neurons' : [l4_exc], 'length' : 50.0 }),tags=['GSTA']).analyse()
     Precision(select_result_sheet_query(data_store,"V1_Exc_L4"),ParameterSet({'neurons' : [l4_exc], 'bin_length' : 10.0 })).analyse()
     
-    GSTA(select_result_sheet_query(data_store,"V1_Exc_L2/3"),ParameterSet({'neurons' : [l4_exc], 'length' : 50.0 }),tags=['GSTA']).analyse()
-    Precision(select_result_sheet_query(data_store,"V1_Exc_L2/3"),ParameterSet({'neurons' : [l4_exc], 'bin_length' : 10.0 })).analyse()
+    #GSTA(select_result_sheet_query(data_store,"V1_Exc_L2/3"),ParameterSet({'neurons' : [l4_exc], 'length' : 50.0 }),tags=['GSTA']).analyse()
+    #Precision(select_result_sheet_query(data_store,"V1_Exc_L2/3"),ParameterSet({'neurons' : [l4_exc], 'bin_length' : 10.0 })).analyse()
 
     l4_exc_data = select_result_sheet_query(data_store,'V1_Exc_L4')
     l4_inh_data = select_result_sheet_query(data_store,'V1_Inh_L4')
-    l23_exc_data = select_result_sheet_query(data_store,'V1_Exc_L2/3')
-    l23_inh_data = select_result_sheet_query(data_store,'V1_Inh_L2/3')
+    #l23_exc_data = select_result_sheet_query(data_store,'V1_Exc_L2/3')
+    #l23_inh_data = select_result_sheet_query(data_store,'V1_Inh_L2/3')
 
     TrialAveragedFiringRate(l4_exc_data,ParameterSet({'stimulus_type':"FullfieldDriftingSinusoidalGrating"})).analyse()
     TrialAveragedFiringRate(l4_inh_data,ParameterSet({'stimulus_type':"FullfieldDriftingSinusoidalGrating"})).analyse()
@@ -148,8 +148,7 @@ if (not MPI) or (mpi_comm.rank == MPI_ROOT):
     #Figure2Gratings(data_store,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc}),plot_file_name='FigureL4Gratings.png',fig_param={'dpi' : 100,'figsize': (18,12)}).plot()
     #Figure2Gratings(data_store,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : l23_exc}),plot_file_name='FigureL23Gratings.png',fig_param={'dpi' : 100,'figsize': (18,12)}).plot()
 
-    #Figure2NaturalImagesWithEyeMovement(data_store,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc}),plot_file_name='FigureL4NIWEM.png',fig_param={'dpi' : 100,'figsize': (18,12)}).plot()
-    pylab.show()
+    Figure2Gratings(data_store,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc}),plot_file_name='FigureL4NIWEM.png',fig_param={'dpi' : 100,'figsize': (18,12)}).plot()
         
     dsv = analysis_data_structure_stimulus_filter_query(data_store,'FullfieldDriftingSinusoidalGrating')
     dsv = analysis_data_structure_parameter_filter_query(dsv,analysis_algorithm='TrialAveragedFiringRate')
@@ -179,8 +178,6 @@ if (not MPI) or (mpi_comm.rank == MPI_ROOT):
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'X_OFF', 'neuron' : 0, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot()
 
   
-    pylab.show()
-    0/0
     
     dsv = analysis_data_structure_stimulus_filter_query(data_store,'FullfieldDriftingSinusoidalGrating')
     ModulationRatio(select_result_sheet_query(dsv,'V1_Exc_L4'),ParameterSet({'bin_length' : 10.0 })).analyse()
@@ -205,7 +202,7 @@ if (not MPI) or (mpi_comm.rank == MPI_ROOT):
     PerNeuronValuePlot(analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation',sheet_name='V1_Exc_L4'),ParameterSet({}),plot_file_name='ORSET.png').plot()
     dsv = analysis_data_structure_stimulus_filter_query(data_store,'FullfieldDriftingSinusoidalGrating',max_luminance=90)
     PerNeuronValuePlot(analysis_data_structure_parameter_filter_query(dsv,identifier='PerNeuronValue',value_name='orientation preference',sheet_name='V1_Exc_L4'),ParameterSet({}),plot_file_name='ORPREFL4.png').plot()
-    PerNeuronValuePlot(analysis_data_structure_parameter_filter_query(dsv,identifier='PerNeuronValue',value_name='orientation preference',sheet_name='V1_Exc_L2/3'),ParameterSet({}),plot_file_name='ORPREFL23.png').plot()
+    #PerNeuronValuePlot(analysis_data_structure_parameter_filter_query(dsv,identifier='PerNeuronValue',value_name='orientation preference',sheet_name='V1_Exc_L2/3'),ParameterSet({}),plot_file_name='ORPREFL23.png').plot()
     
     
 

@@ -3,7 +3,8 @@ sys.path.append('/home/jan/projects/mozaik/')
 import numpy
 from NeuroTools.parameters import ParameterSet
 from mozaik.models.model import Model
-from mozaik.framework.connectors import ExponentialProbabilisticArborization,UniformProbabilisticArborization,GaborConnector, V1PushPullProbabilisticArborization
+from mozaik.connectors.meta_connectors import GaborConnector
+from mozaik.connectors.modular_connectors import ModularProbabilisticConnector
 from mozaik.framework import load_component
 from mozaik.framework.space import VisualRegion
 
@@ -38,9 +39,9 @@ class PushPullCCModel(Model):
 
         # which neurons to record
         tr = {'spikes' : 'all', 
-              'v' : numpy.arange(0,60,1),
-              'gsyn_exc' :numpy.arange(0,60,1),
-              'gsyn_inh' : numpy.arange(0,60,1),
+              'v' : numpy.arange(0,21,1),
+              'gsyn_exc' :numpy.arange(0,21,1),
+              'gsyn_inh' : numpy.arange(0,21,1),
         }
         
         cortex_exc_l4.to_record = tr #'all'
@@ -54,18 +55,18 @@ class PushPullCCModel(Model):
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_exc_l4,self.parameters.l4_cortex_exc.AfferentConnection,'V1AffConnection')
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_inh_l4,self.parameters.l4_cortex_inh.AfferentConnection,'V1AffInhConnection')
         
-        V1PushPullProbabilisticArborization(self,cortex_exc_l4,cortex_exc_l4,self.parameters.l4_cortex_exc.L4ExcL4ExcConnection,'V1L4ExcL4ExcConnection')
-        V1PushPullProbabilisticArborization(self,cortex_exc_l4,cortex_inh_l4,self.parameters.l4_cortex_exc.L4ExcL4InhConnection,'V1L4ExcL4InhConnection')
-        V1PushPullProbabilisticArborization(self,cortex_inh_l4,cortex_exc_l4,self.parameters.l4_cortex_inh.L4InhL4ExcConnection,'V1L4InhL4ExcConnection')
-        V1PushPullProbabilisticArborization(self,cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnection,'V1L4InhL4InhConnection')
-        
-        #ExponentialProbabilisticArborization(self,cortex_exc_l23,cortex_exc_l23,self.parameters.l23_cortex_exc.L23ExcL23ExcConnection,'V1ExcL23ExcL23Connection').connect()
-        #ExponentialProbabilisticArborization(self,cortex_exc_l23,cortex_inh_l23,self.parameters.l23_cortex_exc.L23ExcL23InhConnection,'V1ExcL23InhL23Connection').connect()
-        #ExponentialProbabilisticArborization(self,cortex_inh_l23,cortex_exc_l23,self.parameters.l23_cortex_inh.L23InhL23ExcConnection,'V1InhL23ExcL23Connection').connect()
-        #ExponentialProbabilisticArborization(self,cortex_inh_l23,cortex_inh_l23,self.parameters.l23_cortex_inh.L23InhL23InhConnection,'V1InhL23InhL23Connection').connect()
-        #ExponentialProbabilisticArborization(self,cortex_exc_l4,cortex_exc_l23,self.parameters.l23_cortex_exc.L4ExcL23ExcConnection,'V1ExcL4ExcL23Connection').connect()
-        #ExponentialProbabilisticArborization(self,cortex_exc_l23,cortex_exc_l4,self.parameters.l23_cortex_exc.L23ExcL4ExcConnection,'V1ExcL23ExcL4Connection').connect()
-        #ExponentialProbabilisticArborization(self,cortex_exc_l23,cortex_inh_l4,self.parameters.l23_cortex_exc.L23ExcL4InhConnection,'V1ExcL23InhL4Connection').connect()
+        ModularProbabilisticConnector(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.l4_cortex_exc.L4ExcL4ExcConnection).connect()
+        ModularProbabilisticConnector(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.l4_cortex_exc.L4ExcL4InhConnection).connect()
+        ModularProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.l4_cortex_inh.L4InhL4ExcConnection).connect()
+        ModularProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnection).connect()
+ 
+        #ModularProbabilisticConnector(self,'V1ExcL23ExcL23Connection',cortex_exc_l23,cortex_exc_l23,self.parameters.l23_cortex_exc.L23ExcL23ExcConnection).connect()
+        #ModularProbabilisticConnector(self,'V1ExcL23InhL23Connection',cortex_exc_l23,cortex_inh_l23,self.parameters.l23_cortex_exc.L23ExcL23InhConnection).connect()
+        #ModularProbabilisticConnector(self,'V1InhL23ExcL23Connection',cortex_inh_l23,cortex_exc_l23,self.parameters.l23_cortex_inh.L23InhL23ExcConnection).connect()
+        #ModularProbabilisticConnector(self,'V1InhL23InhL23Connection',cortex_inh_l23,cortex_inh_l23,self.parameters.l23_cortex_inh.L23InhL23InhConnection).connect()
+        #ModularProbabilisticConnector(self,'V1ExcL4ExcL23Connection',cortex_exc_l4,cortex_exc_l23,self.parameters.l23_cortex_exc.L4ExcL23ExcConnection).connect()
+        #ModularProbabilisticConnector(self,'V1ExcL23ExcL4Connection',cortex_exc_l23,cortex_exc_l4,self.parameters.l23_cortex_exc.L23ExcL4ExcConnection).connect()
+        #ModularProbabilisticConnector(self,'V1ExcL23InhL4Connection',cortex_exc_l23,cortex_inh_l4,self.parameters.l23_cortex_exc.L23ExcL4InhConnection).connect()
         
         
         

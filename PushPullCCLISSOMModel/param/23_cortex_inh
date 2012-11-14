@@ -40,25 +40,77 @@
     },
 
 
-    'L23InhL23ExcConnection': 
-    {
-        'weights': 0.01,               
-        'arborization_constant': 10.0, 
-        'arborization_scaler' : 20.0,
-        'propagation_constant' : 0.02,    
-        'target_synapses' : 'inhibitory',
-        'short_term_plasticity' : None,
-    },        
+    'L23InhL23ExcConnection': {
+        'target_synapses' : 'excitatory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.MapDependentModularConnectorFunction',
+                                         'params' : {
+                                                	    'sigma' : 0.3,
+                                                        'map_location' : './or_map',
+                                                        'periodic' : True,
+                                                    }
+                                       }, 
+                                'f2' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.ExponentialDecayModularConnectorFunction',
+                                         'params' : {
+                                                	            'arborization_constant': 50.0,
+                                                                'arborization_scaler': 1.0,
+                                                    }
+                                       },                                        
+                             },
 
-    'L23InhL23InhConnection': 
-    {
-        'weights': 0.01,               
-        'arborization_constant': 10.0, 
-        'arborization_scaler' : 20.0,
-        'propagation_constant' : 0.02,    
-        'target_synapses' : 'inhibitory',
-        'short_term_plasticity' : None,
-    },        
+        'delay_functions' : {
+                                'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.LinearModularConnectorFunction',
+                                         'params' : {
+                                                        'constant_scaler': 0.1,
+                                                        'linear_scaler': 0.0033333333,   
+                                                    }
+                                       }, 
+                            },
+        'weight_expression' : 'f1*f2',
+        'delay_expression' : 'f1', 
+        
+        'base_weight': 0.04,
+		'num_samples' : 18,
+    },
+
+    'L23InhL23InhConnection': {
+        'target_synapses' : 'excitatory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.MapDependentModularConnectorFunction',
+                                         'params' : {
+                                                	    'sigma' : 0.3,
+                                                        'map_location' : './or_map',
+                                                        'periodic' : True,
+                                                    }
+                                       }, 
+                                'f2' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.ExponentialDecayModularConnectorFunction',
+                                         'params' : {
+                                                	            'arborization_constant': 50.0,
+                                                                'arborization_scaler': 1.0,
+                                                    }
+                                       },                                        
+                             },
+
+        'delay_functions' : {
+                                'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.LinearModularConnectorFunction',
+                                         'params' : {
+                                                        'constant_scaler': 0.1,
+                                                        'linear_scaler': 0.0033333333,   
+                                                    }
+                                       }, 
+                            },
+        'weight_expression' : 'f1*f2',
+        'delay_expression' : 'f1', 
+        
+        'base_weight': 0.04,
+		'num_samples' : 18,
+    },
 
 
     

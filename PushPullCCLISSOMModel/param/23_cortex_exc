@@ -7,7 +7,7 @@
                 'name':'V1_Exc_L2/3',
                 'sx':100.0,
                 'sy':100.0,
-                'density':1600.0,
+                'density':160.0,
         	'mpi_safe' : False,
                 'magnification_factor': 5000.0,
                     
@@ -41,53 +41,137 @@
 
 
     'L23ExcL23ExcConnection': {
-	    'weights': 0.01,               
-	    'arborization_constant': 30.0, 
-        'arborization_scaler' : 20.0,        
-	    'propagation_constant' : 0.02,	    
-	    'target_synapses' : 'excitatory',
-        'short_term_plasticity': {
-                            'u': 0.0, 
-                            'tau_rec': 0.0, 
-                            'tau_psc': 0.0, 
-                            'tau_fac': 0.0,
-                        },
+        'target_synapses' : 'excitatory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.MapDependentModularConnectorFunction',
+                                         'params' : {
+                                                	    'sigma' : 0.3,
+                                                        'map_location' : './or_map',
+                                                        'periodic' : True,
+                                                    }
+                                       }, 
+                                'f2' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.ExponentialDecayModularConnectorFunction',
+                                         'params' : {
+                                                	            'arborization_constant': 50.0,
+                                                                'arborization_scaler': 1.0,
+                                                    }
+                                       },                                        
+                             },
+
+        'delay_functions' : {
+                                'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.LinearModularConnectorFunction',
+                                         'params' : {
+                                                        'constant_scaler': 0.1,
+                                                        'linear_scaler': 0.0033333333,   
+                                                    }
+                                       }, 
+                            },
+        'weight_expression' : 'f1*f2',
+        'delay_expression' : 'f1', 
+        
+        'base_weight': 0.04,
+		'num_samples' : 72,
     },
 
     'L23ExcL23InhConnection': {
-	    'weights': 0.01,
-	    'arborization_constant': 30.0,
-        'arborization_scaler' : 20.0,        
-	    'propagation_constant' : 0.02,
-	    'target_synapses' : 'excitatory',
-	    'short_term_plasticity' : None,
-   },
+        'target_synapses' : 'excitatory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.MapDependentModularConnectorFunction',
+                                         'params' : {
+                                                	    'sigma' : 0.3,
+                                                        'map_location' : './or_map',
+                                                        'periodic' : True,
+                                                    }
+                                       }, 
+                                'f2' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.ExponentialDecayModularConnectorFunction',
+                                         'params' : {
+                                                	            'arborization_constant': 50.0,
+                                                                'arborization_scaler': 1.0,
+                                                    }
+                                       },                                        
+                             },
 
-   'L4ExcL23ExcConnection': {
-	    'weights': 0.02,
-	    'arborization_constant': 3.0,
-        'arborization_scaler' : 20.0,        
-	    'propagation_constant' : 0.02,
-	    'target_synapses' : 'excitatory',
-	    'short_term_plasticity' : None,
+        'delay_functions' : {
+                                'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.LinearModularConnectorFunction',
+                                         'params' : {
+                                                        'constant_scaler': 0.1,
+                                                        'linear_scaler': 0.0033333333,   
+                                                    }
+                                       }, 
+                            },
+        'weight_expression' : 'f1*f2',
+        'delay_expression' : 'f1', 
+        
+        'base_weight': 0.04,
+		'num_samples' : 72,
+    },
+
+
+
+    'L4ExcL23ExcConnection': {
+        'target_synapses' : 'excitatory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.ExponentialDecayModularConnectorFunction',
+                                         'params' : {
+                                                	            'arborization_constant': 10,
+                                                                'arborization_scaler': 1.0,
+                                                    }
+                                       },                                        
+                             },
+
+        'delay_functions' : {},
+        'weight_expression' : 'f1',
+        'delay_expression' : '2', 
+        
+        'base_weight': 0.04,
+		'num_samples' : 72,
+    },
+
+    'L23ExcL4ExcConnection': {
+        'target_synapses' : 'excitatory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.ExponentialDecayModularConnectorFunction',
+                                         'params' : {
+                                                	            'arborization_constant': 20.0,
+                                                                'arborization_scaler': 1.0,
+                                                    }
+                                       },                                        
+                             },
+
+        'delay_functions' : {},
+        'weight_expression' : 'f1',
+        'delay_expression' : '2', 
+        
+        'base_weight': 0.01,
+		'num_samples' : 72,
     },
     
-    'L23ExcL4ExcConnection': {
-	    'weights': 0.01,
-	    'arborization_constant': 3.0,
-        'arborization_scaler' : 20.0,        
-	    'propagation_constant' : 0.02,
-	    'target_synapses' : 'excitatory',
-	    'short_term_plasticity' : None,
-    }, 
-    
+
     'L23ExcL4InhConnection': {
-	    'weights': 0.01,
-	    'arborization_constant': 10.0,
-        'arborization_scaler' : 20.0,        
-	    'propagation_constant' : 0.02,
-	    'target_synapses' : 'excitatory',
-	    'short_term_plasticity' : None,
-    }
-    
+        'target_synapses' : 'excitatory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.ExponentialDecayModularConnectorFunction',
+                                         'params' : {
+                                                	            'arborization_constant': 50.0,
+                                                                'arborization_scaler': 1.0,
+                                                    }
+                                       },                                        
+                             },
+
+        'delay_functions' : {},
+        'weight_expression' : 'f1',
+        'delay_expression' : '2', 
+        
+        'base_weight': 0.01,
+		'num_samples' : 72,
+    },
 }

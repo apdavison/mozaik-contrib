@@ -98,7 +98,6 @@ if (not MPI) or (mpi_comm.rank == MPI_ROOT):
     #ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_exc,'sheet_name' : 'V1_Exc_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentPhase')).plot()
     #ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_inh,'sheet_name' : 'V1_Inh_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
     #ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_inh,'sheet_name' : 'V1_Inh_L4','reversed' : True}),analysis_data_structure_parameter_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentPhase')).plot()
-    #ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_exc,'sheet_name' : 'V1_Exc_L2/3','reversed' : True})).plot()
     
     GSTA(select_result_sheet_query(data_store,"V1_Exc_L4"),ParameterSet({'neurons' : [l4_exc], 'length' : 50.0 }),tags=['GSTA']).analyse()
     Precision(select_result_sheet_query(data_store,"V1_Exc_L4"),ParameterSet({'neurons' : [l4_exc], 'bin_length' : 10.0 })).analyse()
