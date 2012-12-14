@@ -3,7 +3,6 @@ sys.path.append('/home/jan/projects/mozaik/')
 import numpy
 from NeuroTools.parameters import ParameterSet
 from mozaik.models.model import Model
-from mozaik.framework.connectors import ExponentialProbabilisticArborization,UniformProbabilisticArborization,GaborConnector, V1PushPullProbabilisticArborization
 from mozaik.framework import load_component
 from mozaik.framework.space import VisualRegion
 
