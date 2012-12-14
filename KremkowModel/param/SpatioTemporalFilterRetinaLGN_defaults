@@ -3,7 +3,7 @@
     'params': {
         'density': 50.0, # neurons per degree squared
         'size'  : (3.0,3.0), # the effective size of the modelled section of retina/lgn
-        'linear_scaler': 2.0,
+        'linear_scaler': 1.5,
         'mpi_reproducible_noise' : False,
         'cached' : True,
         'cache_path' : 'retinal_cache/',
@@ -41,7 +41,7 @@
                 'v_reset': -70.0,
                 'tau_refrac': 2.0,
                 'tau_m': 10.0,
-                'cm': 0.2895,
+                'cm': 0.29,
                 'e_rev_E': 0.0,
                 'e_rev_I': -75.0,
                 'tau_syn_E': 1.5,
@@ -54,7 +54,7 @@
         
         'noise': {
             'mean': 0.0,
-            'stdev': 3.0, #nA
+            'stdev': 2.65, #nA
         }
     }
 }
