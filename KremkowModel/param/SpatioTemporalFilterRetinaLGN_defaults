@@ -1,9 +1,9 @@
 {
     'component': 'mozaik.models.retinal.spatiotemporalfilter.SpatioTemporalFilterRetinaLGN',
     'params': {
-        'density': 50.0, # neurons per degree squared
-        'size'  : (3.0,3.0), # the effective size of the modelled section of retina/lgn
-        'linear_scaler': 1.5,
+        'density': 61, # 10.0 neurons per degree squared
+        'size'  : (6.8,6.8), # the effective size of the modelled section of retina/lgn
+        'linear_scaler': 2.5,
         'mpi_reproducible_noise' : False,
         'cached' : True,
         'cache_path' : 'retinal_cache/',
@@ -22,8 +22,8 @@
                 't1': -6.0, # ms
                 't2': -6.0, # ms
                 'td': 6.0, # time differece between ON-OFF
-                'sigma_c': 0.4, # Allen 2006 # 1.15 # sigma of center gauss degree
-                'sigma_s': 1.0, # sigma_c*1.5+0.4 Allen 2006 # 2.95 # sigma of surround gauss degree
+                'sigma_c': 0.4, #0.4, # Allen 2006 # 1.15 # sigma of center gauss degree
+                'sigma_s': 1.0, #1.0, # sigma_c*1.5+0.4 Allen 2006 # 2.95 # sigma of surround gauss degree
                 'subtract_mean': True,
             },
             'width': 2.6, # degrees
@@ -54,7 +54,7 @@
         
         'noise': {
             'mean': 0.0,
-            'stdev': 2.65, #nA
+            'stdev': 2.7, #nA
         }
     }
 }

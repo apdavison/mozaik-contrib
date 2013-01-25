@@ -5,18 +5,18 @@
     
     'params':{
                 'name':'V1_Inh_L4',
-                'sx': 5000.0,
-                'sy': 5000.0,
-                'density': 20.0,
+                'sx': 1000.0,
+                'sy': 1000.0,
+                'density': 500.0,
                 'mpi_safe' : False,
-                'magnification_factor': 5000.0,
+                'magnification_factor': 1000.0,
                     
                 'cell': {
                         'model': 'IF_cond_exp',
                         'params': {
                             'v_thresh':-57.0,
                             'v_rest': -70.0,
-                            'v_reset': -70.0,
+                            'v_reset': -65.0,
                             'tau_refrac': 2.0,
                             'tau_m': 6.4,
                             'cm': 0.141,
@@ -31,11 +31,11 @@
                     },
                     
                     'background_noise' : {
-                                            'exc_firing_rate' : 500.0, 
-                                            'exc_weight' : 0.0075,
-                                            'inh_firing_rate' : 500.0,
-                                            'inh_weight' : 0.00095,
-                                        },
+                                            'exc_firing_rate' : 2000.0, 
+                                            'exc_weight' : 0.0015,
+                                            'inh_firing_rate' : 2000.0,
+                                            'inh_weight' : 0.00035,
+                                         },
 
     },
     
@@ -70,7 +70,7 @@
         'weight_expression' : 'f1*f2',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.04,
+        'base_weight': 0.009,
 		'num_samples' : 18,
     },
     
@@ -107,31 +107,31 @@
         'weight_expression' : 'f1*f2',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.04,
+        'base_weight': 0.009,
 		'num_samples' : 18,
     },
     
     'AfferentConnection': {
-            'aspect_ratio':            UniformDist(min=0.33333333, max=0.3333333),
-            'size':                    UniformDist(min=0.7, max=0.7),
+            'aspect_ratio':            UniformDist(min=0.303030303, max=0.303030303),
+            'size':                    UniformDist(min=0.5, max=0.5),
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
             'phase':                   UniformDist(min=0.0, max=6.283185307179586),
             'frequency':               UniformDist(min=0.8, max=0.8),
             'delay': 2.0,    
-            'topological' : False,
+            'topological' : True,
             'probabilistic' : True,
             'or_map' : True,
-            'or_map_location' : './or_map',
+            'or_map_location' : './or_map_small',
             'phase_map' : False,
             'phase_map_location' : './phase_map',
 	    
 	    'specific_arborization': {
-		    'weight_factor': 0.4,
+		    'weight_factor': 0.105,
 		    'num_samples' : 50,
 		    'target_synapses' : 'excitatory',
 	            'short_term_plasticity': {
                         'u': 0.3, 
-                        'tau_rec': 110.0, 
+                        'tau_rec': 30.0, 
                         'tau_psc': 3.0,
                         'tau_fac': 21.0,
                     },

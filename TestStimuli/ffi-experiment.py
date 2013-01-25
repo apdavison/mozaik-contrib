@@ -18,13 +18,16 @@ if True:
     jens_model = PushPullCCModel(sim,params)
     experiment_list =   [
                        #Spontaneous Activity 
-                       MeasureSpontaneousActivity(jens_model,duration=50*7,num_trials=1),
+                       #MeasureSpontaneousActivity(jens_model,duration=50*7,num_trials=1),
 
                        #IMAGES WITH EYEMOVEMENT
-                       #MeasureNaturalImagesWithEyeMovement(jens_model,stimulus_duration=200*7,num_trials=1)
+                       MeasureNaturalImagesWithEyeMovement(jens_model,stimulus_duration=200*7,num_trials=1),
 
                        #GRATINGS
                        MeasureOrientationTuningFullfield(jens_model,num_orientations=1,spatial_frequency=0.8,temporal_frequency=2,grating_duration=50*7,contrasts=[100],num_trials=1),
+                       
+                       #GRATINGS WITH EYEMOVEMENT
+                       MeasureDriftingSineGratingWithEyeMovement(jens_model,spatial_frequency=0.8,temporal_frequency=2,stimulus_duration=200*7,num_trials=1,contrast=100),
                        
                        #SIZE TUNING
                        #MeasureSizeTuning(jens_model,max_size=1.0,orientation=0.0,spatial_frequency=0.8,temporal_frequency=2,grating_duration=50*7,contrasts=[20,50,100],num_trials=1,num_sizes=3),

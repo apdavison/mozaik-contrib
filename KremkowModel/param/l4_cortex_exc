@@ -7,7 +7,7 @@
                 'name':'V1_Exc_L4',
                 'sx':5000.0,
                 'sy':5000.0,
-                'density':60.0,
+                'density': 64.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 5000.0,
                     
@@ -33,9 +33,9 @@
                     
                 'background_noise' : {
                                         'exc_firing_rate' : 2000.0, 
-                                        'exc_weight' : 0.0018,
+                                        'exc_weight' : 0.001,
                                         'inh_firing_rate' : 2000.0,
-                                        'inh_weight' : 0.0010,
+                                        'inh_weight' : 0.00035,
                                     },
     },
 
@@ -83,13 +83,13 @@
         'weight_expression' : 'f1',
         'delay_expression' : '2', 
         
-        'base_weight': 0.027,
-		'num_samples' : 18,
+        'base_weight': 0.108,
+		'num_samples' : 72,
     },
 
     'AfferentConnection': {
-            'aspect_ratio':            UniformDist(min=0.333333, max=0.33333),
-            'size':                    UniformDist(min=0.7, max=0.7),
+            'aspect_ratio':            UniformDist(min=0.57, max=0.57),
+            'size':                    UniformDist(min=0.46, max=0.46),
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
             'phase':                   UniformDist(min=0.0, max=6.283185307179586),
             'frequency':               UniformDist(min=0.8, max=0.8),
@@ -103,12 +103,12 @@
 	    'phase_map_location' : './phase_map',
 	    
 	    'specific_arborization': {
-		    'weight_factor': 0.2,
-		    'num_samples' : 50,
+		    'weight_factor': 0.0658,
+		    'num_samples' : 94,
 		    'target_synapses' : 'excitatory',
 	            'short_term_plasticity': {
                         'u': 0.3, 
-                        'tau_rec': 40.0, 
+                        'tau_rec': 30.0, 
                         'tau_psc': 3.0,
                         'tau_fac': 21.0,
     	            },
