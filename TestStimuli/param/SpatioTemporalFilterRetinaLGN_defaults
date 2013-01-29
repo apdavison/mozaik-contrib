@@ -5,7 +5,7 @@
         'size'  : (3.0,3.0), # the effective size of the modelled section of retina/lgn
         'linear_scaler': 2.0,
         'mpi_reproducible_noise' : False,
-        'cached' : True,
+        'cached' : False,
         'cache_path' : 'retinal_cache/',
         'receptive_field': {
             #'func': 'lambda x,y,t,p: numpy.sin(t)',
