@@ -5,7 +5,7 @@ import matplotlib
 import time
 import pylab
 from mozaik.framework.experiment import *
-#from pyNN import nest as sim
+from pyNN import nest as sim
 from model import PushPullCCModel
 from mozaik.framework.experiment_controller import run_experiments, setup_experiments, setup_logging
 from mozaik.visualization.plotting import *
@@ -18,7 +18,7 @@ from NeuroTools.parameters import ParameterSet
 from mozaik.storage.queries import *
 from mozaik.tools.circ_stat import circular_dist
 import mozaik
-from contrib.misc import verify_connectivity
+from contrib.misc import verify_connectivity, F0_F1table
 
 logger = mozaik.getMozaikLogger("Mozaik")
 
@@ -37,10 +37,10 @@ if True:
 
     experiment_list =   [
                            #Spontaneous Activity 
-                           MeasureSpontaneousActivity(jens_model,duration=147*7,num_trials=3),
+                           MeasureSpontaneousActivity(jens_model,duration=147*7,num_trials=2),
 
                            #GRATINGS
-                           MeasureOrientationTuningFullfield(jens_model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[30,100],num_trials=3),
+                           MeasureOrientationTuningFullfield(jens_model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[30,100],num_trials=2),
                        
                            #IMAGES WITH EYEMOVEMENT
                            #MeasureNaturalImagesWithEyeMovement(jens_model,stimulus_duration=147*7,num_trials=15),
@@ -63,7 +63,7 @@ if True:
         data_store.save()
 else:
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'NEWSMALL'}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'OR'}),replace=True)
     logger.info('Loaded data store')
 
 import resource
@@ -71,69 +71,53 @@ print "Current memory usage: %iMB" % (resource.getrusage(resource.RUSAGE_SELF).r
 
 
 #find neuron with preference closet to 0  
+NeuronAnnotationsToPerNeuronValues(data_store,ParameterSet({})).analyse()
+l4_exc_or = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L4')
+l4_exc_phase = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentPhase', sheet_name = 'V1_Exc_L4')
+l4_exc = numpy.argmin([circular_dist(o,numpy.pi/2,numpy.pi)  for (o,p) in zip(l4_exc_or[0].values[:20],l4_exc_phase[0].values[:20])])
+l4_inh_or = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Inh_L4')
+l4_inh_phase = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentPhase', sheet_name = 'V1_Inh_L4')
+l4_inh = numpy.argmin([circular_dist(o,numpy.pi/2,numpy.pi)  for (o,p) in zip(l4_inh_or[0].values[:20],l4_inh_phase[0].values[:20])])
+l4_exc_or_many = numpy.nonzero(numpy.array([circular_dist(o,numpy.pi/2,numpy.pi)  for (o,p) in zip(l4_exc_or[0].values,l4_exc_phase[0].values)]) < 0.1)[0]
+
+print "Prefered orientation of plotted exc neurons:"
+print l4_exc_or[0].values[l4_exc]
+print 'index ' + str(l4_exc)
+print "Prefered phase of plotted exc neurons:"
+print l4_exc_phase[0].values[l4_exc]
+print "Prefered orientation of plotted inh neurons:"
+print l4_inh_or[0].values[l4_inh]
+print 'index ' + str(l4_inh)
+print "Prefered phase of plotted inh neurons:"
+print l4_inh_phase[0].values[l4_inh]
+
+
 if False:  #ANALYSIS
-    NeuronAnnotationsToPerNeuronValues(data_store,ParameterSet({})).analyse()
-    l4_exc_or = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L4')
-    l4_exc_phase = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentPhase', sheet_name = 'V1_Exc_L4')
-    l4_exc = numpy.argmin([circular_dist(o,0,numpy.pi)  for (o,p) in zip(l4_exc_or[0].values[:20],l4_exc_phase[0].values[:20])])
-    l4_inh_or = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Inh_L4')
-    l4_inh_phase = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentPhase', sheet_name = 'V1_Inh_L4')
-    l4_inh = numpy.argmin([circular_dist(o,0,numpy.pi)  for (o,p) in zip(l4_inh_or[0].values[:20],l4_inh_phase[0].values[:20])])
-    l4_exc_or_many = numpy.nonzero(numpy.array([circular_dist(o,0,numpy.pi)  for (o,p) in zip(l4_exc_or[0].values,l4_exc_phase[0].values)]) < 0.1)[0]
-
-    print "Prefered orientation of plotted exc neurons:"
-    print l4_exc_or[0].values[l4_exc]
-    print 'index ' + str(l4_exc)
-    print "Prefered phase of plotted exc neurons:"
-    print l4_exc_phase[0].values[l4_exc]
-    print "Prefered orientation of plotted inh neurons:"
-    print l4_inh_or[0].values[l4_inh]
-    print 'index ' + str(l4_inh)
-    print "Prefered phase of plotted inh neurons:"
-    print l4_inh_phase[0].values[l4_inh]
-
-    l4_exc_data = param_filter_query(data_store,sheet_name='V1_Exc_L4')
-    l4_inh_data = param_filter_query(data_store,sheet_name='V1_Inh_L4')
-    TrialAveragedFiringRate(l4_exc_data,ParameterSet({'stimulus_type':"FullfieldDriftingSinusoidalGrating"})).analyse()
-    TrialAveragedFiringRate(l4_inh_data,ParameterSet({'stimulus_type':"FullfieldDriftingSinusoidalGrating"})).analyse()
+    
+    TrialAveragedFiringRate(param_filter_query(data_store,sheet_name='V1_Exc_L4'),ParameterSet({'stimulus_type':"FullfieldDriftingSinusoidalGrating"})).analyse()
+    TrialAveragedFiringRate(param_filter_query(data_store,sheet_name='V1_Inh_L4'),ParameterSet({'stimulus_type':"FullfieldDriftingSinusoidalGrating"})).analyse()
 
     #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate')    
     #GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
-
-    Conductance_F0andF1(data_store,ParameterSet({})).analyse()
-    TrialVariability(data_store,ParameterSet({'vm': True,  'cond_exc': False, 'cond_inh': False})).analyse()
-    TrialMean(data_store,ParameterSet({'vm': True,  'cond_exc': False, 'cond_inh': False})).analyse()
-    GSTA(param_filter_query(data_store,sheet_name='V1_Exc_L4'),ParameterSet({'neurons' : [l4_exc], 'length' : 250.0 }),tags=['GSTA']).analyse()
-    Precision(param_filter_query(data_store,sheet_name='V1_Exc_L4'),ParameterSet({'neurons' : [l4_exc], 'bin_length' : 10.0 })).analyse()
+    #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',sheet_name=['V1_Exc_L4','V1_Inh_L4'])   
+    #Conductance_F0andF1(dsv,ParameterSet({})).analyse()
+    #TrialVariability(data_store,ParameterSet({'vm': True,  'cond_exc': False, 'cond_inh': False})).analyse()
+    #TrialMean(data_store,ParameterSet({'vm': True,  'cond_exc': False, 'cond_inh': False})).analyse()
+    #GSTA(param_filter_query(data_store,sheet_name='V1_Exc_L4'),ParameterSet({'neurons' : [l4_exc], 'length' : 250.0 }),tags=['GSTA']).analyse()
+    #Precision(param_filter_query(data_store,sheet_name='V1_Exc_L4'),ParameterSet({'neurons' : [l4_exc], 'bin_length' : 10.0 })).analyse()
     data_store.save()
  
-if False: # PLOTTING
-    l4_exc_or = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L4')
-    l4_exc_phase = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentPhase', sheet_name = 'V1_Exc_L4')
-    l4_exc = numpy.argmin([circular_dist(o,numpy.pi/2,numpy.pi)  for (o,p) in zip(l4_exc_or[0].values[:20],l4_exc_phase[0].values[:20])])
-    l4_inh_or = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Inh_L4')
-    l4_inh_phase = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentPhase', sheet_name = 'V1_Inh_L4')
-    l4_inh = numpy.argmin([circular_dist(o,numpy.pi/2,numpy.pi)  for (o,p) in zip(l4_inh_or[0].values[:20],l4_inh_phase[0].values[:20])])
-    l4_exc_or_many = numpy.nonzero(numpy.array([circular_dist(o,numpy.pi/2,numpy.pi)  for (o,p) in zip(l4_exc_or[0].values,l4_exc_phase[0].values)]) < 0.1)[0]
+if True: # PLOTTING
 
-    print "Prefered orientation of plotted exc neurons:"
-    print l4_exc_or[0].values[l4_exc]
-    print 'index ' + str(l4_exc)
-    print "Prefered phase of plotted exc neurons:"
-    print l4_exc_phase[0].values[l4_exc]
-    print "Prefered orientation of plotted inh neurons:"
-    print l4_inh_or[0].values[l4_inh]
-    print 'index ' + str(l4_inh)
-    print "Prefered phase of plotted inh neurons:"
-    print l4_inh_phase[0].values[l4_inh]
-
-    PerNeuronValueScatterPlot(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0,numpy.pi/2],st_contrast=100),ParameterSet({})).plot({'ScatterPlot.title' : 'HC,DC','ScatterPlot.identity_line' : True})
-    PerNeuronValueScatterPlot(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0,numpy.pi/2],st_contrast=30),ParameterSet({})).plot({'ScatterPlot.title' : 'LC,DC','ScatterPlot.identity_line' : True})
-    PerNeuronValueScatterPlot(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0,numpy.pi/2],st_contrast=100),ParameterSet({})).plot({'ScatterPlot.title' : 'HC,F1','ScatterPlot.identity_line' : True})
-    PerNeuronValueScatterPlot(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0,numpy.pi/2],st_contrast=30),ParameterSet({})).plot({'ScatterPlot.title' : 'LC,F1','ScatterPlot.identity_line' : True})
+    #F0_F1table(data_store,l4_exc)
     
-    dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],analysis_algorithm='TrialVariability',st_orientation = 0)    
-    PerNeuronValueScatterPlot(dsv,ParameterSet({})).plot({'ScatterPlot.identity_line' : True, 'ScatterPlot.mark_means' : True})
+    #PerNeuronValueScatterPlot(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0,numpy.pi/2],st_contrast=100),ParameterSet({})).plot({'ScatterPlot.title' : 'HC,DC','ScatterPlot.identity_line' : True})
+    #PerNeuronValueScatterPlot(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0,numpy.pi/2],st_contrast=30),ParameterSet({})).plot({'ScatterPlot.title' : 'LC,DC','ScatterPlot.identity_line' : True})
+    #PerNeuronValueScatterPlot(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0,numpy.pi/2],st_contrast=100),ParameterSet({})).plot({'ScatterPlot.title' : 'HC,F1','ScatterPlot.identity_line' : True})
+    #PerNeuronValueScatterPlot(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0,numpy.pi/2],st_contrast=30),ParameterSet({})).plot({'ScatterPlot.title' : 'LC,F1','ScatterPlot.identity_line' : True})
+    
+    #dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],analysis_algorithm='TrialVariability',st_orientation = 0)    
+    #PerNeuronValueScatterPlot(dsv,ParameterSet({})).plot({'ScatterPlot.identity_line' : True, 'ScatterPlot.mark_means' : True})
     
     #dsv = param_filter_query(data_store,value_name=['orientation HWHH'],sheet_name=['V1_Exc_L4','V1_Inh_L4'])    
     #PerNeuronValueScatterPlot(dsv,ParameterSet({})).plot({'ScatterPlot.title' : 'Exc', 'ScatterPlot.x_lim' : (0,90), 'ScatterPlot.y_lim' : (0,90), 'ScatterPlot.identity_line' : True})
@@ -142,8 +126,12 @@ if False: # PLOTTING
     OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
     OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : l4_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
     
-    dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate')    
-    PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': l4_exc_or_many.tolist(), 'sheet_name' : 'V1_Exc_L4'})).plot()
+    
+    # tuninc curves
+    #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate','Conductance_F0andF1'])    
+    #PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': list(numpy.arange(0,7,1)), 'sheet_name' : 'V1_Exc_L4'})).plot()
 
     import pylab
     pylab.show()
+
+

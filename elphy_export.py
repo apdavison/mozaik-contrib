@@ -99,10 +99,10 @@ def exportToElphy(data_store_location,elphy_export_location):
                 for s in segs: s.load_full()
                 
                 # create file name:
-                filename = "name=" + sn + ":" + "sheet_name=" + shn + ":"
+                filename = "name=" + sn + "#" + "sheet_name=" + shn 
                 for pn in varying_parameters:
                     if pn != "trial":
-                        filename += str(pn) + "=" + str(getattr(MP.MozaikParametrized.idd(st),pn)) + ":"
+                        filename += "#" + str(pn) + "=" + str(getattr(MP.MozaikParametrized.idd(st),pn)) 
                 path = os.path.join(elphy_export_location,filename+".dat")
                 createFileFromSegmentList( segs, path)
                 print "Finished saving file %d/%d for sheet %s and %d-th stimulus" % (j+1,len(segments),shn,i)
