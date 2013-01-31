@@ -1,6 +1,6 @@
 #!/usr/local/bin/ipython -i 
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
+sys.path.append('/home/jan/projects/mozaik-recording-update/')
 import matplotlib
 import time
 import pylab
@@ -37,10 +37,10 @@ if True:
 
     experiment_list =   [
                            #Spontaneous Activity 
-                           MeasureSpontaneousActivity(jens_model,duration=147*7,num_trials=2),
+                           MeasureSpontaneousActivity(jens_model,duration=50*7,num_trials=2),
 
                            #GRATINGS
-                           MeasureOrientationTuningFullfield(jens_model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[30,100],num_trials=2),
+                           #MeasureOrientationTuningFullfield(jens_model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[30,100],num_trials=2),
                        
                            #IMAGES WITH EYEMOVEMENT
                            #MeasureNaturalImagesWithEyeMovement(jens_model,stimulus_duration=147*7,num_trials=15),
@@ -107,7 +107,7 @@ if False:  #ANALYSIS
     #Precision(param_filter_query(data_store,sheet_name='V1_Exc_L4'),ParameterSet({'neurons' : [l4_exc], 'bin_length' : 10.0 })).analyse()
     data_store.save()
  
-if True: # PLOTTING
+if False: # PLOTTING
 
     #F0_F1table(data_store,l4_exc)
     

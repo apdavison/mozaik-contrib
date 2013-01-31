@@ -2,7 +2,7 @@
     #CorticalUniformSheet parameters
     
     'component': 'mozaik.framework.sheets.CorticalUniformSheet',
-    
+
     'params':{
                 'name':'V1_Inh_L4',
                 'sx': 5000.0,
@@ -36,7 +36,7 @@
                                             'inh_firing_rate' : 2000.0,
                                             'inh_weight' : 0.0007,
                                         },
-
+                'recorders' : url("param/l4_inh_rec"),    
     },
     
     'L4InhL4ExcConnection': {
@@ -109,5 +109,4 @@
 
 
     }        
-  
 }
