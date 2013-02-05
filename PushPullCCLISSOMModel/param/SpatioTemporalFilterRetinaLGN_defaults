@@ -7,6 +7,7 @@
         'mpi_reproducible_noise' : False,
         'cached' : True,
         'cache_path' : 'retinal_cache/',
+	'recorders' :  url("param/lgn_rec"),
         'receptive_field': {
             #'func': 'lambda x,y,t,p: numpy.sin(t)',
             'func': 'cai97.stRF_2d',

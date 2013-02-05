@@ -36,6 +36,7 @@
                                             'inh_firing_rate' : 2000.0,
                                             'inh_weight' : 0.0007,
                                         },
+                    'recorders' :  url("param/l4_inh_rec"),
 
     },    
     'L4InhL4ExcConnection': {
