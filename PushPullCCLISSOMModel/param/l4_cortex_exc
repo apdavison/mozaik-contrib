@@ -7,7 +7,7 @@
                 'name':'V1_Exc_L4',
                 'sx':1000.0,
                 'sy':1000.0,
-                'density':2000.0,
+                'density': 1600.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1000.0,
                     
@@ -33,9 +33,9 @@
                     
                 'background_noise' : {
                                         'exc_firing_rate' : 2000.0, 
-                                        'exc_weight' : 0.0017,
+                                        'exc_weight' : 0.00145,
                                         'inh_firing_rate' : 2000.0,
-                                        'inh_weight' : 0.0003,
+                                        'inh_weight' : 0.00030,
                                     },
     },
 
@@ -68,7 +68,7 @@
                                 'f1' : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.LinearModularConnectorFunction',
                                          'params' : {
-                                                        'constant_scaler': 0.1,
+                                                        'constant_scaler': 0.2,
                                                         'linear_scaler': 0.0033333333,   
                                                     }
                                        }, 
@@ -105,7 +105,7 @@
                                 'f1' : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.LinearModularConnectorFunction',
                                          'params' : {
-                                                        'constant_scaler': 0.1,
+                                                        'constant_scaler': 0.2,
                                                         'linear_scaler': 0.0033333333,   
                                                     }
                                        }, 
@@ -118,8 +118,8 @@
     },
 
     'AfferentConnection': {
-            'aspect_ratio':            UniformDist(min=0.303030303, max=0.303030303),
-            'size':                    UniformDist(min=0.5, max=0.5),
+            'aspect_ratio':            UniformDist(min=0.57, max=0.57),
+            'size':                    UniformDist(min=0.46, max=0.46),
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
             'phase':                   UniformDist(min=0.0, max=6.283185307179586),
             'frequency':               UniformDist(min=0.8, max=0.8),
@@ -133,8 +133,8 @@
 	    'phase_map_location' : './phase_map',
 	    
 	    'specific_arborization': {
-		    'weight_factor': 0.035,
-		    'num_samples' : 50,
+		    'weight_factor': 0.0658,
+		    'num_samples' : 94,
 		    'target_synapses' : 'excitatory',
 	            'short_term_plasticity': {
                         'u': 0.3, 
