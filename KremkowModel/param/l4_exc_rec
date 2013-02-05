@@ -1,0 +1,16 @@
+{
+    "1" : {
+      'component' :  'mozaik.framework.recording_configuration.RCRandomN',
+      'variables' : ("spikes"),
+      'params' :  {
+                    'num_of_cells' : 800,
+                  }
+    },
+    "2" : {
+      'component' :  'mozaik.framework.recording_configuration.RCRandomN',
+      'variables' : ("spikes","v","gsyn_exc" , "gsyn_inh"),
+      'params' :  {
+                    'num_of_cells' : 21,
+                  }
+    },
+}

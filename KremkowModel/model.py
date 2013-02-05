@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
+sys.path.append('/home/jan/projects/mozaik-recording-update/')
 import numpy
 from NeuroTools.parameters import ParameterSet
 from mozaik.models.model import Model
@@ -30,25 +30,6 @@ class PushPullCCModel(Model):
         self.input_layer = RetinaLGN(self, self.parameters.retina_lgn.params)
         cortex_exc_l4 = CortexExcL4(self, self.parameters.l4_cortex_exc.params)
         cortex_inh_l4 = CortexInhL4(self, self.parameters.l4_cortex_inh.params)
-
-        # which neurons to record
-        tr = {'spikes' : 'all', 
-              'v' : numpy.arange(0,21,1),
-              'gsyn_exc' :numpy.arange(0,21,1),
-              'gsyn_inh' : numpy.arange(0,21,1),
-        }
-        
-        tr_X  = {'spikes' : 'all', 
-                 'v' : numpy.arange(0,21,1),
-                 'gsyn_exc' :numpy.arange(0,21,1),
-                 'gsyn_inh' : numpy.arange(0,21,1),
-                }
-
-        
-        cortex_exc_l4.to_record = tr #'all'
-        cortex_inh_l4.to_record = tr #'all'
-        self.input_layer.sheets['X_ON'].to_record = tr_X  #'all'
-        self.input_layer.sheets['X_OFF'].to_record = tr_X #'all'
 
         # initialize projections
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_exc_l4,self.parameters.l4_cortex_exc.AfferentConnection,'V1AffConnection')
