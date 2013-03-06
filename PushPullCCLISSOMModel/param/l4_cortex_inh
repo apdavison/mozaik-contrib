@@ -5,9 +5,9 @@
     
 'params':{
                 'name':'V1_Inh_L4',
-                'sx': 1000.0,
-                'sy': 1000.0,
-                'density': 400.0,
+                'sx': 7000.0,
+                'sy': 7000.0,
+                'density': 62.0,
                 'mpi_safe' : False,
                 'magnification_factor': 1000.0,
                     
@@ -29,7 +29,7 @@
                                         'v': -60.0,
                          }
                     },
-                    
+                    'artificial_stimulation' : False,                    
                     'background_noise' : {
                                             'exc_firing_rate' : 2000.0, 
                                             'exc_weight' : 0.002,
@@ -51,10 +51,10 @@
                                                     }
                                        }, 
                                 'f2' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.ExponentialDecayModularConnectorFunction',
+                                         'component' : 'mozaik.connectors.modular_connector_functions.HyperbolicModularConnectorFunction',
                                          'params' : {
-                                                	            'arborization_constant': 50.0,
-                                                                'arborization_scaler': 1.0,
+                                                	            'alpha': 0.012614,
+                                                                'theta': 237.54,
                                                     }
                                        },                                        
                              },
@@ -86,10 +86,10 @@
                                          }
                                        }, 
                                 'f2' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.ExponentialDecayModularConnectorFunction',
+                                         'component' : 'mozaik.connectors.modular_connector_functions.HyperbolicModularConnectorFunction',
                                          'params' : {
-                                                	            'arborization_constant': 50.0,
-                                                                'arborization_scaler': 1.0,
+                                                	            'alpha': 0.011907,
+                                                                'theta': 256.43,
                                                     }
                                        },                                        
 
@@ -121,7 +121,7 @@
             'topological' : True,
             'probabilistic' : True,
             'or_map' : True,
-            'or_map_location' : './or_map_small',
+            'or_map_location' : './or_map_7x7',
             'phase_map' : False,
             'phase_map_location' : './phase_map',
 	    

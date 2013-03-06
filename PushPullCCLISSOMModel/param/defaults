@@ -11,7 +11,7 @@
     'l23_cortex_inh': url("param/23_cortex_inh"),    
     'visual_field': {
         'centre': (0.0, 0.0), # degrees (x,y)
-        'size': (6.8, 6.8), # degrees (width, height)
+        'size': (10.0, 10.0), # degrees (width, height)
     },
     'results_dir': '/home/jan/projects/mozaik/contrib/PushPullCCLISSOMModel/',
     'name' : 'Jens Model',
