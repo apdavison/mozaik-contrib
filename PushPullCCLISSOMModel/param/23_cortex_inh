@@ -7,7 +7,7 @@
                 'name':'V1_Inh_L2/3',
                 'sx':7000.0,
                 'sy':7000.0,
-                'density':62.0,
+                'density':125.0,
                 'mpi_safe' : False,
                 'magnification_factor': 1000.0,
                     
@@ -32,9 +32,9 @@
                     'recorders' :  url("param/l23_inh_rec"),                                        
                     'artificial_stimulation' : False,                    
                     'background_noise' : {
-                                            'exc_firing_rate' : 500.0, 
-                                            'exc_weight' : 0.0025,
-                                            'inh_firing_rate' : 500.0,
+                                            'exc_firing_rate' : 2000.0, 
+                                            'exc_weight' : 0.002,
+                                            'inh_firing_rate' : 2000.0,
                                             'inh_weight' : 0.0007,
                                         },
 
@@ -73,7 +73,7 @@
         'weight_expression' : 'f1*f2',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.08,
+        'base_weight': 0.05,
 		'num_samples' : 80,
     },
 
@@ -109,7 +109,7 @@
         'weight_expression' : 'f1*f2',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.08,
+        'base_weight': 0.02,
 		'num_samples' : 80,
     },
 

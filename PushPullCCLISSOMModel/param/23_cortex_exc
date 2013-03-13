@@ -7,7 +7,7 @@
                 'name':'V1_Exc_L2/3',
                 'sx':7000.0,
                 'sy':7000.0,
-                'density':250.0,
+                'density':500.0,
         	    'mpi_safe' : False,
                 'magnification_factor': 1000.0,
                     
@@ -33,10 +33,10 @@
                 'recorders' :  url("param/l23_exc_rec"),           
                 'artificial_stimulation' : False,
                 'background_noise' : {
-                                        'exc_firing_rate' : 500.0, 
-                                        'exc_weight' : 0.002,
-                                        'inh_firing_rate' : 500.0,
-                                        'inh_weight' : 0.0005,
+                                        'exc_firing_rate' : 2000.0, 
+                                        'exc_weight' : 0.00145,
+                                        'inh_firing_rate' : 2000.0,
+                                        'inh_weight' : 0.00030,
                                     },
     },
 
@@ -76,10 +76,10 @@
                                                     }
                                        }, 
                             },
-        'weight_expression' : 'f1*(f2+0.02)',
+        'weight_expression' : 'f1',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.4,
+        'base_weight': 0.1,
 		'num_samples' : 280,
     },
 
@@ -112,10 +112,10 @@
                                                     }
                                        }, 
                             },
-        'weight_expression' : 'f1*(f2+0.02)',
+        'weight_expression' : 'f1',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.4,
+        'base_weight': 0.2,
 		'num_samples' : 280,
     },
 
@@ -138,8 +138,8 @@
         'weight_expression' : 'f1',
         'delay_expression' : '2', 
         
-        'base_weight': 0.2,
-		'num_samples' : 144,
+        'base_weight': 0.3,
+		'num_samples' : 300,
     },
 
     'L23ExcL4ExcConnection': {

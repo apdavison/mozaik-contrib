@@ -13,7 +13,7 @@
         'centre': (0.0, 0.0), # degrees (x,y)
         'size': (10.0, 10.0), # degrees (width, height)
     },
-    'results_dir': '/home/jan/projects/mozaik/contrib/PushPullCCLISSOMModel/',
+    'results_dir': '/home/antolikjan/projects/mozaik/contrib/PushPullCCLISSOMModel/',
     'name' : 'Jens Model',
     'reset' : False,
     'null_stimulus_period' : 140.0,
