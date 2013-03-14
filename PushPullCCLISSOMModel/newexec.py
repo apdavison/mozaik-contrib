@@ -31,13 +31,13 @@ if MPI:
 MPI_ROOT = 0
 
 
-if True:
+if False:
     params = setup_experiments('FFI',sim)    
     jens_model = PushPullCCModel(sim,params)
 
     experiment_list =   [
                            #Size Tuning  
-                           MeasureSizeTuning(jens_model,num_sizes=15,max_size=6.0,orientation=numpy.pi/2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[100],num_trials=20),
+                           MeasureSizeTuning(jens_model,num_sizes=13,max_size=4.5,orientation=numpy.pi/2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[100],num_trials=20),
     
                            #Spontaneous Activity 
                            #MeasureSpontaneousActivity(jens_model,duration=147*7,num_trials=5),
@@ -76,7 +76,7 @@ if True:
         data_store.save()
 else:
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'B'}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'D'}),replace=True)
     logger.info('Loaded data store')
 
 import resource
@@ -100,7 +100,7 @@ l23_inh_or = data_store.get_analysis_result(identifier='PerNeuronValue',value_na
 l23_inh = l23_analog_ids_inh[numpy.argmin([circular_dist(o,pref_or,numpy.pi)  for o in l23_inh_or[0].get_value_by_id(l23_analog_ids_inh)])]
 #l4_exc_or_many = numpy.array(l4_exc_or[0].ids)[numpy.nonzero(numpy.array([circular_dist(o,pref_or,numpy.pi)  for (o,p) in zip(l4_exc_or[0].values,l4_exc_phase[0].values)]) < 0.1)[0]]
 
-# Find neurons for which spikes were recorded and whose orientation is close to pi/2
+# Find neurons for which spikes were recorded and whose orientation is close to pref_or
 l4_spike_ids = param_filter_query(data_store,sheet_name="V1_Exc_L4").get_segments()[0].get_stored_spike_train_ids()
 l4_spike_ids_inh = param_filter_query(data_store,sheet_name="V1_Inh_L4").get_segments()[0].get_stored_spike_train_ids()
 l23_spike_ids = param_filter_query(data_store,sheet_name="V1_Exc_L2/3").get_segments()[0].get_stored_spike_train_ids()
@@ -120,7 +120,7 @@ print "Prefered orientation of plotted inh neurons:"
 print 'id: ' + str(l4_inh)
 
 
-if True:  #ANALYSIS
+if False:
     TrialAveragedFiringRate(data_store,ParameterSet({'stimulus_type':"DriftingSinusoidalGratingDisk"})).analyse()
     #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate')    
     #GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
@@ -161,10 +161,10 @@ if True: # PLOTTING
 
     dsv = param_filter_query(data_store,st_orientation=[0,numpy.pi/2],st_name='DriftingSinusoidalGratingDisk',st_contrast=100)    
     #dsv = param_filter_query(data_store,st_orientation=[0,numpy.pi/2],st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100)    
-    OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
-    OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : l23_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
-    OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : l4_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
-    OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : l23_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
+    #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
+    #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : l23_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
+    #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : l4_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
+    #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : l23_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
     
     
     #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : l4_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
@@ -178,6 +178,8 @@ if True: # PLOTTING
     PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'radius', 'neurons': l23_spike_exc_or_close_to_pi_half, 'sheet_name' : 'V1_Exc_L2/3'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
     PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'radius', 'neurons': l23_spike_inh_or_close_to_pi_half, 'sheet_name' : 'V1_Inh_L2/3'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
     
+    PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'radius', 'neurons': l23_spike_exc_or_close_to_pi_half[8:], 'sheet_name' : 'V1_Exc_L2/3'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
+    PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'radius', 'neurons': l23_spike_exc_or_close_to_pi_half[16:], 'sheet_name' : 'V1_Exc_L2/3'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
     
     # tuninc curves
     #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate','Analog_F0andF1'])    

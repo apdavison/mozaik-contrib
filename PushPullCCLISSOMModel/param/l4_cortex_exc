@@ -75,7 +75,7 @@
                                        }, 
         
                             },
-        'weight_expression' : 'f1*f2',
+        'weight_expression' : 'f1*(f2+0.01)',
         'delay_expression' : 'f1', 
         
         'base_weight': 0.108,
@@ -111,7 +111,7 @@
                                                     }
                                        }, 
                             },
-        'weight_expression' : 'f1*f2',
+        'weight_expression' : 'f1*(f2+0.01)',
         'delay_expression' : 'f1', 
         
         'base_weight': 0.108,

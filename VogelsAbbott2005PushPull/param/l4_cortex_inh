@@ -5,7 +5,7 @@
                 'name':'V1_Inh_L4',
                 'sx': 1000.0,
                 'sy': 1000.0,
-                'density': 1600.0,
+                'density': 3200.0,
                 'mpi_safe' : False,
                 'magnification_factor': 1.0,
                     
@@ -63,19 +63,13 @@
         'delay_expression' : '0.2', 
         
         'base_weight': 0.051,
-		'connection_probability' : 0.01,
+		'connection_probability' : 0.005,
     },
 
 
     'L4InhL4InhConnection': {
         'target_synapses' : 'inhibitory',             
-        'short_term_plasticity': {
-				            'u': 0.5, 
-				            'tau_rec': 1100.0, 
-		                    'tau_psc': 3.0,
-				            'tau_fac': 50.0,
-                        },        
-
+        'short_term_plasticity': None, 
         'weight_functions' : {
                                 'f1' : {
                                           'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
@@ -92,7 +86,7 @@
         'delay_expression' : '0.2', 
         
         'base_weight': 0.051,
-		'connection_probability' : 0.01,
+		'connection_probability' : 0.005,
     },
     
       'AfferentConnection': {

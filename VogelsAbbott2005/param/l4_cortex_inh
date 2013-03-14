@@ -5,7 +5,7 @@
                 'name':'V1_Inh_L4',
                 'sx': 1000.0,
                 'sy': 1000.0,
-                'density': 1600.0,
+                'density': 800.0,
                 'mpi_safe' : False,
                 'magnification_factor': 1.0,
                     
@@ -42,7 +42,7 @@
                 'target_synapses' : 'inhibitory',             
                 'short_term_plasticity': None, 
                 'connection_probability': 0.02,  # probability of connection between two neurons from the two populations
-                'weights': 0.011,  # nA, the synapse strength
+                'weights': 0.051,  # nS, the synapse strength
                 'delay': 0.2,    # ms delay of the connections    
     },
 
@@ -50,7 +50,7 @@
                 'target_synapses' : 'inhibitory',             
                 'short_term_plasticity': None, 
                 'connection_probability': 0.02,  # probability of connection between two neurons from the two populations
-                'weights': 0.011,  # nA, the synapse strength
+                'weights': 0.051,  # nS, the synapse strength
                 'delay': 0.2,    # ms delay of the connections    
     },
 }

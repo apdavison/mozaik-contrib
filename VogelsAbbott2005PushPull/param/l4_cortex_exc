@@ -5,7 +5,7 @@
                 'name':'V1_Exc_L4',
                 'sx':1000.0,
                 'sy':1000.0,
-                'density': 6400.0,
+                'density': 12800.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1.0,
                     
@@ -63,8 +63,8 @@
         'weight_expression' : 'f1',
         'delay_expression' : '0.2', 
         
-        'base_weight': 0.0005,
-		'connection_probability' : 0.01,
+        'base_weight': 0.004,
+		'connection_probability' : 0.005,
     },
     
     
@@ -94,8 +94,8 @@
         'weight_expression' : 'f1',
         'delay_expression' : '0.2', 
         
-        'base_weight': 0.0005,
-		'connection_probability' : 0.01,
+        'base_weight': 0.004,
+		'connection_probability' : 0.005,
     },
     
      'AfferentConnection': {
