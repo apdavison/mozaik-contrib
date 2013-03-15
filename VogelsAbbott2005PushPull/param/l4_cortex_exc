@@ -13,18 +13,18 @@
                         'model': 'IF_cond_exp',
                         'params': {
                             'v_thresh':-50.0,
-                            'v_rest': -60.0,
+                            'v_rest': PyNNDistribution(name='uniform',params=(-65,-55)),
                             'v_reset': -60.0,
                             'tau_refrac': 5.0,
-                            'tau_m': 20.0,
+                            'tau_m': PyNNDistribution(name='uniform',params=(15,25)),
                             'cm': 0.2,
             	            'e_rev_E': 0.0,
                             'e_rev_I': -80.0,
-                    	    'tau_syn_E': 5.0,
-                            'tau_syn_I': 10.0, 
+                            'tau_syn_E': PyNNDistribution(name='uniform',params=(4,6)),
+                            'tau_syn_I': PyNNDistribution(name='uniform',params=(8,12)), 
                         },
                        'initial_values': {
-                                    'v': UniformDist(min=-60, max=-50),
+				    'v': PyNNDistribution(name='uniform',params=(-60,-50)),
                                 },
 
                     },
@@ -38,32 +38,36 @@
                 'recorders' : url("param/l4_exc_rec"),
     },
 
+
+
     
     'L4ExcL4ExcConnection': {
         'target_synapses' : 'excitatory',             
-        'short_term_plasticity': {
-				            'u': 0.5, 
-				            'tau_rec': 1100.0, 
-		                    'tau_psc': 3.0,
-				            'tau_fac': 50.0,
-                        },        
+        'short_term_plasticity': None,        
 
         'weight_functions' : {
                                 'f1' : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
                                          'params' : {
-                                                	    'or_sigma' : 0.26,
-                                                        'phase_sigma' : 0.52,
+                                                	    'or_sigma' : 5*0.26,
+                                                        'phase_sigma' : 5*0.52,
                                                         'target_synapses' : 'excitatory',             
                                          }
                                        }, 
                                        
                              },
-        'delay_functions' : {},
+        'delay_functions' : {
+                                'd1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.PyNNDistributionConnectorFunction',
+                                          'params' : {
+                                                	    'pynn_distribution' : PyNNDistribution(name='uniform',params=(0.2,2.0))
+                                                     }
+                                        }
+                            },
         'weight_expression' : 'f1',
-        'delay_expression' : '0.2', 
+        'delay_expression' : 'd1', 
         
-        'base_weight': 0.004,
+        'base_weight': 0.002,
 		'connection_probability' : 0.005,
     },
     
@@ -72,29 +76,31 @@
 
     'L4ExcL4InhConnection': {
         'target_synapses' : 'excitatory',             
-        'short_term_plasticity': {
-				            'u': 0.5, 
-				            'tau_rec': 1100.0, 
-		                    'tau_psc': 3.0,
-				            'tau_fac': 50.0,
-                        },        
+        'short_term_plasticity': None,        
 
         'weight_functions' : {
                                 'f1' : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
                                          'params' : {
-                                                	    'or_sigma' : 0.26,
-                                                        'phase_sigma' : 0.52,
+                                                	    'or_sigma' : 5*0.26,
+                                                        'phase_sigma' : 5*0.52,
                                                         'target_synapses' : 'excitatory',             
                                          }
                                        }, 
                                        
                              },
-        'delay_functions' : {},
+         'delay_functions' : {
+                                'd1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.PyNNDistributionConnectorFunction',
+                                          'params' : {
+                                                	    'pynn_distribution' : PyNNDistribution(name='uniform',params=(0.2,2.0))
+                                                     }
+                                        }
+                            },
         'weight_expression' : 'f1',
-        'delay_expression' : '0.2', 
+        'delay_expression' : 'd1', 
         
-        'base_weight': 0.004,
+        'base_weight': 0.002,
 		'connection_probability' : 0.005,
     },
     

@@ -7,7 +7,7 @@
                 'name':'V1_Exc_L4',
                 'sx':7000.0,
                 'sy':7000.0,
-                'density': 250.0,
+                'density': 500.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1000.0,
                     
