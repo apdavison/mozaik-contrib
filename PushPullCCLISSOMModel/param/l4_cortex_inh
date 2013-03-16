@@ -7,7 +7,7 @@
                 'name':'V1_Inh_L4',
                 'sx': 7000.0,
                 'sy': 7000.0,
-                'density': 125.0,
+                'density': 62.0,
                 'mpi_safe' : False,
                 'magnification_factor': 1000.0,
                     
