@@ -13,10 +13,10 @@
                         'model': 'IF_cond_exp',
                         'params': {
                             'v_thresh':-50.0,
-                            'v_rest': PyNNDistribution(name='uniform',params=(-65,-55)),
+                            'v_rest': PyNNDistribution(name='uniform',params=(-62,-58)),
                             'v_reset': -60.0,
                             'tau_refrac': 5.0,
-                            'tau_m': PyNNDistribution(name='uniform',params=(15,25)),
+                            'tau_m': PyNNDistribution(name='uniform',params=(18,22)),
                             'cm': 0.2,
             	            'e_rev_E': 0.0,
                             'e_rev_I': -80.0,
@@ -31,7 +31,7 @@
                 'artificial_stimulation' : True,                    
                 'background_noise' : {
                                         'exc_firing_rate' : 0.0, 
-                                        'exc_weight' : 0.1,
+                                        'exc_weight' : 0.01,
                                         'inh_firing_rate' : 0.0,
                                         'inh_weight' : 0.0,
                                     },
@@ -49,8 +49,8 @@
                                 'f1' : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
                                          'params' : {
-                                                	    'or_sigma' : 5*0.26,
-                                                        'phase_sigma' : 5*0.52,
+                                                	    'or_sigma' : 3*0.26,
+                                                        'phase_sigma' : 3*0.52,
                                                         'target_synapses' : 'excitatory',             
                                          }
                                        }, 
@@ -67,8 +67,8 @@
         'weight_expression' : 'f1',
         'delay_expression' : 'd1', 
         
-        'base_weight': 0.002,
-		'connection_probability' : 0.005,
+        'base_weight': 0.00032,
+		'connection_probability' : 0.02,
     },
     
     
@@ -82,8 +82,8 @@
                                 'f1' : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
                                          'params' : {
-                                                	    'or_sigma' : 5*0.26,
-                                                        'phase_sigma' : 5*0.52,
+                                                	    'or_sigma' : 3*0.26,
+                                                        'phase_sigma' : 3*0.52,
                                                         'target_synapses' : 'excitatory',             
                                          }
                                        }, 
@@ -100,8 +100,8 @@
         'weight_expression' : 'f1',
         'delay_expression' : 'd1', 
         
-        'base_weight': 0.002,
-		'connection_probability' : 0.005,
+        'base_weight': 0.00032,
+		'connection_probability' : 0.02,
     },
     
      'AfferentConnection': {
@@ -120,7 +120,7 @@
 	    'phase_map_location' : './phase_map',
 	    
 	    'specific_arborization': {
-		    'weight_factor': 0.0,
+		    'weight_factor': 0.0658,
 		    'num_samples' : 94,
 		    'target_synapses' : 'excitatory',
 	            'short_term_plasticity': {
