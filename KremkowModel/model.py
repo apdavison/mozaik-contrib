@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
+sys.path.append('/Users/jan/projects/mozaik/')
 import numpy
 from NeuroTools.parameters import ParameterSet
 from mozaik.models.model import Model

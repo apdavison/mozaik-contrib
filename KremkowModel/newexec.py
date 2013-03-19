@@ -1,11 +1,10 @@
-#!/usr/local/bin/ipython -i 
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
+sys.path.append('/Users/jan/projects/mozaik/')
 import matplotlib
 import time
 import pylab
 from mozaik.framework.experiment import *
-#from pyNN import nest as sim
+from pyNN import nest as sim
 from model import PushPullCCModel
 from mozaik.framework.experiment_controller import run_experiments, setup_experiments, setup_logging
 from mozaik.visualization.plotting import *
@@ -98,7 +97,7 @@ print "Prefered phase of plotted inh neurons:"
 print l4_exc_phase[0].get_value_by_id(l4_exc)
 
 
-if True:  #ANALYSIS
+if False:  #ANALYSIS
     dsv = param_filter_query(data_store,sheet_name='V1_Exc_L4')
     ActionPotentialRemoval(dsv,ParameterSet({'window_length' : 10.0})).analyse()
     TrialAveragedFiringRate(param_filter_query(data_store,sheet_name='V1_Exc_L4'),ParameterSet({'stimulus_type':"FullfieldDriftingSinusoidalGrating"})).analyse()
@@ -122,16 +121,15 @@ if True: # PLOTTING
     #VmPlot(dsv,ParameterSet({'neuron' : l4_exc,'sheet_name' : 'V1_Exc_L4'})).plot({'Vm_plot.y_lim' : (-67,-56)})
     #dsv = param_filter_query(data_store,st_orientation=[0,numpy.pi/2],st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='ActionPotentialRemoval',st_trial=0)    
     #AnalogSignalListPlot(dsv,ParameterSet({'neurons' : [l4_exc],'sheet_name' : 'V1_Exc_L4'})).plot({'AnalogSignalPlot.y_lim' : (-67,-56)})
-    #import pylab
-    #pylab.show()
-
-    F0_F1table(data_store,l4_exc)
     
-    dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],value_name='LGNAfferentOrientation')   
-    PerNeuronValuePlot(dsv,ParameterSet({})).plot()
+    #RetinalInputMovie(data_store,ParameterSet({'frame_rate' : 10})).plot()
     
-    dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],value_name='orientation preference',analysis_algorithm='PeriodicTuningCurvePreferenceAndSelectivity_VectorAverage',st_contrast=100)    
-    PerNeuronValuePlot(dsv,ParameterSet({})).plot()
+    
+    #dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],value_name='LGNAfferentOrientation')   
+    #PerNeuronValuePlot(dsv,ParameterSet({})).plot()
+    
+    #dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],value_name='orientation preference',analysis_algorithm='PeriodicTuningCurvePreferenceAndSelectivity_VectorAverage',st_contrast=100)    
+    #PerNeuronValuePlot(dsv,ParameterSet({})).plot()
     
     #dsv = param_filter_query(data_store,value_name=['orientation HWHH'],sheet_name=['V1_Exc_L4','V1_Inh_L4'])    
     #PerNeuronValueScatterPlot(dsv,ParameterSet({})).plot({ 'ScatterPlot.x_lim' : (0,90), 'ScatterPlot.y_lim' : (0,90), 'ScatterPlot.identity_line' : True})
@@ -141,8 +139,8 @@ if True: # PLOTTING
     OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : l4_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
     
     # tuninc curves
-    dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate','Analog_F0andF1'])    
-    PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids), 'sheet_name' : 'V1_Exc_L4'})).plot({'TuningCurve F0_Inh_Cond.y_lim' : (0,180) , 'TuningCurve F0_Exc_Cond.y_lim' : (0,80)})
+    #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate','Analog_F0andF1'])    
+    #PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids), 'sheet_name' : 'V1_Exc_L4'})).plot({'TuningCurve F0_Inh_Cond.y_lim' : (0,180) , 'TuningCurve F0_Exc_Cond.y_lim' : (0,80)})
 
     #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialVariability'])    
     #PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids), 'sheet_name' : 'V1_Exc_L4'})).plot()
