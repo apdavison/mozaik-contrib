@@ -24,7 +24,7 @@
                             'tau_syn_I': 10.0, 
                         },
                        'initial_values': {
-                                    'v': UniformDist(min=-60, max=-50),
+                                                'v': PyNNDistribution(name='uniform',params=(-60,-50)),
                                 },
 
                     },

@@ -25,7 +25,7 @@
                                       },
 
                             'initial_values':   {
-                                                       'v': UniformDist(min=-60, max=-50),
+                                                     'v': PyNNDistribution(name='uniform',params=(-60,-50)),
                                                 }
                         },
                 'artificial_stimulation' : True,                    
