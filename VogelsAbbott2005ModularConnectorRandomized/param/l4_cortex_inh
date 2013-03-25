@@ -60,7 +60,7 @@
         'weight_expression' : 'const',
         'delay_expression' : 'd1', 
         
-        'base_weight': 0.0014,
+        'base_weight': 0.00125,
 		'connection_probability' : 0.02,
     },
 
@@ -87,7 +87,7 @@
         'weight_expression' : 'const',
         'delay_expression' : 'd1', 
         
-        'base_weight': 0.0014,
+        'base_weight': 0.00125,
 		'connection_probability' : 0.02,
     },
 

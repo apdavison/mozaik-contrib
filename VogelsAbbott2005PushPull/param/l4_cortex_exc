@@ -67,7 +67,7 @@
         'weight_expression' : 'f1',
         'delay_expression' : 'd1', 
         
-        'base_weight': 0.00032,
+        'base_weight': 0.00031,
 		'connection_probability' : 0.02,
     },
     
@@ -100,7 +100,7 @@
         'weight_expression' : 'f1',
         'delay_expression' : 'd1', 
         
-        'base_weight': 0.00032,
+        'base_weight': 0.00031,
 		'connection_probability' : 0.02,
     },
     
