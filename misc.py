@@ -5,6 +5,7 @@ from mozaik.analysis.technical import NeuronAnnotationsToPerNeuronValues
 from NeuroTools.parameters import ParameterSet
 from mozaik.storage.queries import *
 from mozaik.tools.circ_stat import *
+from mozaik.tools.misc import *
 
 def verify_push_pull(data_store,connection_name):
     # test the push pull 
@@ -51,15 +52,15 @@ def verify_connectivity(data_store):
     print find_neuron('bottom_right',l4_pos)
     print find_neuron('bottom_left',l4_pos)
     
-    ConnectivityPlot(data_store,ParameterSet({'neuron' : find_neuron('center',l4_pos),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
-    ConnectivityPlot(data_store,ParameterSet({'neuron' : find_neuron('top_right',l4_pos),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
-    ConnectivityPlot(data_store,ParameterSet({'neuron' : find_neuron('top_left',l4_pos),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
-    ConnectivityPlot(data_store,ParameterSet({'neuron' : find_neuron('bottom_right',l4_pos),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
-    ConnectivityPlot(data_store,ParameterSet({'neuron' : find_neuron('bottom_left',l4_pos),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
+    ConnectivityPlot(data_store,ParameterSet({'neuron' : data_store.get_sheet_ids('V1_Exc_L4',find_neuron('center',l4_pos)),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
+    ConnectivityPlot(data_store,ParameterSet({'neuron' : data_store.get_sheet_ids('V1_Exc_L4',find_neuron('top_right',l4_pos)),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
+    ConnectivityPlot(data_store,ParameterSet({'neuron' : data_store.get_sheet_ids('V1_Exc_L4',find_neuron('top_left',l4_pos)),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
+    ConnectivityPlot(data_store,ParameterSet({'neuron' : data_store.get_sheet_ids('V1_Exc_L4',find_neuron('bottom_right',l4_pos)),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
+    ConnectivityPlot(data_store,ParameterSet({'neuron' : data_store.get_sheet_ids('V1_Exc_L4',find_neuron('bottom_left',l4_pos)),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
     
-    #ConnectivityPlot(data_store,ParameterSet({'neuron' : find_neuron('center',l4_pos),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentPhase')).plot()
-    #ConnectivityPlot(data_store,ParameterSet({'neuron' : find_neuron('center',l4_inh_pos),'sheet_name' : 'V1_Inh_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
-    #ConnectivityPlot(data_store,ParameterSet({'neuron' : find_neuron('center',l4_inh_pos),'sheet_name' : 'V1_Inh_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentPhase')).plot()        
+    #ConnectivityPlot(data_store,ParameterSet({'neuron' : data_store.get_sheet_ids('V1_Exc_L4',find_neuron('center',l4_pos)),'sheet_name' : 'V1_Exc_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentPhase')).plot()
+    #ConnectivityPlot(data_store,ParameterSet({'neuron' : data_store.get_sheet_ids('V1_Exc_L4',find_neuron('center',l4_inh_pos)),'sheet_name' : 'V1_Inh_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentOrientation')).plot()
+    #ConnectivityPlot(data_store,ParameterSet({'neuron' : data_store.get_sheet_ids('V1_Exc_L4',find_neuron('center',l4_inh_pos)),'sheet_name' : 'V1_Inh_L4','reversed' : True}),param_filter_query(data_store,identifier='PerNeuronValue',value_name='LGNAfferentPhase')).plot()        
     
     verify_push_pull(data_store,'V1L4ExcL4ExcConnection')
     verify_push_pull(data_store,'V1L4ExcL4InhConnection')
@@ -79,25 +80,25 @@ def verify_connectivity(data_store):
 
 def F0_F1table(data_store,l4_exc):
     # PRINT INFO ON F0 and F1 of Conductances
-    print "Excitatory cond, F0, preffered, contrast 100: ", str(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=100,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Excitatory cond, F0, null, contrast 100: ", str(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=100,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Excitatory cond, F0, preffered, contrast 30: ", str(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=30,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Excitatory cond, F0, null, contrast 30: ", str(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=30,ads_unique=True).get_analysis_result()[0].values[l4_exc])
+    print "Excitatory cond, F0, preffered, contrast 100: ", str(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=100,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    print "Excitatory cond, F0, null, contrast 100: ", str(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=100,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    #print "Excitatory cond, F0, preffered, contrast 30: ", str(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=30,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    #print "Excitatory cond, F0, null, contrast 30: ", str(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=30,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
     
-    print "Excitatory cond, F1, preffered, contrast 100: ", str(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=100,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Excitatory cond, F1, null, contrast 100: ", str(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=100,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Excitatory cond, F1, preffered, contrast 30: ", str(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=30,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Excitatory cond, F1, null, contrast 30: ", str(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=30,ads_unique=True).get_analysis_result()[0].values[l4_exc])
+    print "Excitatory cond, F1, preffered, contrast 100: ", str(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=100,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    print "Excitatory cond, F1, null, contrast 100: ", str(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=100,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    #print "Excitatory cond, F1, preffered, contrast 30: ", str(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=30,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    #print "Excitatory cond, F1, null, contrast 30: ", str(param_filter_query(data_store,value_name=['F1_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=30,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
       
 
-    print "Inhibitory cond, F0, preffered, contrast 100: ", str(param_filter_query(data_store,value_name=['F0_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=100,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Inhibitory cond, F0, null, contrast 100: ", str(param_filter_query(data_store,value_name=['F0_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=100,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Inhibitory cond, F0, preffered, contrast 30: ", str(param_filter_query(data_store,value_name=['F0_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=30,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Inhibitory cond, F0, null, contrast 30: ", str(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=30,ads_unique=True).get_analysis_result()[0].values[l4_exc])
+    #print "Inhibitory cond, F0, preffered, contrast 100: ", str(param_filter_query(data_store,value_name=['F0_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=100,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    #print "Inhibitory cond, F0, null, contrast 100: ", str(param_filter_query(data_store,value_name=['F0_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=100,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    #print "Inhibitory cond, F0, preffered, contrast 30: ", str(param_filter_query(data_store,value_name=['F0_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=30,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    #print "Inhibitory cond, F0, null, contrast 30: ", str(param_filter_query(data_store,value_name=['F0_Exc_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=30,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
     
-    print "Inhibitory cond, F1, preffered, contrast 100: ", str(param_filter_query(data_store,value_name=['F1_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=100,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Inhibitory cond, F1, null, contrast 100: ", str(param_filter_query(data_store,value_name=['F1_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=100,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Inhibitory cond, F1, preffered, contrast 30: ", str(param_filter_query(data_store,value_name=['F1_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=30,ads_unique=True).get_analysis_result()[0].values[l4_exc])
-    print "Inhibitory cond, F1, null, contrast 30: ", str(param_filter_query(data_store,value_name=['F1_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=30,ads_unique=True).get_analysis_result()[0].values[l4_exc])
+    #print "Inhibitory cond, F1, preffered, contrast 100: ", str(param_filter_query(data_store,value_name=['F1_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=100,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    #print "Inhibitory cond, F1, null, contrast 100: ", str(param_filter_query(data_store,value_name=['F1_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=100,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    #print "Inhibitory cond, F1, preffered, contrast 30: ", str(param_filter_query(data_store,value_name=['F1_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[numpy.pi/2],st_contrast=30,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
+    #print "Inhibitory cond, F1, null, contrast 30: ", str(param_filter_query(data_store,value_name=['F1_Inh_Cond'],sheet_name='V1_Exc_L4',st_orientation=[0],st_contrast=30,ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc))
 
     

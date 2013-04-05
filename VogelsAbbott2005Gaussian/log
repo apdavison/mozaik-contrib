@@ -1,0 +1,5 @@
+2013-02-28 18:01:26,401   0 Mozaik     INFO   Loaded data store [/home/jan/projects/mozaik/contrib/VogelsAbbott2005/newexec.py:50]
+2013-02-28 18:01:31,234   0 Mozaik     WARNING OverviewPlot plotting took: 2.62210893631seconds [/home/jan/projects/mozaik/mozaik/visualization/plotting.py:166]
+2013-02-28 18:01:33,647   0 Mozaik     WARNING OverviewPlot plotting took: 2.41243386269seconds [/home/jan/projects/mozaik/mozaik/visualization/plotting.py:166]
+2013-02-28 18:01:33,866   0 Mozaik     WARNING RasterPlot plotting took: 0.218278169632seconds [/home/jan/projects/mozaik/mozaik/visualization/plotting.py:166]
+2013-02-28 18:01:34,126   0 Mozaik     WARNING RasterPlot plotting took: 0.260382175446seconds [/home/jan/projects/mozaik/mozaik/visualization/plotting.py:166]

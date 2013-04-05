@@ -8,7 +8,7 @@ import numpy
 from NeuroTools.parameters import ParameterSet
 from mozaik.models.model import Model
 from mozaik.connectors.meta_connectors import GaborConnector
-from mozaik.connectors.modular_connectors import ModularProbabilisticConnector
+from mozaik.connectors.modular_connectors import ModularSamplingProbabilisticConnector
 from mozaik.framework import load_component
 from mozaik.framework.space import VisualRegion
 
@@ -39,25 +39,6 @@ class PushPullCCModel(Model):
         cortex_exc_l4 = CortexExcL4(self, self.parameters.l4_cortex_exc.params)
         cortex_inh_l4 = CortexInhL4(self, self.parameters.l4_cortex_inh.params)
 
-        # which neurons to record
-        tr = {'spikes' : 'all', 
-              'v' : numpy.arange(0,21,1),
-              'gsyn_exc' :numpy.arange(0,21,1),
-              'gsyn_inh' : numpy.arange(0,21,1),
-        }
-        
-        tr_X  = {'spikes' : 'all', 
-                 'v' : numpy.arange(0,21,1),
-                 'gsyn_exc' :numpy.arange(0,21,1),
-                 'gsyn_inh' : numpy.arange(0,21,1),
-                }
-
-        
-        cortex_exc_l4.to_record = tr #'all'
-        cortex_inh_l4.to_record = tr #'all'
-        self.input_layer.sheets['X_ON'].to_record = tr_X  #'all'
-        self.input_layer.sheets['X_OFF'].to_record = tr_X #'all'
-
         # initialize projections
         GaborConnector(self,
                        self.input_layer.sheets['X_ON'],
@@ -72,22 +53,7 @@ class PushPullCCModel(Model):
                        self.parameters.l4_cortex_inh.AfferentConnection,
                        'V1AffInhConnection')
         
-        ModularProbabilisticConnector(self,
-                                      'V1L4ExcL4ExcConnection',
-                                      cortex_exc_l4,
-                                      cortex_exc_l4,
-                                      self.parameters.l4_cortex_exc.L4ExcL4ExcConnection).connect()
-        ModularProbabilisticConnector(self,'V1L4ExcL4InhConnection',
-                                      cortex_exc_l4,
-                                      cortex_inh_l4,
-                                      self.parameters.l4_cortex_exc.L4ExcL4InhConnection).connect()
-        ModularProbabilisticConnector(self,
-                                      'V1L4InhL4ExcConnection',
-                                      cortex_inh_l4,
-                                      cortex_exc_l4,
-                                      self.parameters.l4_cortex_inh.L4InhL4ExcConnection).connect()
-        ModularProbabilisticConnector(self,
-                                      'V1L4InhL4InhConnection',
-                                      cortex_inh_l4,
-                                      cortex_inh_l4,
-                                      self.parameters.l4_cortex_inh.L4InhL4InhConnection).connect()
+        ModularSamplingProbabilisticConnector(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.l4_cortex_exc.L4ExcL4ExcConnection).connect()
+        ModularSamplingProbabilisticConnector(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.l4_cortex_exc.L4ExcL4InhConnection).connect()
+        ModularSamplingProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.l4_cortex_inh.L4InhL4ExcConnection).connect()
+        ModularSamplingProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnection).connect()
