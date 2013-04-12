@@ -5,7 +5,7 @@
                 'name':'V1_Inh_L4',
                 'sx': 1000.0,
                 'sy': 1000.0,
-                'density': 3200.0,
+                'density': 6400.0,
                 'mpi_safe' : False,
                 'magnification_factor': 1.0,
                     
@@ -16,12 +16,12 @@
                                         'v_rest': PyNNDistribution(name='uniform',params=(-65,-55)),
                                         'v_reset': -60.0,
                                         'tau_refrac': 5.0,
-                                        'tau_m': PyNNDistribution(name='uniform',params=(15,25)),
+                                        'tau_m': PyNNDistribution(name='uniform',params=(17,23)),
                                         'cm': 0.2,
                                         'e_rev_E': 0.0,
                                         'e_rev_I': -80.0,
-                                        'tau_syn_E': PyNNDistribution(name='uniform',params=(4,6)),
-                                        'tau_syn_I': PyNNDistribution(name='uniform',params=(8,12)), 
+                                        'tau_syn_E': PyNNDistribution(name='uniform',params=(5,5)),
+                                        'tau_syn_I': PyNNDistribution(name='uniform',params=(10,10)), 
                                       },
 
                             'initial_values':   {
@@ -59,9 +59,8 @@
                             },
         'weight_expression' : 'const',
         'delay_expression' : 'd1', 
-        
-        'base_weight': 0.00125,
-		'connection_probability' : 0.02,
+        'base_weight': 0.0015,
+	'connection_probability' : 0.01,
     },
 
 
@@ -87,8 +86,9 @@
         'weight_expression' : 'const',
         'delay_expression' : 'd1', 
         
-        'base_weight': 0.00125,
-		'connection_probability' : 0.02,
+        'base_weight': 0.0015,
+	'connection_probability' : 0.01,
+
     },
 
 }

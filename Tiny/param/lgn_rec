@@ -1,9 +1,0 @@
-{
-    "1" : {
-      'component' :  'mozaik.framework.population_selector.RCAll',
-      'variables' : ("spikes","v","gsyn_exc","gsyn_inh"),
-      'params' :  {
-                  }
-    },
-}
-
