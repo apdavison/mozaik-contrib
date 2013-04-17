@@ -6,13 +6,16 @@ Signal propagation and logic gating in networks of integrate-and-fire neurons.
 The Journal of neuroscience : the official journal of the Society for Neuroscience, 25(46), 10786–95. 
 """
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
+sys.path.append('/home/jan/projects/mozaik0.8/')
 import mozaik
 from model import VogelsAbbott
 from experiments import create_experiments
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from mozaik.framework.experiment_controller import run_workflow, setup_logging
 from analysis_and_visualization import perform_analysis_and_visualization
+from numpy.random import seed
+
+seed(2023)
 
 if True:
     logger = mozaik.getMozaikLogger("Mozaik")

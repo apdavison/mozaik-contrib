@@ -1,7 +1,7 @@
 import sys
-sys.path.append('/Users/jan/projects/mozaik/')
+sys.path.append('/home/jan/projects/mozaik/')
 import numpy
-from NeuroTools.parameters import ParameterSet
+from parameters import ParameterSet
 from mozaik.models.model import Model
 from mozaik.connectors.meta_connectors import GaborConnector
 from mozaik.connectors.modular_connectors import ModularSamplingProbabilisticConnector
