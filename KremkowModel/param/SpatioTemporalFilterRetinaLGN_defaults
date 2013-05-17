@@ -4,7 +4,7 @@
         'density': 61, # 10.0 neurons per degree squared
         'size'  : (4.0,4.0), # the effective size of the modelled section of retina/lgn
         'linear_scaler': 2.5,
-        'mpi_reproducible_noise' : False,
+        'mpi_reproducible_noise' : True,
         'cached' : True,
         'cache_path' : 'retinal_cache/',
         'recorders' :  url("param/lgn_rec"),
