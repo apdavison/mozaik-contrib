@@ -1,0 +1,12 @@
+(dp0
+S'l4_cortex_exc.L4ExcL4ExcConnection.weights'
+p1
+F0.004
+sS'l4_cortex_inh.L4InhL4ExcConnection.weights'
+p2
+F0.51
+sS'results_dir'
+p3
+S'/home/jan/projects/mozaik/contrib/BoustaniEtAlJPP2007/20130410-145058ParamSearch{l4_cortex_inh.L4InhL4ExcConnection.weights:[0.51, 0.52],l4_cortex_exc.L4ExcL4ExcConnection.weights:[0.004, 0.0041]}/'
+p4
+s.
