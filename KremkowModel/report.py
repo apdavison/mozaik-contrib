@@ -12,7 +12,7 @@ from mozaik.analysis.analysis import *
 from mozaik.analysis.technical import NeuronAnnotationsToPerNeuronValues
 from mozaik.visualization.Kremkow_plots import *
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
-from NeuroTools.parameters import ParameterSet
+from parameters import ParameterSet
 from mozaik.storage.queries import *
 from mozaik.tools.circ_stat import circular_dist
 import mozaik
