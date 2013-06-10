@@ -54,7 +54,8 @@
                                          'params' : {
                                                 	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,
-                                                        'target_synapses' : 'excitatory',             
+                                                        'target_synapses' : 'excitatory',          
+                                                        'push_pull_ratio' : 1.0,   
                                                     }
                                        }, 
                                 'f2' : {
@@ -90,7 +91,8 @@
                                          'params' : {
                                                 	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,
-                                                        'target_synapses' : 'excitatory',             
+                                                        'target_synapses' : 'excitatory',  
+                                                        'push_pull_ratio' : 1.0,           
                                                     }
                                        }, 
                                 'f2' : {

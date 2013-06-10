@@ -7,7 +7,7 @@ from mozaik.connectors.modular_connectors import ModularSingleWeightProbabilisti
 from mozaik.framework import load_component
 from mozaik.framework.space import VisualRegion
 
-class VogelsAbbottGaussian(Model):
+class VogelsAbbottPushPull(Model):
     
     required_parameters = ParameterSet({
         'l4_cortex_exc' : ParameterSet, 

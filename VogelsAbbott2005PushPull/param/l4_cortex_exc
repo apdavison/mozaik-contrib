@@ -5,7 +5,7 @@
                 'name':'V1_Exc_L4',
                 'sx':1000.0,
                 'sy':1000.0,
-                'density': 12800.0,
+                'density': 3200.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1.0,
                     
@@ -49,9 +49,10 @@
                                 'f1' : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
                                          'params' : {
-                                                	    'or_sigma' : 3*0.26,
-                                                        'phase_sigma' : 3*0.52,
-                                                        'target_synapses' : 'excitatory',             
+                                                	    'or_sigma' : 0.26,
+                                                        'phase_sigma' : 0.52,
+                                                        'target_synapses' : 'excitatory',  
+                                                        'push_pull_ratio' : 0.0,
                                          }
                                        }, 
                                        
@@ -71,40 +72,9 @@
 		'connection_probability' : 0.02,
     },
     
+    'L4ExcL4InhConnection': ref('l4_cortex_exc.L4ExcL4ExcConnection'),
     
-
-
-    'L4ExcL4InhConnection': {
-        'target_synapses' : 'excitatory',             
-        'short_term_plasticity': None,        
-
-        'weight_functions' : {
-                                'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
-                                         'params' : {
-                                                	    'or_sigma' : 3*0.26,
-                                                        'phase_sigma' : 3*0.52,
-                                                        'target_synapses' : 'excitatory',             
-                                         }
-                                       }, 
-                                       
-                             },
-         'delay_functions' : {
-                                'd1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.PyNNDistributionConnectorFunction',
-                                          'params' : {
-                                                	    'pynn_distribution' : PyNNDistribution(name='uniform',params=(0.2,2.0))
-                                                     }
-                                        }
-                            },
-        'weight_expression' : 'f1',
-        'delay_expression' : 'd1', 
-        
-        'base_weight': 0.00031,
-		'connection_probability' : 0.02,
-    },
-    
-     'AfferentConnection': {
+    'AfferentConnection': {
             'aspect_ratio':            UniformDist(min=0.57, max=0.57),
             'size':                    UniformDist(min=0.46, max=0.46),
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
@@ -120,7 +90,7 @@
 	    'phase_map_location' : './phase_map',
 	    
 	    'specific_arborization': {
-		    'weight_factor': 0.0658,
+		    'weight_factor': 0.0,
 		    'num_samples' : 94,
 		    'target_synapses' : 'excitatory',
 	            'short_term_plasticity': {
