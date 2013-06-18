@@ -33,7 +33,7 @@ if True:
 
     experiment_list =   [
                            #Lets kick the network up into activation
-                           PoissonNetworkKick(jens_model,duration=10*7,sheet_list=["V1_Exc_L4","V1_Inh_L4"],recording_configuration_list=[l4exc_kick,l4inh_kick],lambda_list=[100,100]),
+                           PoissonNetworkKick(jens_model,duration=70*7,sheet_list=["V1_Exc_L4","V1_Inh_L4"],recording_configuration_list=[l4exc_kick,l4inh_kick],lambda_list=[100,100]),
                            #Spontaneous Activity 
                            NoStimulation(jens_model,duration=70*7),
                         ]

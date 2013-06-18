@@ -5,7 +5,7 @@
                 'name':'V1_Exc_L4',
                 'sx':1000.0,
                 'sy':1000.0,
-                'density': 3200.0,
+                'density': 12000.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1.0,
                     
@@ -41,8 +41,8 @@
     'L4ExcL4ExcConnection': {
                 'target_synapses' : 'excitatory',             
                 'short_term_plasticity': None, 
-                'connection_probability': 0.02,  # probability of connection between two neurons from the two populations
-                'weights': 0.004,  # microS, the synapse strength
+                'connection_probability': 0.0025,  # probability of connection between two neurons from the two populations
+                'weights': 0.0018,  # nS, the synapse strength
                 'delay': 0.2,    # ms delay of the connections    
     },
 

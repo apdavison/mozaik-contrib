@@ -1,11 +1,11 @@
 {
     #CorticalUniformSheet parameters
     'component': 'mozaik.framework.sheets.CorticalUniformSheet',
-    'params':{
+      'params':{
                 'name':'V1_Inh_L4',
                 'sx': 1000.0,
                 'sy': 1000.0,
-                'density': 1600.0,
+                'density': 3200.0,
                 'mpi_safe' : False,
                 'magnification_factor': 1.0,
                     
@@ -13,25 +13,25 @@
                             'model': 'IF_cond_exp',
                             'params': {
                                         'v_thresh':-50.0,
-                                        'v_rest': -60.0,
+                                        'v_rest': PyNNDistribution(name='uniform',params=(-62,-58)),
                                         'v_reset': -60.0,
                                         'tau_refrac': 5.0,
-                                        'tau_m': 20.0,
+                                        'tau_m': PyNNDistribution(name='uniform',params=(18,22)),
                                         'cm': 0.2,
                                         'e_rev_E': 0.0,
                                         'e_rev_I': -80.0,
-                                        'tau_syn_E': 5.0,
-                                        'tau_syn_I': 10.0, 
+                                        'tau_syn_E': PyNNDistribution(name='uniform',params=(4,6)),
+                                        'tau_syn_I': PyNNDistribution(name='uniform',params=(8,12)), 
                                       },
 
                             'initial_values':   {
-                                                       'v': UniformDist(min=-60, max=-50),
+							'v': PyNNDistribution(name='uniform',params=(-60,-50)),
                                                 }
                         },
                 'artificial_stimulation' : True,                    
                 'background_noise' : {
                                             'exc_firing_rate' : 0.0, 
-                                            'exc_weight' : 0.1,
+                                            'exc_weight' : 0.01,
                                             'inh_firing_rate' : 0.0,
                                             'inh_weight' : 0.0,
                                       },
@@ -40,59 +40,62 @@
         
     'L4InhL4ExcConnection': {
         'target_synapses' : 'inhibitory',               
-        'short_term_plasticity': {
-				            'u': 0.5, 
-				            'tau_rec': 1100.0, 
-		                    'tau_psc': 3.0,
-				            'tau_fac': 50.0,
-                        },        
+        'short_term_plasticity': None,        
 
         'weight_functions' : {
                                 'f1' : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
                                          'params' : {
-                                                	    'or_sigma' : 0.26,
-                                                        'phase_sigma' : 0.52,
+                                                	    'or_sigma' : 3*0.26,
+                                                        'phase_sigma' : 3*0.52,
                                                         'target_synapses' : 'inhibitory',             
                                          }
                                        }, 
                                        
                              },
-        'delay_functions' : {},
+        'delay_functions' : {
+                                'd1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.PyNNDistributionConnectorFunction',
+                                          'params' : {
+                                                	    'pynn_distribution' : PyNNDistribution(name='uniform',params=(0.2,2.0))
+                                                     }
+                                        }
+                            },
         'weight_expression' : 'f1',
-        'delay_expression' : '0.2', 
+        'delay_expression' : 'd1', 
         
-        'base_weight': 0.051,
-		'connection_probability' : 0.01,
+        'base_weight': 0.0019,
+		'connection_probability' : 0.02,
     },
 
 
     'L4InhL4InhConnection': {
         'target_synapses' : 'inhibitory',             
-        'short_term_plasticity': {
-				            'u': 0.5, 
-				            'tau_rec': 1100.0, 
-		                    'tau_psc': 3.0,
-				            'tau_fac': 50.0,
-                        },        
-
+        'short_term_plasticity': None, 
         'weight_functions' : {
                                 'f1' : {
                                           'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
                                          'params' : {
-                                                	    'or_sigma' : 0.26,
-                                                        'phase_sigma' : 0.52,
+                                                	    'or_sigma' : 3*0.26,
+                                                        'phase_sigma' : 3*0.52,
                                                         'target_synapses' : 'inhibitory',             
                                          }
                                        }, 
                                        
                              },
-        'delay_functions' : {},
+        'delay_functions' : {
+                                'd1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.PyNNDistributionConnectorFunction',
+                                          'params' : {
+                                                	    'pynn_distribution' : PyNNDistribution(name='uniform',params=(0.2,2.0))
+                                                     }
+                                        }
+                            },
         'weight_expression' : 'f1',
-        'delay_expression' : '0.2', 
+        'delay_expression' : 'd1', 
         
-        'base_weight': 0.051,
-		'connection_probability' : 0.01,
+        'base_weight': 0.0019,
+		'connection_probability' : 0.02,
     },
     
       'AfferentConnection': {
@@ -110,7 +113,7 @@
             'phase_map_location' : './phase_map',
 	    
 	    'specific_arborization': {
-		    'weight_factor': 0.0,
+		    'weight_factor': 0.1316,
 		    'num_samples' : 94,
 		    'target_synapses' : 'excitatory',
 	            'short_term_plasticity': {

@@ -1,5 +1,4 @@
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
 from NeuroTools.parameters import ParameterSet
 from mozaik.models.model import Model
 from mozaik.connectors.modular_connectors import ModularSingleWeightProbabilisticConnector

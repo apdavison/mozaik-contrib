@@ -5,7 +5,7 @@
                 'name':'V1_Inh_L4',
                 'sx': ref('l4_cortex_exc.params.sx'),
                 'sy': ref('l4_cortex_exc.params.sy'),
-                'density': 800.0,
+                'density': 4000.0,
                 'mpi_safe' : False,
                 'magnification_factor': ref('l4_cortex_exc.params.magnification_factor'),
                 'cell': ref('l4_cortex_exc.params.cell'),
@@ -17,8 +17,8 @@
     'L4InhL4ExcConnection': {
                 'target_synapses' : 'inhibitory',             
                 'short_term_plasticity': None, 
-                'connection_probability': 0.02,  # probability of connection between two neurons from the two populations
-                'weights': 0.051,  # microS, the synapse strength
+                'connection_probability': 0.0025,  # probability of connection between two neurons from the two populations
+                'weights': 0.005,  # nS, the synapse strength
                 'delay': 0.2,    # ms delay of the connections    
     },
 

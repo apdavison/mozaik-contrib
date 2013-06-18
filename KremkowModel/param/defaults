@@ -11,7 +11,11 @@
         'centre': (0.0, 0.0), # degrees (x,y)
         'size': (6.8, 6.8), # degrees (width, height)
     },
+<<<<<<< HEAD
     'results_dir': '/home/antolikjan/projects/mozaik/contrib/KremkowModel/',
+=======
+    'results_dir': '/home/jan/projects/mozaik0.8/contrib/KremkowModel/',
+>>>>>>> 45e7b4f092826dcc4a73cf30b7f71e421fd1dcc9
     'name' : 'Jens Model',
     'reset' : False,
     'null_stimulus_period' : 140.0,

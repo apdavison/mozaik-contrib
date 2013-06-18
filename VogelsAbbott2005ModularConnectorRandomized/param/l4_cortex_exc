@@ -5,33 +5,33 @@
                 'name':'V1_Exc_L4',
                 'sx':1000.0,
                 'sy':1000.0,
-                'density': 3200.0,
+                'density': 25600.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1.0,
                     
                 'cell': {
                         'model': 'IF_cond_exp',
                         'params': {
-                            'v_thresh':-50.0,
-                            'v_rest': -60.0,
+                            'v_thresh':-53.0,
+                            'v_rest': PyNNDistribution(name='uniform',params=(-65,-55)),
                             'v_reset': -60.0,
                             'tau_refrac': 5.0,
-                            'tau_m': 20.0,
+                            'tau_m': PyNNDistribution(name='uniform',params=(17,23)),
                             'cm': 0.2,
             	            'e_rev_E': 0.0,
                             'e_rev_I': -80.0,
-                    	    'tau_syn_E': 5.0,
-                            'tau_syn_I': 10.0, 
+                            'tau_syn_E': PyNNDistribution(name='uniform',params=(5,5)),
+                            'tau_syn_I': PyNNDistribution(name='uniform',params=(10,10)), 
                         },
                        'initial_values': {
-                                    'v': UniformDist(min=-60, max=-50),
-                                },
+                                                'v': PyNNDistribution(name='uniform',params=(-60,-50)),
+                                         },
 
                     },
                 'artificial_stimulation' : True,                    
                 'background_noise' : {
                                         'exc_firing_rate' : 0.0, 
-                                        'exc_weight' : 0.1,
+                                        'exc_weight' : 0.02,
                                         'inh_firing_rate' : 0.0,
                                         'inh_weight' : 0.0,
                                     },
@@ -50,12 +50,24 @@
                                        }, 
                                        
                              },
-        'delay_functions' : {},
+         'delay_functions' : {
+                                'd1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.PyNNDistributionConnectorFunction',
+                                          'params' : {
+                                                	    'pynn_distribution' : PyNNDistribution(name='uniform',params=(0.2,2.0))
+                                                     }
+                                        }
+                            },
         'weight_expression' : 'const',
-        'delay_expression' : '0.2', 
+        'delay_expression' : 'd1', 
         
-        'base_weight': 0.004,
+<<<<<<< HEAD
+        'base_weight': 0.00028,
 		'connection_probability' : 0.02,
+=======
+        'base_weight': 0.00031,
+		'connection_probability' : 0.01,
+>>>>>>> dc284c188bc868c4ea024f3c85c6611cf0da5b5d
     },
 
 
@@ -70,11 +82,23 @@
                                        }, 
                                        
                              },
-        'delay_functions' : {},
+         'delay_functions' : {
+                                'd1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.PyNNDistributionConnectorFunction',
+                                          'params' : {
+                                                	    'pynn_distribution' : PyNNDistribution(name='uniform',params=(0.2,2.0))
+                                                     }
+                                        }
+                            },
         'weight_expression' : 'const',
-        'delay_expression' : '0.2', 
+        'delay_expression' : 'd1', 
         
-        'base_weight': 0.004,
+<<<<<<< HEAD
+        'base_weight': 0.00028,
 		'connection_probability' : 0.02,
+=======
+        'base_weight': 0.00031,
+		'connection_probability' : 0.01,
+>>>>>>> dc284c188bc868c4ea024f3c85c6611cf0da5b5d
     },
 }
