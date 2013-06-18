@@ -26,6 +26,7 @@ import mozaik
 logger = mozaik.getMozaikLogger("Mozaik")
 
 if True:
+
     params = setup_experiments('FFI',sim)    
     jens_model = VogelsAbbott(sim,params)
     l4exc_kick = RCRandomPercentage(jens_model.sheets["V1_Exc_L4"],ParameterSet({'percentage': 20.0}))
@@ -33,17 +34,15 @@ if True:
 
     experiment_list =   [
                            #Lets kick the network up into activation
-                           PoissonNetworkKick(jens_model,duration=30*7,sheet_list=["V1_Exc_L4","V1_Inh_L4"],recording_configuration_list=[l4exc_kick,l4inh_kick],lambda_list=[100,100]),
+                           PoissonNetworkKick(jens_model,duration=30*7,sheet_list=["V1_Exc_L4","V1_Inh_L4"],
+                                              recording_configuration_list=[l4exc_kick,l4inh_kick],lambda_list=[100,100]),
                            #Spontaneous Activity 
                            NoStimulation(jens_model,duration=70*7),
                         ]
     data_store = run_experiments(jens_model,experiment_list)
-    #jens_model.connectors['V1L4ExcL4ExcConnection'].store_connections(data_store)    
-    #jens_model.connectors['V1L4ExcL4InhConnection'].store_connections(data_store)    
-    #jens_model.connectors['V1L4InhL4ExcConnection'].store_connections(data_store)    
-    #jens_model.connectors['V1L4InhL4InhConnection'].store_connections(data_store)    
     logger.info('Saving Datastore')
     data_store.save()
+
 else:
     setup_logging()
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'A'}),replace=True)
