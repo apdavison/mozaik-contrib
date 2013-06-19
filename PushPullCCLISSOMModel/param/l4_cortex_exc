@@ -1,13 +1,13 @@
 {
     #CorticalUniformSheet parameters
     
-   'component': 'mozaik.framework.sheets.CorticalUniformSheet',
+    'component': 'mozaik.framework.sheets.CorticalUniformSheet',
     
     'params':{
                 'name':'V1_Exc_L4',
                 'sx':7000.0,
                 'sy':7000.0,
-                'density': 500.0,
+                'density': 250.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1000.0,
                     
@@ -76,11 +76,11 @@
                                        }, 
         
                             },
-        'weight_expression' : 'f1*(f2+0.01)',
+        'weight_expression' : 'f1*(f2+0.1)',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.108,
-		'num_samples' : 72,
+        'base_weight': 0.216,
+		'num_samples' : 144,
     },
 
     'L4ExcL4InhConnection': {
@@ -113,11 +113,11 @@
                                                     }
                                        }, 
                             },
-        'weight_expression' : 'f1*(f2+0.01)',
+        'weight_expression' : 'f1*(f2+0.1)',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.108,
-		'num_samples' : 72,
+        'base_weight': 0.216,
+		'num_samples' : 144,
     },
 
     'AfferentConnection': {
