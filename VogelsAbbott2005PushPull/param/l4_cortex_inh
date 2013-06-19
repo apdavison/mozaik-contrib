@@ -5,7 +5,7 @@
                 'name':'V1_Inh_L4',
                 'sx': ref('l4_cortex_exc.params.sx'),
                 'sy': ref('l4_cortex_exc.params.sy'),
-                'density': 800.0,
+                'density': 8000.0,
                 'mpi_safe' : False,
                 'magnification_factor': ref('l4_cortex_exc.params.magnification_factor'),
                 'cell': ref('l4_cortex_exc.params.cell'),
@@ -19,12 +19,12 @@
         'short_term_plasticity': None,        
 
         'weight_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.weight_functions'),
-        'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.weight_functions'),
+        'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),
         'weight_expression' : 'f1',
-        'delay_expression' : 'd1', 
+        'delay_expression' : '2.0', 
         
-        'base_weight': 0.0019,
-		'connection_probability' : 0.02,
+        'base_weight': 0.051,
+		'connection_probability' : 0.00225,
     },
 
 

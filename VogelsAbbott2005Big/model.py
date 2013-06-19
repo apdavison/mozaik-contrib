@@ -3,7 +3,7 @@ from mozaik.models.model import Model
 from mozaik.connectors.fast_connectors import UniformProbabilisticArborization
 from mozaik.framework import load_component
 
-class Boustani2007(Model):
+class VogelsAbbott(Model):
     
     required_parameters = ParameterSet({
         'l4_cortex_exc' : ParameterSet, 

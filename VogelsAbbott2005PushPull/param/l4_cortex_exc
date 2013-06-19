@@ -5,26 +5,27 @@
                 'name':'V1_Exc_L4',
                 'sx':1000.0,
                 'sy':1000.0,
-                'density': 3200.0,
+                'density': 32000.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1.0,
                     
                 'cell': {
                         'model': 'IF_cond_exp',
                         'params': {
-                            'v_thresh':-50.0,
-                            'v_rest': PyNNDistribution(name='uniform',params=(-62,-58)),
-                            'v_reset': -60.0,
-                            'tau_refrac': 5.0,
-                            'tau_m': PyNNDistribution(name='uniform',params=(18,22)),
+                            'v_thresh':-57.0,
+                            'v_rest': -70.0,
+                            'v_reset': -65.0,
+                            'tau_refrac': 2.0,
+                            'tau_m': 10.0,
                             'cm': 0.2,
             	            'e_rev_E': 0.0,
-                            'e_rev_I': -80.0,
-                            'tau_syn_E': PyNNDistribution(name='uniform',params=(4,6)),
-                            'tau_syn_I': PyNNDistribution(name='uniform',params=(8,12)), 
+                            'e_rev_I': -75.0,
+                    	    'tau_syn_E': 5.0,
+                            'tau_syn_I': 10.0, 
                         },
+
                        'initial_values': {
-				    'v': PyNNDistribution(name='uniform',params=(-60,-50)),
+                                    'v': PyNNDistribution(name='uniform',params=(-60,-50)),
                                 },
 
                     },
@@ -66,10 +67,10 @@
                                         }
                             },
         'weight_expression' : 'f1',
-        'delay_expression' : 'd1', 
+        'delay_expression' : '2.0', 
         
-        'base_weight': 0.00031,
-		'connection_probability' : 0.02,
+        'base_weight': 0.004,
+		'connection_probability' : 0.00225,
     },
     
     'L4ExcL4InhConnection': ref('l4_cortex_exc.L4ExcL4ExcConnection'),

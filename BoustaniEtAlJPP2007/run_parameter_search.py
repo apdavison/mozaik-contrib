@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
-from mozaik.meta_workflow.parameter_search import run_parameter_search
+import numpy
+from mozaik.meta_workflow.parameter_search import CombinationParameterSearch, SlurmSequentialBackend
 
-run_parameter_search({'l4_cortex_exc.L4ExcL4ExcConnection.weights' : [0.004,0.0041],'l4_cortex_inh.L4InhL4ExcConnection.weights' : [0.51,0.52]})
+CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=1),{'l4_cortex_exc.L4ExcL4ExcConnection.weights' : numpy.linspace(0.0,0.006,20),'l4_cortex_inh.L4InhL4ExcConnection.weights' : numpy.linspace(0.0,0.05,20)}).run_parameter_search()

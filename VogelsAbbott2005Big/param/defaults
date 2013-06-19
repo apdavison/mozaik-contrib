@@ -1,7 +1,7 @@
 {
     'l4_cortex_exc': url("param/l4_cortex_exc"),
     'l4_cortex_inh': url("param/l4_cortex_inh"),
-    'results_dir': '/home/jan/projects/mozaik/contrib/BoustaniEtAlJPP2007/',
+    'results_dir': '/home/antolikjan/dev/pkg/mozaik-pynn0.8/mozaik/contrib/VogelsAbbott2005Big/',
     'name' : 'Vogels&Abbott',
     'reset' : False,
     'null_stimulus_period' : 0.0,
