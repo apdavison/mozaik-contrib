@@ -11,5 +11,5 @@ def create_experiments(model):
                            #Lets kick the network up into activation
                            PoissonNetworkKick(model,duration=10*7,sheet_list=["V1_Exc_L4","V1_Inh_L4"],recording_configuration_list=[l4exc_kick,l4inh_kick],lambda_list=[100,100]),
                            #Spontaneous Activity 
-                           MeasureSpontaneousActivity(model,duration=300*7,num_trials=1),
+                           MeasureSpontaneousActivity(model,duration=145*7,num_trials=1),
             ]

@@ -22,7 +22,7 @@ mpi_comm = MPI.COMM_WORLD
 
 if True:
     logger = mozaik.getMozaikLogger("Mozaik")
-    data_store,model = run_workflow('VogeslAbbott2005Big',VogelsAbbottPushPull,create_experiments)
+    data_store,model = run_workflow('VogeslAbbott2005PushPull',VogelsAbbottPushPull,create_experiments)
 else: 
     setup_logging()
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'A'}),replace=True)
