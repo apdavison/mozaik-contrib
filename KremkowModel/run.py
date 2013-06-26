@@ -4,6 +4,7 @@ This is implementation of model of push-pull connectvity:
 Jens Kremkow: Correlating Excitation and Inhibition in Visual Cortical Circuits: Functional Consequences and Biological Feasibility. PhD Thesis, 2009.
 """
 import sys
+from pyNN import nest
 sys.path.append('/home/jan/projects/mozaik0.8/')
 from mozaik.framework.experiment_controller import run_workflow, setup_logging
 import mozaik

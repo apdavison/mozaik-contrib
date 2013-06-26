@@ -1,11 +1,11 @@
 {
     'component': 'mozaik.models.retinal.spatiotemporalfilter.SpatioTemporalFilterRetinaLGN',
     'params': {
-        'density': 61, # 10.0 neurons per degree squared
+        'density': 10,#61, # 10.0 neurons per degree squared
         'size'  : (4.0,4.0), # the effective size of the modelled section of retina/lgn
         'linear_scaler': 2.5,
         'mpi_reproducible_noise' : True,
-        'cached' : True,
+        'cached' : False,
         'cache_path' : 'retinal_cache/',
         'recorders' :  url("param/lgn_rec"),
         'receptive_field': {
