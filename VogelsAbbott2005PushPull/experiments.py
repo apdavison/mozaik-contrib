@@ -9,7 +9,7 @@ def create_experiments(model):
 
     return  [
                            #Lets kick the network up into activation
-                           PoissonNetworkKick(model,duration=8*7,sheet_list=["V1_Exc_L4","V1_Inh_L4"],recording_configuration_list=[l4exc_kick,l4inh_kick],lambda_list=[100,100]),
+                           PoissonNetworkKick(model,duration=10*7,sheet_list=["V1_Exc_L4","V1_Inh_L4"],recording_configuration_list=[l4exc_kick,l4inh_kick],lambda_list=[100,100]),
                            #Spontaneous Activity 
-                           NoStimulation(model,duration=3*8*7),
+                           MeasureSpontaneousActivity(model,duration=145*7,num_trials=1),
             ]

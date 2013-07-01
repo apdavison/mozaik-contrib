@@ -12,8 +12,8 @@ class VogelsAbbott(Model):
         'l4_cortex_inh' : ParameterSet, 
     })
     
-    def __init__(self,simulator,parameters):
-        Model.__init__(self,simulator,parameters)        
+    def __init__(self, sim, num_threads, parameters):
+        Model.__init__(self, sim, num_threads, parameters)        
         # Load components
         CortexExcL4 = load_component(self.parameters.l4_cortex_exc.component)
         CortexInhL4 = load_component(self.parameters.l4_cortex_inh.component)

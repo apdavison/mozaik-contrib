@@ -6,7 +6,7 @@
                 'name':'V1_Exc_L4',
                 'sx':5000.0,
                 'sy':5000.0,
-                'density': 64.0,
+                'density': 128.0,
                 'mpi_safe' : True,    
                 'magnification_factor': 5000.0,
                     
@@ -53,7 +53,8 @@
                                          'params' : {
                                                 	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,
-                                                        'target_synapses' : 'excitatory',             
+                                                        'target_synapses' : 'excitatory',    
+                                                        'push_pull_ratio' : 1.0,         
                                          }
                                        }, 
                                        
@@ -74,7 +75,8 @@
                                          'params' : {
                                                 	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,
-                                                        'target_synapses' : 'excitatory',             
+                                                        'target_synapses' : 'excitatory',     
+                                                        'push_pull_ratio' : 1.0,
                                          }
                                        }, 
                                        

@@ -6,7 +6,7 @@ from mozaik.models.model import Model
 from mozaik.framework import load_component
 from mozaik.framework.space import VisualRegion
 
-class PushPullCCModel(Model):
+class TestStimuliModel(Model):
     
     required_parameters = ParameterSet({
         'retina_lgn' : ParameterSet ,

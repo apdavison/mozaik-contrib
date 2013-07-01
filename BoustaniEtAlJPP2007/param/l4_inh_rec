@@ -3,7 +3,7 @@
       'component' :  'mozaik.framework.population_selector.RCRandomN',
       'variables' : ("spikes"),
       'params' :  {
-                    'num_of_cells' : 100,
+                    'num_of_cells' : 40,
                   }
     },
     "2" : {

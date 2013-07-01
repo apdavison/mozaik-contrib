@@ -3,7 +3,7 @@ from mozaik.models.model import Model
 from mozaik.connectors.fast_connectors import UniformProbabilisticArborization
 from mozaik.framework import load_component
 
-class VogelsAbbott(Model):
+class Boustani2007(Model):
     
     required_parameters = ParameterSet({
         'l4_cortex_exc' : ParameterSet, 
@@ -11,7 +11,7 @@ class VogelsAbbott(Model):
     })
     
     def __init__(self, sim, num_threads, parameters):
-        Model.__init__(self, sim, num_threads, parameters)
+        Model.__init__(self, sim, num_threads, parameters)        
         # Load components
         CortexExcL4 = load_component(self.parameters.l4_cortex_exc.component)
         CortexInhL4 = load_component(self.parameters.l4_cortex_inh.component)

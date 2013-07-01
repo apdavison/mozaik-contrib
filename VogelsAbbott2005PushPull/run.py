@@ -5,13 +5,14 @@ Vogels, T. P., & Abbott, L. F. (2005).
 Signal propagation and logic gating in networks of integrate-and-fire neurons. 
 The Journal of neuroscience : the official journal of the Society for Neuroscience, 25(46), 10786–95. 
 """
+print "Z"
 from pyNN import nest
 import sys
 import mozaik.framework.experiment_controller
 from mozaik.framework.experiment_controller import run_workflow, setup_logging
 import mozaik
 from experiments import create_experiments
-from model import VogelsAbbott
+from model import VogelsAbbottPushPull
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from analysis_and_visualization import perform_analysis_and_visualization
 
@@ -21,7 +22,7 @@ mpi_comm = MPI.COMM_WORLD
 
 if True:
     logger = mozaik.getMozaikLogger()
-    data_store,model = run_workflow('VogeslAbbott2005',VogelsAbbott,create_experiments)
+    data_store,model = run_workflow('VogeslAbbott2005PushPull',VogelsAbbottPushPull,create_experiments)
 else: 
     setup_logging()
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'A'}),replace=True)
