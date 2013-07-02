@@ -1,7 +1,7 @@
 {
     #CorticalUniformSheet parameters
     
-    'component': 'mozaik.framework.sheets.CorticalUniformSheet',
+    'component': 'mozaik.framework.sheets.VisualCorticalUniformSheet',
 
     'params':{
                 'name':'V1_Inh_L4',
@@ -44,7 +44,7 @@
         'target_synapses' : 'inhibitory',             
         'short_term_plasticity': None ,
         'weight_functions' : {  'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
+                                         'component' : 'mozaik.connectors.vision.V1PushPullArborization',
                                          'params' : {
                                                 	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,
@@ -66,7 +66,7 @@
         'target_synapses' : 'inhibitory',             
         'short_term_plasticity': None, 
         'weight_functions' : {  'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
+                                         'component' : 'mozaik.connectors.vision.V1PushPullArborization',
                                          'params' : {
                                                 	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,

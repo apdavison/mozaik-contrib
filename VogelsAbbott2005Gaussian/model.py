@@ -1,9 +1,8 @@
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
 from NeuroTools.parameters import ParameterSet
-from mozaik.models.model import Model
-from mozaik.connectors.modular_connectors import ModularSingleWeightProbabilisticConnector
-from mozaik.framework import load_component
+from mozaik.models import Model
+from mozaik.connectors.modular import ModularSingleWeightProbabilisticConnector
+from mozaik import load_component
 
 class VogelsAbbott(Model):
     

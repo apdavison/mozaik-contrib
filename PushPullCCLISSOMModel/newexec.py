@@ -40,7 +40,7 @@ if True:
                            #MeasureOrientationContrastTuning(jens_model,num_orientations=12,orientation=numpy.pi/2,center_radius=1.8,surround_radius=8,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[100],num_trials=2),
 
                            #Size Tuning  
-                           MeasureSizeTuning(jens_model,num_sizes=15,max_size=4.5,orientation=numpy.pi/2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[100],num_trials=15),
+                           MeasureSizeTuning(jens_model,num_sizes=15,max_size=4.5,orientation=numpy.pi/2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[100],num_trials=5),
     
                            #Spontaneous Activity 
                            #MeasureSpontaneousActivity(jens_model,duration=147*7,num_trials=8),

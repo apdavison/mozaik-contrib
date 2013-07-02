@@ -1,6 +1,6 @@
 {
     #CorticalUniformSheet parameters
-    'component': 'mozaik.framework.sheets.CorticalUniformSheet',
+    'component': 'mozaik.framework.sheets.VisualCorticalUniformSheet',
     'params':{
                 'name':'V1_Inh_L4',
                 'sx': ref('l4_cortex_exc.params.sx'),

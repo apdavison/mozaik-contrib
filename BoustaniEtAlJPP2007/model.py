@@ -1,7 +1,7 @@
 from parameters import ParameterSet
-from mozaik.models.model import Model
-from mozaik.connectors.fast_connectors import UniformProbabilisticArborization
-from mozaik.framework import load_component
+from mozaik.models import Model
+from mozaik.connectors.fast import UniformProbabilisticArborization
+from mozaik import load_component
 
 class Boustani2007(Model):
     

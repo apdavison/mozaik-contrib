@@ -5,11 +5,9 @@ Vogels, T. P., & Abbott, L. F. (2005).
 Signal propagation and logic gating in networks of integrate-and-fire neurons. 
 The Journal of neuroscience : the official journal of the Society for Neuroscience, 25(46), 10786–95. 
 """
-
 from pyNN import nest
 import sys
-import mozaik.framework.experiment_controller
-from mozaik.framework.experiment_controller import run_workflow, setup_logging
+from mozaik.controller import run_workflow, setup_logging
 import mozaik
 from experiments import create_experiments
 from model import VogelsAbbott

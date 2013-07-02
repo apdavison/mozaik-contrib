@@ -1,5 +1,5 @@
 #!/usr/local/bin/ipython -i 
-from mozaik.framework.experiment import *
+from mozaik.experiment import *
 from mozaik.framework.population_selector import RCRandomPercentage
 from parameters import ParameterSet
     

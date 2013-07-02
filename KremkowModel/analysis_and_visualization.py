@@ -4,6 +4,7 @@ import pylab
 from mozaik.visualization.plotting import *
 from mozaik.analysis.technical import NeuronAnnotationsToPerNeuronValues
 from mozaik.analysis.analysis import *
+from mozaik.analysis.visin import *
 from mozaik.storage.queries import *
 from mozaik.storage.datastore import PickledDataStore
 from mozaik.tools.circ_stat import circular_dist

@@ -1,12 +1,11 @@
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
 import numpy
 from parameters import ParameterSet
-from mozaik.models.model import Model
+from mozaik.models import Model
 from mozaik.connectors.meta_connectors import GaborConnector
-from mozaik.connectors.modular_connectors import ModularSamplingProbabilisticConnector
-from mozaik.framework import load_component
-from mozaik.framework.space import VisualRegion
+from mozaik.connectors.modular import ModularSamplingProbabilisticConnector
+from mozaik import load_component
+from mozaik.space import VisualRegion
 
 class PushPullCCModel(Model):
     

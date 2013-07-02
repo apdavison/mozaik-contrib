@@ -5,7 +5,7 @@ import numpy
 import cPickle
 import neo
 import quantities as pq
-from mozaik.framework.experiment_controller import run_experiments, setup_experiments, setup_logging
+from mozaik.controller import run_experiments, setup_experiments, setup_logging
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from mozaik.storage.queries import *
 import mozaik.tools.mozaik_parametrized as MP

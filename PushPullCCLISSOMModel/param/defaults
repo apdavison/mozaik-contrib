@@ -1,5 +1,5 @@
 {
-    'input_space_type' : 'mozaik.framework.space.VisualSpace',
+    'input_space_type' : 'mozaik.space.VisualSpace',
     'input_space': {
         'update_interval': 7.0, # ms
         'background_luminance': 50.0, # cd/m²
@@ -13,8 +13,8 @@
         'centre': (0.0, 0.0), # degrees (x,y)
         'size': (10.0, 10.0), # degrees (width, height)
     },
-    'results_dir': '/home/jan/projects/mozaik/contrib/PushPullCCLISSOMModel/',
-    'name' : 'Jens Model',
+    'results_dir': '',
+    'name' : 'V1model',
     'reset' : False,
     'null_stimulus_period' : 140.0,
 }

@@ -2,9 +2,9 @@ import sys
 sys.path.append('/home/jan/projects/mozaik/')
 import numpy
 from NeuroTools.parameters import ParameterSet
-from mozaik.models.model import Model
-from mozaik.framework import load_component
-from mozaik.framework.space import VisualRegion
+from mozaik.models import Model
+from mozaik import load_component
+from mozaik.space import VisualRegion
 
 class TestStimuliModel(Model):
     

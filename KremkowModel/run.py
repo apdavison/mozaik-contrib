@@ -5,7 +5,7 @@ Jens Kremkow: Correlating Excitation and Inhibition in Visual Cortical Circuits:
 """
 import sys
 from pyNN import nest
-from mozaik.framework.experiment_controller import run_workflow, setup_logging
+from mozaik.controller import run_workflow, setup_logging
 import mozaik
 from model import PushPullCCModel
 from experiments import create_experiments

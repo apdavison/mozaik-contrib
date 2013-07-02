@@ -1,7 +1,7 @@
-{
+    {
     #CorticalUniformSheet parameters
     
-    'component': 'mozaik.framework.sheets.CorticalUniformSheet',
+    'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
 
     'params':{
                 'name':'V1_Inh_L2/3',
@@ -45,7 +45,7 @@
         'target_synapses' : 'inhibitory',             
         'short_term_plasticity': None, 
         'weight_functions' : {  'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.MapDependentModularConnectorFunction',
+                                         'component' : 'mozaik.connectors.vision.MapDependentModularConnectorFunction',
                                          'params' : {
                                                 	    'sigma' : 0.3,
                                                         'map_location' : './or_map_7x7',
@@ -81,7 +81,7 @@
         'target_synapses' : 'inhibitory',             
         'short_term_plasticity': None, 
         'weight_functions' : {  'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.MapDependentModularConnectorFunction',
+                                         'component' : 'mozaik.connectors.vision.MapDependentModularConnectorFunction',
                                          'params' : {
                                                 	    'sigma' : 0.3,
                                                         'map_location' : './or_map_7x7',

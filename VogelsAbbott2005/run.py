@@ -7,9 +7,8 @@ The Journal of neuroscience : the official journal of the Society for Neuroscien
 """
 from pyNN import nest
 import sys
-import mozaik.framework.experiment_controller
-from mozaik.framework.experiment_controller import run_workflow, setup_logging
 import mozaik
+from mozaikcontroller import run_workflow, setup_logging
 from experiments import create_experiments
 from model import VogelsAbbott
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore

@@ -8,8 +8,7 @@ The Journal of neuroscience : the official journal of the Society for Neuroscien
 print "Z"
 from pyNN import nest
 import sys
-import mozaik.framework.experiment_controller
-from mozaik.framework.experiment_controller import run_workflow, setup_logging
+from mozaik.controller import run_workflow, setup_logging
 import mozaik
 from experiments import create_experiments
 from model import VogelsAbbottPushPull

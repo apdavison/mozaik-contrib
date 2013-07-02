@@ -11,10 +11,10 @@ sys.path.append('/home/jan/projects/mozaik/')
 import matplotlib
 import time
 import pylab
-from mozaik.framework.experiment import *
+from mozaik.experiment import *
 from pyNN import nest as sim
 from model import VogelsAbbott
-from mozaik.framework.experiment_controller import run_experiments, setup_experiments, setup_logging
+from mozaik.controller import run_experiments, setup_experiments, setup_logging
 from mozaik.framework.population_selector import RCRandomPercentage
 from mozaik.visualization.plotting import *
 from mozaik.analysis.technical import NeuronAnnotationsToPerNeuronValues

@@ -1,11 +1,11 @@
 import sys
 from parameters import ParameterSet
-from mozaik.models.model import Model
+from mozaik.models import Model
 from mozaik.connectors.meta_connectors import GaborConnector
-from mozaik.connectors.modular_connectors import ModularSingleWeightProbabilisticConnector
-from mozaik.connectors.fast_connectors import UniformProbabilisticArborization
-from mozaik.framework import load_component
-from mozaik.framework.space import VisualRegion
+from mozaik.connectors.modular import ModularSingleWeightProbabilisticConnector
+from mozaik.connectors.fast import UniformProbabilisticArborization
+from mozaik import load_component
+from mozaik.space import VisualRegion
 
 class VogelsAbbottPushPull(Model):
     
