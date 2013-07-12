@@ -11,7 +11,7 @@ import mozaik.controller
 from mozaik.controller import run_workflow, setup_logging
 import mozaik
 from experiments import create_experiments
-from model import VogelsAbbottPushPull
+from model import VogelsAbbottPushPullFixedK
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from analysis_and_visualization import perform_analysis_and_visualization
 
@@ -21,7 +21,7 @@ mpi_comm = MPI.COMM_WORLD
 
 if True:
     logger = mozaik.getMozaikLogger()
-    data_store,model = run_workflow('VogeslAbbott2005PushPull',VogelsAbbottPushPull,create_experiments)
+    data_store,model = run_workflow('VogeslAbbott2005PushPullFixedK',VogelsAbbottPushPullFixedK,create_experiments)
 else: 
     setup_logging()
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'A'}),replace=True)

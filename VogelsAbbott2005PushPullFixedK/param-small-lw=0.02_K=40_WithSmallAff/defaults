@@ -1,0 +1,18 @@
+{
+    'input_space_type' : 'mozaik.space.VisualSpace',
+    'input_space': {
+        'update_interval': 7.0, # ms
+        'background_luminance': 50.0, # cd/m²
+    },
+    'visual_field': {
+        'centre': (0.0, 0.0), # degrees (x,y)
+        'size': (6.8, 6.8), # degrees (width, height)
+    },
+    'l4_cortex_exc': url("param-small-lw=0.02_K=40_WithSmallAff/l4_cortex_exc"),
+    'l4_cortex_inh': url("param-small-lw=0.02_K=40_WithSmallAff/l4_cortex_inh"),
+    'retina_lgn': url("param-small-lw=0.02_K=40_WithSmallAff/SpatioTemporalFilterRetinaLGN_defaults"),
+    'results_dir': '',
+    'name' : 'Vogels&AbbottPushPullFixedK',
+    'reset' : False,
+    'null_stimulus_period' : 50.0,
+}
