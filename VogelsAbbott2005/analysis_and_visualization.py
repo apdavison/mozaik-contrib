@@ -37,12 +37,9 @@ def perform_analysis_and_visualization(data_store):
             OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[2], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (19,12)},plot_file_name='ExcAnalog3.png').plot({'Vm_plot.y_lim' : (-80,-50),'Conductance_plot.y_lim' : (0,500.0)})
             
             
-            
-            
             RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neurons' : spike_ids,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (17,5)},plot_file_name='ExcRaster.png').plot({'SpikeRasterPlot.group_trials':True})
             RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neurons' : spike_ids_inh,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (17,5)},plot_file_name='InhRaster.png').plot({'SpikeRasterPlot.group_trials':True})
 
-            dsv = param_filter_query(data_store,st_direct_stimulation_name=['None'],sheet_name='V1_Exc_L4')    
             import pylab
             pylab.show()
             

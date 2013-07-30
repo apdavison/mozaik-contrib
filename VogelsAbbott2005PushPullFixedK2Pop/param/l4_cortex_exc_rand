@@ -9,8 +9,7 @@
                 'mpi_safe' : ref('l4_cortex_exc_pp.params.mpi_safe'),
                 'magnification_factor': ref('l4_cortex_exc_pp.params.magnification_factor'),
                 'cell': ref('l4_cortex_exc_pp.params.cell'),
-                'artificial_stimulation' : ref('l4_cortex_exc_pp.params.artificial_stimulation'),                    
-                'background_noise' : ref('l4_cortex_exc_pp.params.background_noise'),
+                'artificial_stimulators' : ref('l4_cortex_exc.params.artificial_stimulators'),
                 'recorders' : ref('l4_cortex_exc_pp.params.recorders'),    
     },
 

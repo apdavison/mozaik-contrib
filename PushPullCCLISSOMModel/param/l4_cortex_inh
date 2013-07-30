@@ -29,13 +29,17 @@
                                         'v': -60.0,
                          }
                     },
-                    'artificial_stimulation' : False,                    
-                    'background_noise' : {
-                                            'exc_firing_rate' : 2000.0, 
-                                            'exc_weight' : 0.001,
-                                            'inh_firing_rate' : 2000.0,
-                                            'inh_weight' : 0.00035,
-                                        },
+                    'artificial_stimulators' : {
+                                'background_act' : {
+                                                      'component' :  'mozaik.sheets.direct_stimulator.BackgroundActivityBombardment',   
+                                                      'params' : {
+                                                                   'exc_firing_rate' : 2000.0, 
+                                                                    'exc_weight' : 0.001,
+                                                                    'inh_firing_rate' : 2000.0,
+                                                                    'inh_weight' : 0.00035,
+
+                                                                 }
+                                                   }
                     'recorders' :  url("param/l4_inh_rec"),
 
     },    

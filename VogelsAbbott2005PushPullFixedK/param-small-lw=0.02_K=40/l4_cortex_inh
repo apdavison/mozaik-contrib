@@ -9,8 +9,7 @@
                 'mpi_safe' : False,
                 'magnification_factor': ref('l4_cortex_exc.params.magnification_factor'),
                 'cell': ref('l4_cortex_exc.params.cell'),
-                'artificial_stimulation' : True,                    
-                'background_noise' : ref('l4_cortex_exc.params.background_noise'),
+                'artificial_stimulators' : ref('l4_cortex_exc.params.artificial_stimulators'),
                 'recorders' : url("param-small-lw=0.02_K=40/l4_inh_rec"),    
     },
         

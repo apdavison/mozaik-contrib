@@ -4,7 +4,7 @@ import pylab
 from mozaik.visualization.plotting import *
 from mozaik.analysis.technical import NeuronAnnotationsToPerNeuronValues
 from mozaik.analysis.analysis import *
-from mozaik.analysis.visin import *
+from mozaik.analysis.vision import *
 from mozaik.storage.queries import *
 from mozaik.storage.datastore import PickledDataStore
 from mozaik.tools.circ_stat import circular_dist
@@ -71,7 +71,7 @@ def perform_analysis_and_visualization(data_store):
         #dsv = param_filter_query(data_store,value_name=['orientation HWHH'],sheet_name=['V1_Exc_L4','V1_Inh_L4'])    
         #PerNeuronValueScatterPlot(dsv,ParameterSet({})).plot({ 'ScatterPlot.x_lim' : (0,90), 'ScatterPlot.y_lim' : (0,90), 'ScatterPlot.identity_line' : True})
 
-        dsv = param_filter_query(data_store,st_orientation=[numpy.pi/2],st_name='FullfieldDriftingSinusoidalGrating')    
+        dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating')    
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)},plot_file_name="Exc.png").plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : l4_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)},plot_file_name="Inh.png").plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'X_ON', 'neuron' : sorted(param_filter_query(data_store,sheet_name="X_ON").get_segments()[0].get_stored_esyn_ids())[0], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)},plot_file_name="LGN0On.png").plot()

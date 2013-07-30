@@ -6,7 +6,7 @@
                 'sx':1000.0,
                 'sy':1000.0,
                 'density': 3200.0,
-                'mpi_safe' : False,    
+                'mpi_safe' : True,    
                 'magnification_factor': 1.0,
 
                 'cell': {
@@ -28,13 +28,7 @@
                                 },
 
                     },
-                'artificial_stimulation' : True,                    
-                'background_noise' : {
-                                        'exc_firing_rate' : 0.0, 
-                                        'exc_weight' : 0.1,
-                                        'inh_firing_rate' : 0.0,
-                                        'inh_weight' : 0.0,
-                                    },
+                'artificial_stimulators' : {},
                 'recorders' : url("param/l4_exc_rec"),
     },
 
