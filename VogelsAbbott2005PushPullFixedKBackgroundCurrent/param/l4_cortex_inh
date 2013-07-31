@@ -33,7 +33,7 @@
         'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),
         'weight_expression' : 'f1*0.0+0.1',
         'delay_expression' : '2.0', 
-        'base_weight': 0.3,
+        'base_weight': 0.12,
         'num_samples': ref('l4_cortex_exc.L4ExcL4ExcConnection.num_samples')/4,
     },
 

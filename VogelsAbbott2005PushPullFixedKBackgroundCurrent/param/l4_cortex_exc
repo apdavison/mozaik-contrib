@@ -13,8 +13,8 @@
                         'model': 'IF_cond_exp',
                         'params': {
                             'v_thresh':-50.0,
-                            'v_rest': -70.0,
-                            'v_reset': -70.0,
+                            'v_rest': -60.0,
+                            'v_reset': -60.0,
                             'tau_refrac': 5.0,
                             'tau_m': 20.0,
                             'cm': 0.2,
@@ -74,7 +74,7 @@
                             },
         'weight_expression' : 'f1*0.0+0.1',
         'delay_expression' : '2.0', 
-        'base_weight': 0.2,
+        'base_weight': 0.1,
         'num_samples' : 40,
     },
 
