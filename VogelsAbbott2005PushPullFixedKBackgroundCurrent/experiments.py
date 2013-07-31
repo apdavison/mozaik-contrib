@@ -12,5 +12,5 @@ def create_experiments(model):
                            #Spontaneous Activity 
                            MeasureSpontaneousActivity(model,duration=145*7,num_trials=1),
                            #Orientation Tuning
-                           MeasureOrientationTuningFullfield(model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[100],num_trials=2),
+                           #MeasureOrientationTuningFullfield(model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[100],num_trials=2),
             ]
