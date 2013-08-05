@@ -14,5 +14,5 @@
     'results_dir': '',
     'name' : 'Vogels&AbbottPushPullFixedK',
     'reset' : False,
-    'null_stimulus_period' : 50.0,
+    'null_stimulus_period' : 0.0,
 }

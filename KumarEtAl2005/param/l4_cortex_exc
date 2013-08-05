@@ -1,0 +1,44 @@
+{
+    #CorticalUniformSheet parameters
+    'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
+    'params':{
+                'name':'V1_Exc_L4',
+                'sx':1000.0,
+                'sy':1000.0,
+                'density': 3200.0,
+                'mpi_safe' : False,    
+                'magnification_factor': 1.0,
+
+                'cell': {
+                        'model': 'IF_cond_exp',
+                        'params': {
+                            'v_thresh':-50.0,
+                            'v_rest': -70.0,
+                            'v_reset': -70.0,
+                            'tau_refrac': 2.0,
+                            'tau_m': 15.0,
+                            'cm': 0.25,
+            	            'e_rev_E': 0.0,
+                            'e_rev_I': -80.0,
+                    	    'tau_syn_E': 0.326,
+                            'tau_syn_I': 0.326, 
+                        },
+                       'initial_values': {
+                                                'v':  60,#PyNNDistribution(name='uniform',params=(-60,-50)),
+                                },
+
+                    },
+                'artificial_stimulators' : {},
+                'recorders' : url("param/l4_exc_rec"),
+    },
+
+    'L4ExcL4ExcConnection': {
+                'target_synapses' : 'excitatory',             
+                'short_term_plasticity': None, 
+                'k': 160,  # probability of connection between two neurons from the two populations
+                'weights': 0.004,  # microS, the synapse strength
+                'delay': 0.2,    # ms delay of the connections    
+    },
+
+    'L4ExcL4InhConnection': ref('l4_cortex_exc.L4ExcL4ExcConnection'),
+}
