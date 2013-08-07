@@ -41,7 +41,7 @@
                                                        }
                                 },
 
-                'recorders' : url("param/l4_exc_rec"),
+                'recorders' : url("signle_neuron/l4_exc_rec"),
     },
 
     'L4ExcL4ExcConnection': {
