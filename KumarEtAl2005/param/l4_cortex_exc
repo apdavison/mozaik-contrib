@@ -24,7 +24,7 @@
                             'tau_syn_I': 0.326, 
                         },
                        'initial_values': {
-                                                'v':  PyNNDistribution(name='uniform',params=(-80,-50)),
+                                                'v':  PyNNDistribution(name='uniform',params=(-80,-60)),
                                 },
 
                     },
@@ -35,7 +35,7 @@
     'L4ExcL4ExcConnection': {
                 'target_synapses' : 'excitatory',             
                 'short_term_plasticity': None, 
-                'k': 2000,  # probability of connection between two neurons from the two populations
+                'k': 2000,  # number of in connections
                 'weights': 0.006,  # microS, the synapse strength
                 'delay': 1.5,    # ms delay of the connections    
     },
