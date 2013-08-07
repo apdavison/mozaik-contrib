@@ -24,7 +24,7 @@
                             'tau_syn_I': 0.326, 
                         },
                        'initial_values': {
-                                                'v':  60,#PyNNDistribution(name='uniform',params=(-60,-50)),
+                                                'v':  70,#PyNNDistribution(name='uniform',params=(-60,-50)),
                                 },
 
                     },
