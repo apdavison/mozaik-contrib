@@ -17,7 +17,7 @@
                 'target_synapses' : 'inhibitory',             
                 'short_term_plasticity': ref('l4_cortex_exc.L4ExcL4ExcConnection.short_term_plasticity'), 
                 'k': ref('l4_cortex_exc.L4ExcL4ExcConnection.k')/4,
-                'weights': 0.051,  # microS, the synapse strength
+                'weights': 0.095,  # microS, the synapse strength
                 'delay': ref('l4_cortex_exc.L4ExcL4ExcConnection.delay'),    # ms delay of the connections    
     },
 
