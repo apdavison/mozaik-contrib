@@ -16,10 +16,16 @@
     'L4InhL4ExcConnection': {
                 'target_synapses' : 'inhibitory',             
                 'short_term_plasticity': ref('l4_cortex_exc.L4ExcL4ExcConnection.short_term_plasticity'), 
-                'k': ref('l4_cortex_exc.L4ExcL4ExcConnection.k')/4,
+                'k': ref('l4_cortex_exc.L4ExcL4ExcConnection.k'),
                 'weights': 0.095,  # microS, the synapse strength
                 'delay': ref('l4_cortex_exc.L4ExcL4ExcConnection.delay'),    # ms delay of the connections    
     },
 
-    'L4InhL4InhConnection': ref('l4_cortex_inh.L4InhL4ExcConnection'),
+    'L4InhL4InhConnection': {
+                'target_synapses' : ref('l4_cortex_inh.L4InhL4ExcConnection.target_synapses'),
+                'short_term_plasticity': ref('l4_cortex_exc.L4ExcL4ExcConnection.short_term_plasticity'),
+                'k':  ref('l4_cortex_exc.L4ExcL4ExcConnection.k')/4,
+                'weights': ref('l4_cortex_inh.L4InhL4ExcConnection.weights'),
+                'delay': ref('l4_cortex_exc.L4ExcL4ExcConnection.delay'),
+    },
 }

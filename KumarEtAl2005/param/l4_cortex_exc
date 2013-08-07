@@ -40,5 +40,11 @@
                 'delay': 1.5,    # ms delay of the connections    
     },
 
-    'L4ExcL4InhConnection': ref('l4_cortex_exc.L4ExcL4ExcConnection'),
+    'L4ExcL4InhConnection': {
+                'target_synapses' : ref('l4_cortex_exc.L4ExcL4ExcConnection.target_synapses'),
+                'short_term_plasticity': ref('l4_cortex_exc.L4ExcL4ExcConnection.short_term_plasticity'),
+                'k': ref('l4_cortex_exc.L4ExcL4ExcConnection.k')/4,
+                'weights': ref('l4_cortex_exc.L4ExcL4ExcConnection.weights'),
+                'delay': ref('l4_cortex_exc.L4ExcL4ExcConnection.delay'),
+    },
 }
