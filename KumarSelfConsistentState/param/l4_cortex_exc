@@ -41,16 +41,6 @@
                                                        }
                                 },
 
-                'recorders' : url("signle_neuron/l4_exc_rec"),
+                'recorders' : url("param/l4_exc_rec"),
     },
-
-    'L4ExcL4ExcConnection': {
-                'target_synapses' : 'excitatory',             
-                'short_term_plasticity': None, 
-                'k': 1,  # probability of connection between two neurons from the two populations
-                'weights': 0.0,  # microS, the synapse strength
-                'delay': 1.5,    # ms delay of the connections    
-    },
-
-    'L4ExcL4InhConnection': ref('l4_cortex_exc.L4ExcL4ExcConnection'),
 }

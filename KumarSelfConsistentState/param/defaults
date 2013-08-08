@@ -1,6 +1,5 @@
 {
-    'l4_cortex_exc': url("signle_neuron/l4_cortex_exc"),
-    'l4_cortex_inh': url("signle_neuron/l4_cortex_inh"),
+    'l4_cortex_exc': url("single_neuron/l4_cortex_exc"),
     'results_dir': '',
     'name' : 'KumarEtAL2007',
     'reset' : False,
