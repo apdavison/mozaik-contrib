@@ -8,7 +8,7 @@ def create_experiments(model):
 
     return  [
                            #Lets kick the network up into activation
-                           MeasureSpontaneousActivityWithPoissonStimulation(model,duration=2*2*50*7,sheet_list=["V1_Exc_L4","V1_Inh_L4"],drive_period=100.0,recording_configuration={'component' : 'mozaik.sheets.population_selector.RCRandomPercentage','params' : {'percentage' : 100.0}},lambda_list=[3000.0,3000.0],weight_list=[0.0007,0.0007]),
+                           MeasureSpontaneousActivityWithPoissonStimulation(model,duration=10*5*8*7,sheet_list=["V1_Exc_L4","V1_Inh_L4"],drive_period=200.0,recording_configuration={'component' : 'mozaik.sheets.population_selector.RCRandomPercentage','params' : {'percentage' : 100.0}},lambda_list=[5000.0,5000.0],weight_list=[0.004,0.004]),
                            #Spontaneous Activity 
                            MeasureSpontaneousActivity(model,duration=145*7,num_trials=1),
                            #Orientation Tuning
