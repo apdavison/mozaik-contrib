@@ -1,0 +1,81 @@
+{
+    #CorticalUniformSheet parameters
+    'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
+    'params':{
+                'name':'V1_Inh_L4',
+                'sx': ref('l4_cortex_exc.params.sx'),
+                'sy': ref('l4_cortex_exc.params.sy'),
+                'density': 2500.0,
+                'mpi_safe' : False,
+                'magnification_factor': ref('l4_cortex_exc.params.magnification_factor'),
+                'cell': ref('l4_cortex_exc.params.cell'),
+                'artificial_stimulators' : ref('l4_cortex_exc.params.artificial_stimulators'),
+                'recorders' : url("param_AffON_WeakLGN_base_weight=0.0004_StrongerLGN2Inh_Small/l4_inh_rec"),    
+    },
+        
+    'L4InhL4ExcConnection': {
+        'target_synapses' : 'inhibitory',               
+        'short_term_plasticity': None,        
+
+        'weight_functions' : {
+                                'f1' : {
+                                         'component' : 'mozaik.connectors.vision.V1PushPullArborization',
+                                         'params' : {
+                                                        'or_sigma' : 0.26,
+                                                        'phase_sigma' : 0.52,
+                                                        'target_synapses' : 'inhibitory',  
+                                                        'push_pull_ratio' : ref('l4_cortex_exc.L4ExcL4ExcConnection.weight_functions.f1.params.push_pull_ratio'),
+                                         }
+                                        }, 
+                            },
+        
+        
+        'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),
+        'weight_expression' : 'f1',
+        'delay_expression' : '1.5',
+        'base_weight': 0.005,
+        'connection_probability' : ref('l4_cortex_exc.L4ExcL4ExcConnection.connection_probability'),
+    },
+
+    'L4InhL4InhConnection': ref('l4_cortex_inh.L4InhL4ExcConnection'),
+
+
+    'L4InhL4ExcConnectionRand': {
+                'target_synapses' : 'inhibitory',             
+                'short_term_plasticity': None, 
+                'connection_probability': ref('l4_cortex_exc.L4ExcL4ExcConnectionRand.connection_probability'),  # probability of connection between two neurons from the two populations
+                'weights': ref('l4_cortex_inh.L4InhL4ExcConnection.base_weight'),  # microS, the synapse strength
+                'delay': ref('l4_cortex_exc.L4ExcL4ExcConnectionRand.delay'),    # ms delay of the connections    
+    },
+
+    'L4InhL4InhConnectionRand': ref('l4_cortex_inh.L4InhL4ExcConnectionRand'),    
+      
+    'AfferentConnection': {
+            'aspect_ratio':            UniformDist(min=0.57, max=0.57),
+            'size':                    UniformDist(min=0.46, max=0.46),
+            'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
+            'phase':                   UniformDist(min=0.0, max=6.283185307179586),
+            'frequency':               UniformDist(min=0.8, max=0.8),
+            'delay': 2.0,    
+            'topological' : False,
+            'probabilistic' : True,
+            'or_map' : False,
+            'or_map_location' : './or_map',
+            'phase_map' : False,
+            'phase_map_location' : './phase_map',
+	    
+            'specific_arborization': {
+                'weight_factor': 0.0376*1.2,
+                'num_samples' : 94,
+                'target_synapses' : 'excitatory',
+                    'short_term_plasticity': {
+                            'u': 0.3, 
+                            'tau_rec': 30.0, 
+                            'tau_psc': 3.0,
+                            'tau_fac': 21.0,
+                        },
+            },
+
+
+    }        
+}

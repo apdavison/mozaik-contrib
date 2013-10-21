@@ -10,7 +10,7 @@
                 'magnification_factor': 1.0,
 
                 'cell': {
-                        'model': 'IF_cond_exp',
+                        'model': 'IF_cond_alpha',
                         'params': {
                             'v_thresh':-50.0,
                             'v_rest': -70.0,
@@ -33,10 +33,9 @@
                                                           'component' :  'mozaik.sheets.direct_stimulator.BackgroundActivityBombardment',   
                                                           'params' : {
                                                                        'exc_firing_rate' : 1600, 
-                                                                       'exc_weight' : 0.003,
-                                                                       'inh_firing_rate' : ref('l4_cortex_exc.params.artificial_stimulators.background_act.params.exc_firing_rate')/4,
-                                                                       'inh_weight' : 0.03,
-
+                                                                       'exc_weight' : 0.006,
+                                                                       'inh_firing_rate' : ref('l4_cortex_exc.params.artificial_stimulators.background_act.params.exc_firing_rate')/4.0,
+                                                                       'inh_weight' : 0.095,
                                                                      }
                                                        }
                                 },

@@ -1,0 +1,20 @@
+{
+    'input_space_type' : 'mozaik.space.VisualSpace',
+    'input_space': {
+        'update_interval': 7.0, # ms
+        'background_luminance': 50.0, # cd/m²
+    },
+    'visual_field': {
+        'centre': (0.0, 0.0), # degrees (x,y)
+        'size': (6.8, 6.8), # degrees (width, height)
+    },
+    'l4_cortex_exc': url("param/l4_cortex_exc"),
+    'l4_cortex_inh': url("param/l4_cortex_inh"),
+    'l23_cortex_exc': url("param/23_cortex_exc"),
+    'l23_cortex_inh': url("param/23_cortex_inh"),    
+    'retina_lgn': url("param/SpatioTemporalFilterRetinaLGN_defaults"),
+    'results_dir': '',
+    'name' : 'SelfSustainedPushPullV1',
+    'reset' : False,
+    'null_stimulus_period' : 50.0,
+}
