@@ -97,24 +97,20 @@
             'frequency':               UniformDist(min=0.8, max=0.8),
             'delay': 2.0,    
             'topological' : False,
-            'probabilistic' : True,
+
             'or_map' : False,
             'or_map_location' : './or_map',
             'phase_map' : False,
             'phase_map_location' : './phase_map',
+
+            'base_weight' : 0.0007,
+            'num_samples' : 94,
 	    
-	    'specific_arborization': {
-		    'weight_factor': 0.1316,
-		    'num_samples' : 94,
-		    'target_synapses' : 'excitatory',
-	            'short_term_plasticity': {
+	        'short_term_plasticity': {
                         'u': 0.3, 
                         'tau_rec': 30.0, 
                         'tau_psc': 1.5,
                         'tau_fac': 21.0,
                     },
-	    },
-
-
     }        
 }

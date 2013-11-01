@@ -22,11 +22,20 @@ def perform_analysis_and_visualization(data_store):
             }       
             
             
-            PSTH(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({'bin_length' : 5.0})).analyse()
-            TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
-            Irregularity(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
-            NeuronToNeuronAnalogSignalCorrelations(param_filter_query(data_store,analysis_algorithm='PSTH'),ParameterSet({'convert_nan_to_zero' : True})).analyse()
-            PopulationMean(data_store,ParameterSet({})).analyse()
+            #PSTH(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({'bin_length' : 5.0})).analyse()
+            #TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
+            #Irregularity(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
+            #NeuronToNeuronAnalogSignalCorrelations(param_filter_query(data_store,analysis_algorithm='PSTH'),ParameterSet({'convert_nan_to_zero' : True})).analyse()
+            #PopulationMean(data_store,ParameterSet({})).analyse()
+            
+            ConnectivityPlot(data_store,ParameterSet({
+                            'neuron': spike_ids[0],  # the target neuron whose connections are to be displayed
+                            'reversed': True,  # if false the outgoing connections from the given neuron are shown. if true the incomming connections are shown
+                            'sheet_name': 'V1_Exc_L4',  # for neuron in which sheet to display connectivity
+                            })).plot()
+                            
+            import pylab
+            pylab.show()
             
             data_store.print_content(full_ADS=True)
             

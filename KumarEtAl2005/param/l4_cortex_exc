@@ -10,7 +10,7 @@
                 'magnification_factor': 1.0,
 
                 'cell': {
-                        'model': 'IF_cond_exp',
+                        'model': 'IF_cond_alpha',
                         'params': {
                             'v_thresh':-50.0,
                             'v_rest': -70.0,
@@ -21,10 +21,10 @@
             	            'e_rev_E': 0.0,
                             'e_rev_I': -80.0,
                     	    'tau_syn_E': 0.326,
-                            'tau_syn_I': 0.326, 
+                            'tau_syn_I': ref('l4_cortex_exc.params.cell.params.tau_syn_E'), 
                         },
                        'initial_values': {
-                                                'v':  PyNNDistribution(name='uniform',params=(-80,-51)),
+                                                'v':  PyNNDistribution(name='uniform',params=(-70,-51)),
                                 },
 
                     },
@@ -32,19 +32,14 @@
                 'recorders' : url("param/l4_exc_rec"),
     },
 
+  
     'L4ExcL4ExcConnection': {
                 'target_synapses' : 'excitatory',             
                 'short_term_plasticity': None, 
-                'k': 2000,  # number of in connections
+                'connection_probability': 2000/(ref('l4_cortex_exc.params.density')*5.0/4.0),  # probability of connection between two neurons from the two populations
                 'weights': 0.006,  # microS, the synapse strength
                 'delay': 1.5,    # ms delay of the connections    
     },
 
-    'L4ExcL4InhConnection': {
-                'target_synapses' : ref('l4_cortex_exc.L4ExcL4ExcConnection.target_synapses'),
-                'short_term_plasticity': ref('l4_cortex_exc.L4ExcL4ExcConnection.short_term_plasticity'),
-                'k': ref('l4_cortex_exc.L4ExcL4ExcConnection.k')/4,
-                'weights': ref('l4_cortex_exc.L4ExcL4ExcConnection.weights'),
-                'delay': ref('l4_cortex_exc.L4ExcL4ExcConnection.delay'),
-    },
+    'L4ExcL4InhConnection': ref('l4_cortex_exc.L4ExcL4ExcConnection'),
 }
