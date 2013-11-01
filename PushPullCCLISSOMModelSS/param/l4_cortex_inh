@@ -10,7 +10,7 @@
                 'magnification_factor': ref('l4_cortex_exc.params.magnification_factor'),
                 'cell': ref('l4_cortex_exc.params.cell'),
                 'artificial_stimulators' : ref('l4_cortex_exc.params.artificial_stimulators'),
-                'recorders' : url("param_AffON_WeakLGN_base_weight=0.0004_StrongerLGN2Inh_Small/l4_inh_rec"),    
+                'recorders' : url("param/l4_inh_rec"),    
     },
         
     'L4InhL4ExcConnection': {
@@ -21,7 +21,7 @@
                                          'params' : {
                                                 	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,
-                                                        'target_synapses' : 'excitatory',          
+                                                        'target_synapses' : 'inhibitory',          
                                                         'push_pull_ratio' : 1.0,   
                                                     }
                                        }, 
@@ -38,7 +38,7 @@
         'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),
         'weight_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.weight_expression'),
         'delay_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),
-        'base_weight': 0.005,
+        'base_weight': 0.002,
         'connection_probability' : ref('l4_cortex_exc.L4ExcL4ExcConnection.connection_probability'),
     },
 
@@ -50,15 +50,15 @@
                 'short_term_plasticity': None, 
                 'weight_functions' : ref('l4_cortex_inh.L4InhL4ExcConnection.weight_functions'),
                 'delay_functions' : ref('l4_cortex_inh.L4InhL4ExcConnection.delay_functions'),
-                'weight_expression' : 'f1',
-                'delay_expression' : ref('l4_cortex_inh.L4InhL4ExcConnection.delay_expression'),
-                'base_weight': ref('l4_cortex_exc.L4ExcL4ExcConnection.base_weight'),
+                'weight_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnectionRand.weight_expression'),
+                'delay_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnectionRand.delay_expression'),
+                'base_weight': ref('l4_cortex_inh.L4InhL4ExcConnection.base_weight'),
                 'connection_probability' : ref('l4_cortex_exc.L4ExcL4ExcConnectionRand.connection_probability'),  # probability of connection between two neurons from the two populations
     },
 
     'L4InhL4InhConnectionRand': ref('l4_cortex_inh.L4InhL4ExcConnectionRand'),    
       
-    'AfferentConnection': {
+        'AfferentConnection': {
             'aspect_ratio':            UniformDist(min=0.57, max=0.57),
             'size':                    UniformDist(min=0.46, max=0.46),
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
@@ -66,23 +66,20 @@
             'frequency':               UniformDist(min=0.8, max=0.8),
             'delay': 2.0,    
             'topological' : True,
-            'probabilistic' : True,
 	    
-	    'or_map' : True,
-	    'or_map_location' : './or_map_7x7',
-	    'phase_map' : False,
-	    'phase_map_location' : './phase_map',
-	    
-	    'specific_arborization': {
-		    'weight_factor': 1.5*0.0376,
-		    'num_samples' : 94,
-		    'target_synapses' : 'excitatory',
-	            'short_term_plasticity': {
-                        'u': 0.3, 
-                        'tau_rec': 30.0, 
-                        'tau_psc': 3.0,
-                        'tau_fac': 21.0,
-    	            },
-	    },
+            'or_map' : False,
+            'or_map_location' : './or_map_7x7',
+            'phase_map' : False,
+            'phase_map_location' : './phase_map',
+
+            'base_weight' : 0.0004*1.5,
+            'num_samples' : 94,
+            'short_term_plasticity':  {
+                            'u': 0.3, 
+                            'tau_rec': 30.0, 
+                            'tau_psc': 1.5,
+                            'tau_fac': 21.0,
+                        },
     }        
+
 }

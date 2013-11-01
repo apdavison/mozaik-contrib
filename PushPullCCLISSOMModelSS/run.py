@@ -14,6 +14,7 @@ from experiments import create_experiments
 from model import SelfSustainedPushPull
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from analysis_and_visualization import perform_analysis_and_visualization
+from parameters import ParameterSet
 
 from mpi4py import MPI 
 mpi_comm = MPI.COMM_WORLD
@@ -23,7 +24,7 @@ if True:
     data_store,model = run_workflow('SelfSustainedPushPull',SelfSustainedPushPull,create_experiments)
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'A'}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SelfSustainedPushPull_OR_____'}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 

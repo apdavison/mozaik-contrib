@@ -30,6 +30,26 @@ class STC(Plotting):
                 'Layer23Inh' : (PlotTuningCurve(self.datastore,ParameterSet({'parameter_name' : 'radius', 'neurons': self.parameters.l23_inh_neurons, 'sheet_name' : 'V1_Inh_L2/3'})),gs[9:12,:],{}),
         }
 
+class CTC(Plotting):
+    required_parameters = ParameterSet({
+        'l4_exc_neurons': list,
+        'l4_inh_neurons': list,
+        'l23_exc_neurons': list,
+        'l23_inh_neurons': list,
+    })
+
+    def subplot(self, subplotspec):
+        gs = gridspec.GridSpecFromSubplotSpec(12, 18, subplot_spec=subplotspec,
+                                              hspace=1.0, wspace=1.0)
+        
+        return {
+                'Layer4Exc' : (PlotTuningCurve(self.datastore,ParameterSet({'parameter_name' : 'contrast', 'neurons': self.parameters.l4_exc_neurons, 'sheet_name' : 'V1_Exc_L4'})),gs[0:3,:],{}),
+                'Layer4Inh' : (PlotTuningCurve(self.datastore,ParameterSet({'parameter_name' : 'contrast', 'neurons': self.parameters.l4_inh_neurons, 'sheet_name' : 'V1_Inh_L4'})),gs[3:6,:],{}),
+                'Layer23Exc' : (PlotTuningCurve(self.datastore,ParameterSet({'parameter_name' : 'contrast', 'neurons': self.parameters.l23_exc_neurons, 'sheet_name' : 'V1_Exc_L2/3'})),gs[6:9,:],{}),
+                'Layer23Inh' : (PlotTuningCurve(self.datastore,ParameterSet({'parameter_name' : 'contrast', 'neurons': self.parameters.l23_inh_neurons, 'sheet_name' : 'V1_Inh_L2/3'})),gs[9:12,:],{}),
+        }
+
+
 class OCTC(Plotting):
     required_parameters = ParameterSet({
         'l4_exc_neurons': list,
@@ -138,9 +158,9 @@ def perform_analysis_and_visualization(data_store):
     print 'id: ' + str(l4_inh)
 
 
-    if False:  #ANALYSIS
+    if True:  #ANALYSIS
         #TrialAveragedFiringRate(data_store,ParameterSet({'stimulus_type':"DriftingSinusoidalGratingCenterSurroundStimulus"})).analyse()
-        TrialAveragedFiringRate(data_store,ParameterSet({'stimulus_type':"DriftingSinusoidalGratingDisk"})).analyse()
+        TrialAveragedFiringRate(data_store,ParameterSet({})).analyse()
         #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate')    
         #GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
         #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',sheet_name=['V1_Exc_L4','V1_Inh_L4','V1_Exc_L2/3','V1_Inh_L2/3'])   
@@ -201,8 +221,8 @@ def perform_analysis_and_visualization(data_store):
         #PerNeuronValuePlot(dsv,ParameterSet({})).plot({'*.colorbar' : False,'*.x_axis' : None, '*.y_axis' : None})
         
         
-        dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4','V1_Exc_L2/3','V1_Inh_L2/3'],value_name='LGNAfferentOrientation')   
-        PerNeuronValuePlot(dsv,ParameterSet({})).plot({'*.colorbar' : False,'*.x_axis' : None, '*.y_axis' : None})
+        #dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4','V1_Exc_L2/3','V1_Inh_L2/3'],value_name='LGNAfferentOrientation')   
+        #PerNeuronValuePlot(dsv,ParameterSet({})).plot({'*.colorbar' : False,'*.x_axis' : None, '*.y_axis' : None})
         #dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4','V1_Exc_L2/3','V1_Inh_L2/3'],value_name='orientation preference',analysis_algorithm='PeriodicTuningCurvePreferenceAndSelectivity_VectorAverage',st_contrast=100)    
         #PerNeuronValuePlot(dsv,ParameterSet({})).plot({'*.colorbar' : False, '*.x_axis' : None, '*.y_axis' : None})
         
@@ -224,11 +244,11 @@ def perform_analysis_and_visualization(data_store):
         
         
         #dsv = param_filter_query(data_store,st_orientation=[0,numpy.pi/2],st_name='DriftingSinusoidalGratingDisk',st_contrast=100)    
-        dsv = param_filter_query(data_store,st_orientation=[0,numpy.pi/2],st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100)    
-        OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (16,12)},plot_file_name="OverviewEXCL4.png").plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
-        OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : l23_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (16,12)},plot_file_name="OverviewEXCL23.png").plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
-        OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : l4_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (16,12)},plot_file_name="OverviewINHL4.png").plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
-        OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : l23_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (16,12)},plot_file_name="OverviewINHL23.png").plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
+        #dsv = param_filter_query(data_store,st_orientation=[0,numpy.pi/2],st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100)    
+        #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (16,12)},plot_file_name="OverviewEXCL4.png").plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
+        #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : l23_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (16,12)},plot_file_name="OverviewEXCL23.png").plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
+        #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : l4_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (16,12)},plot_file_name="OverviewINHL4.png").plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
+        #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : l23_inh, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (16,12)},plot_file_name="OverviewINHL23.png").plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
         
         #dsv = param_filter_query(data_store,st_name='Null')    
         #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc, 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (14,12)}).plot({'Vm_plot.y_lim' : (-67,-56),'Conductance_plot.y_lim' : (0,35.0)})
@@ -243,10 +263,11 @@ def perform_analysis_and_visualization(data_store):
 
         #  PLOT ORIENTATION TUNING
         dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate'])    
-        PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': l4_spike_exc_or_close_to_pi_half, 'sheet_name' : 'V1_Exc_L4'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
-        PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': l4_spike_inh_or_close_to_pi_half, 'sheet_name' : 'V1_Inh_L4'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
-        PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': l23_spike_exc_or_close_to_pi_half, 'sheet_name' : 'V1_Exc_L2/3'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
-        PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': l23_spike_inh_or_close_to_pi_half, 'sheet_name' : 'V1_Inh_L2/3'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
+        PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'contrast', 'neurons': l4_spike_exc_or_close_to_pi_half, 'sheet_name' : 'V1_Exc_L4'}),plot_file_name="CTC.png",fig_param={'dpi' : 200,'figsize': (14,3)}).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
+        CTC(dsv,ParameterSet({'l4_exc_neurons' : numpy.array(l4_spike_exc_or_close_to_pi_half)[:4].tolist(),'l4_inh_neurons' : numpy.array(l4_spike_inh_or_close_to_pi_half)[:4].tolist(),'l23_exc_neurons' : numpy.array(l23_spike_exc_or_close_to_pi_half)[:4].tolist(),'l23_inh_neurons' : numpy.array(l23_spike_inh_or_close_to_pi_half)[:4].tolist()}),fig_param={'dpi' : 100,'figsize': (14,12)},plot_file_name="CTC.svg").plot({'*.title' : None})
+        #PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'contrast', 'neurons': l4_spike_inh_or_close_to_pi_half, 'sheet_name' : 'V1_Inh_L4'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
+        #PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'contrast', 'neurons': l23_spike_exc_or_close_to_pi_half, 'sheet_name' : 'V1_Exc_L2/3'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
+        #PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'contrast', 'neurons': l23_spike_inh_or_close_to_pi_half, 'sheet_name' : 'V1_Inh_L2/3'})).plot({'TuningCurve_firing_rate.y_lim' : (0,50)})
 
         
         

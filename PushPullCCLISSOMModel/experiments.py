@@ -16,7 +16,7 @@ def create_experiments(model):
                            #MeasureSpontaneousActivity(model,duration=147*7,num_trials=8),
                     
                            #GRATINGS
-                           MeasureOrientationTuningFullfield(model,num_orientations=8,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[100],num_trials=2),
+                           MeasureOrientationTuningFullfield(model,num_orientations=1,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[10,20,30,40,50,60,70,80,90,100],num_trials=15),
 
                            #IMAGES WITH EYEMOVEMENT
                            #MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=147*7,num_trials=10),

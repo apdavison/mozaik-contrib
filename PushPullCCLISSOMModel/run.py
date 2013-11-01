@@ -15,7 +15,7 @@ from parameters import ParameterSet
 
 logger = mozaik.getMozaikLogger()
 
-if True:
+if False:
     data_store,model = run_workflow('FFI',PushPullCCModel,create_experiments)
     #jens_model.connectors['ON_to_[V1_Exc_L4]'].store_connections(data_store)    
     #jens_model.connectors['OFF_to_[V1_Exc_L4]'].store_connections(data_store)    
@@ -33,7 +33,7 @@ if True:
 
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'B'}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_PP1_____'}),replace=True)
     logger.info('Loaded data store')
 
 if mozaik.mpi_comm.rank == mozaik.MPI_ROOT:

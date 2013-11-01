@@ -5,9 +5,9 @@
                 'name':'V1_Exc_L4',
                 'sx':7000.0,
                 'sy':7000.0,
-                'density': 10000.0,
+                'density': 200.0,
                 'mpi_safe' : False,    
-                'magnification_factor': 1.0,
+                'magnification_factor': 1000.0,
                     
                 'cell': {
                         'model': 'IF_cond_exp',
@@ -31,7 +31,7 @@
 
                     },
                 'artificial_stimulators' : {},
-                'recorders' : url("param_AffON_WeakLGN_base_weight=0.0004_StrongerLGN2Inh_Small/l4_exc_rec"),
+                'recorders' : url("param/l4_exc_rec"),
     },
 
     'rand_struct_ratio' : 0.95, # the ratio of synapses due to random and strucured connectivity
@@ -64,7 +64,7 @@
                                        },                                        
                              },
         'delay_functions' : {
-                                'f1' : {
+                                'd1' : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.LinearModularConnectorFunction',
                                          'params' : {
                                                         'constant_scaler': 0.2,
@@ -76,7 +76,7 @@
         'weight_expression' : 'f1*f2',
         'delay_expression' : 'd1', 
         'base_weight': 0.0004,
-	    'connection_probability' : ref('l4_cortex_exc.K')/(ref('l4_cortex_exc.params.density')*5.0/4.0)*(1.0-ref('l4_cortex_exc.rand_struct_ratio')),
+	    'connection_probability' : ref('l4_cortex_exc.K')/(ref('l4_cortex_exc.params.sx')*ref('l4_cortex_exc.params.sy')/1000000*ref('l4_cortex_exc.params.density')*5.0/4.0)*(1.0-ref('l4_cortex_exc.rand_struct_ratio')),
     },
 
     'L4ExcL4InhConnection': {
@@ -86,20 +86,20 @@
         'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),
         'weight_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.weight_expression'),
         'delay_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),
-        'base_weight': 0.0006,
+        'base_weight': 0.0009,
 	    'connection_probability' : ref('l4_cortex_exc.L4ExcL4ExcConnection.connection_probability'),
     },
     
 
    'L4ExcL4ExcConnectionRand': {
         'target_synapses' : 'excitatory',             
-        'short_term_plasticity': None,        
+        'short_term_plasticity': ref('l4_cortex_exc.L4ExcL4ExcConnection.short_term_plasticity'),        
         'weight_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.weight_functions'),
         'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),
-        'weight_expression' : 'f1',
+        'weight_expression' : 'f2',
         'delay_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),
         'base_weight': ref('l4_cortex_exc.L4ExcL4ExcConnection.base_weight'),
-	    'connection_probability' : ref('l4_cortex_exc.K')/(ref('l4_cortex_exc.params.density')*5.0/4.0)*ref('l4_cortex_exc.rand_struct_ratio'),
+	    'connection_probability' : ref('l4_cortex_exc.K')/(ref('l4_cortex_exc.params.sx')*ref('l4_cortex_exc.params.sy')/1000000*ref('l4_cortex_exc.params.density')*5.0/4.0)*ref('l4_cortex_exc.rand_struct_ratio'),
     },
 
     'L4ExcL4InhConnectionRand': {
@@ -121,23 +121,20 @@
             'frequency':               UniformDist(min=0.8, max=0.8),
             'delay': 2.0,    
             'topological' : True,
-            'probabilistic' : True,
 	    
-	    'or_map' : True,
-	    'or_map_location' : './or_map_7x7',
-	    'phase_map' : False,
-	    'phase_map_location' : './phase_map',
-	    
-	    'specific_arborization': {
-		    'weight_factor': 0.0376,
-		    'num_samples' : 94,
-		    'target_synapses' : 'excitatory',
-	            'short_term_plasticity': {
-                        'u': 0.3, 
-                        'tau_rec': 30.0, 
-                        'tau_psc': 3.0,
-                        'tau_fac': 21.0,
-    	            },
-	    },
+            'or_map' : False,
+            'or_map_location' : './or_map_7x7',
+            'phase_map' : False,
+            'phase_map_location' : './phase_map',
+
+            'base_weight' : 0.0004,
+            'num_samples' : 94,
+            'short_term_plasticity':  {
+                            'u': 0.3, 
+                            'tau_rec': 30.0, 
+                            'tau_psc': 1.5,
+                            'tau_fac': 21.0,
+                        },
     }        
+        
 }
