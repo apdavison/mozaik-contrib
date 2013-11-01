@@ -13,5 +13,5 @@ def create_experiments(model):
                            NoStimulation(model,duration=5*3*8*7),
                            # Measure orientation tuning with full-filed sinusoidal gratins
                            #MeasureOrientationTuningFullfield(model,num_orientations=4,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[100],num_trials=10),
-                           MeasureOrientationTuningFullfield(model,num_orientations=6,spatial_frequency=0.8,temporal_frequency=2,grating_duration=147*7,contrasts=[30,100],num_trials=5),
+                           MeasureOrientationTuningFullfield(model,num_orientations=8,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[50,100],num_trials=10),
             ]

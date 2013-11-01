@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-This is implementation of model of self-sustained activitity in balanced networks from: 
-Vogels, T. P., & Abbott, L. F. (2005). 
-Signal propagation and logic gating in networks of integrate-and-fire neurons. 
-The Journal of neuroscience : the official journal of the Society for Neuroscience, 25(46), 10786–95. 
 """
 from pyNN import nest
 import sys
