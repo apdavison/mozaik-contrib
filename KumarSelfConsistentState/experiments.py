@@ -7,5 +7,5 @@ def create_experiments(model):
     
     return  [
                            #Spontaneous Activity 
-                           NoStimulation(model,duration=100*7),
+                           NoStimulation(model,duration=1000*7),
             ]

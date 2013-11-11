@@ -21,6 +21,12 @@ mpi_comm = MPI.COMM_WORLD
 if True:
     logger = mozaik.getMozaikLogger()
     data_store,model = run_workflow('VogeslAbbott2005',VogelsAbbott,create_experiments)
+    print model.connectors
+    model.connectors['V1L4ExcL4ExcConnection'].store_connections(data_store)    
+    model.connectors['V1L4ExcL4InhConnection'].store_connections(data_store)    
+    model.connectors['V1L4InhL4ExcConnection'].store_connections(data_store)    
+    model.connectors['V1L4InhL4InhConnection'].store_connections(data_store)    
+    
 else: 
     setup_logging()
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'A'}),replace=True)

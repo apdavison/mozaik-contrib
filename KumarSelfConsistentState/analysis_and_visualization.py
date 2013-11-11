@@ -25,7 +25,7 @@ def perform_analysis_and_visualization(data_store):
             
             data_store.print_content(full_ADS=True)
             
-            OverviewPlot(data_store,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[0], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (19,12)},plot_file_name='ExcAnalog1.png').plot({'Vm_plot.y_lim' : (-80,-50),'Conductance_plot.y_lim' : (0,500.0)})
+            OverviewPlot(data_store,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[0], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (19,12)},plot_file_name='ExcAnalog1.png').plot({'Vm_plot.y_lim' : (-80,-50)})
 
             import pylab
             pylab.show()

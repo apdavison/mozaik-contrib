@@ -5,7 +5,7 @@
                 'name':'V1_Exc_L4',
                 'sx':1000.0,
                 'sy':1000.0,
-                'density': 8000.0,
+                'density': 6400.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1.0,
                     
@@ -14,7 +14,7 @@
                         'params': {
                             'v_thresh':-50.0,
                             'v_rest': -60.0,
-                            'v_reset': -56.0,
+                            'v_reset': -60.0,
                             'tau_refrac': 5.0,
                             'tau_m': 20.0,
                             'cm': 0.2,
@@ -22,12 +22,11 @@
                             'e_rev_I': -80.0,
                     	    'tau_syn_E': 5.0,
                             'tau_syn_I': 10.0, 
-                            
                         },
 
                        'initial_values': {
                                     #'v': PyNNDistribution(name='uniform',params=(-60,-50)),
-                                    'v': -60,
+                                    'v': -55,
                                 },
 
                     },
@@ -35,7 +34,7 @@
                                                 'background_depolarization' : {
                                                                       'component' :  'mozaik.sheets.direct_stimulator.Depolarization',   
                                                                       'params' : {
-                                                                                    'current' : 0.07,
+                                                                                    'current' : 0.0,
                                                                                     'population_selector' : {
                                                                                                 'component' : 'mozaik.sheets.population_selector.RCAll',
                                                                                                 'params' : {}
@@ -75,8 +74,8 @@
                             },
         'weight_expression' : 'f1*0.0+0.1',
         'delay_expression' : '2.0', 
-        'base_weight': 0.01,
-        'num_samples' : 144,
+        'base_weight': 0.288,
+        'num_samples' : 160,
     },
 
     
@@ -89,7 +88,7 @@
                                   'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),         
                                   'weight_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.weight_expression'),        
                                   'delay_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),        
-                                  'base_weight': ref('l4_cortex_exc.L4ExcL4ExcConnection.base_weight')*2.0,        
+                                  'base_weight': ref('l4_cortex_exc.L4ExcL4ExcConnection.base_weight'),        
                                   'num_samples' : ref('l4_cortex_exc.L4ExcL4ExcConnection.num_samples'),        
                                 },
                                 
