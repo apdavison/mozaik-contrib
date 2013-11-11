@@ -15,4 +15,5 @@
     'name' : 'Vogels&AbbottPushPull',
     'reset' : False,
     'null_stimulus_period' : 50.0,
+    'store_stimuli' : False,
 }
