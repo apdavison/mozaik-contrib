@@ -15,4 +15,5 @@
     'name' : 'Vogels&AbbottPushPullFixedK',
     'reset' : False,
     'null_stimulus_period' : 0.0,
+    'store_stimuli' : False,
 }
