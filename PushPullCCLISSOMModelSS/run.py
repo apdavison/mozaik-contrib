@@ -20,11 +20,11 @@ from mpi4py import MPI
 mpi_comm = MPI.COMM_WORLD
 
 
-if True:
+if False:
     data_store,model = run_workflow('SelfSustainedPushPull',SelfSustainedPushPull,create_experiments)
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SelfSustainedPushPull_OR_____'}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SelfSustainedPushPull_BIG_OR_____'}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 
