@@ -10,12 +10,13 @@ from experiments import create_experiments
 from model import SelfSustainedPushPull
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from analysis_and_visualization import perform_analysis_and_visualization
+from parameters import ParameterSet
 
 from mpi4py import MPI 
 mpi_comm = MPI.COMM_WORLD
 
 
-if True:
+if False:
     data_store,model = run_workflow('SelfSustainedPushPull',SelfSustainedPushPull,create_experiments)
 else: 
     setup_logging()
