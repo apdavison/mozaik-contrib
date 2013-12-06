@@ -13,4 +13,5 @@
     'name' : 'Jens Model',
     'reset' : False,
     'null_stimulus_period' : 140.0,
+    'store_stimuli' : False,
 }

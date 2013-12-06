@@ -122,7 +122,7 @@
             'delay': 2.0,    
             'topological' : True,
 	    
-            'or_map' : False,
+            'or_map' : True,
             'or_map_location' : './or_map_7x7',
             'phase_map' : False,
             'phase_map_location' : './phase_map',
