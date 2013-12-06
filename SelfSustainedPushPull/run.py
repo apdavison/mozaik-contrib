@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 """
-from pyNN import nest
 import sys
+from pyNN import nest
 import mozaik.controller
 from mozaik.controller import run_workflow, setup_logging
 import mozaik
@@ -11,9 +11,13 @@ from model import SelfSustainedPushPull
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from analysis_and_visualization import perform_analysis_and_visualization
 
-from mpi4py import MPI 
-mpi_comm = MPI.COMM_WORLD
-
+try:
+    from mpi4py import MPI
+except ImportError:
+    MPI = None
+if MPI:
+    mpi_comm = MPI.COMM_WORLD
+MPI_ROOT = 0
 
 if True:
     data_store,model = run_workflow('SelfSustainedPushPull',SelfSustainedPushPull,create_experiments)

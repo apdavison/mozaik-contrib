@@ -13,5 +13,4 @@ import numpy
 #CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=4),{'l4_cortex_exc.params.cell.params.tau_syn_E' : numpy.linspace(0.1,1.0,20),'l4_cortex_inh.L4InhL4ExcConnection.weights' : numpy.linspace(0.0,0.1,20)}).run_parameter_search()
 #CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=4),{'l4_cortex_exc.L4ExcL4InhConnection.weights' : numpy.linspace(0.003,0.01,20),'l4_cortex_inh.L4InhL4ExcConnection.weights' : numpy.linspace(0.0,0.1,20)}).run_parameter_search()
 
-
-CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=8),{'l4_cortex_exc.L4ExcL4InhConnection.weights' : numpy.linspace(0.0006,0.0008,20)}).run_parameter_search()
+CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=32),{'l4_cortex_exc.L4ExcL4InhConnection.weights' : numpy.linspace(0.0006,0.0008,10)}).run_parameter_search()

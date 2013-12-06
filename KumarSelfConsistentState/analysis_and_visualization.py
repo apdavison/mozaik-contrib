@@ -21,6 +21,7 @@ def perform_analysis_and_visualization(data_store):
             
             
             TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
+            PSTH(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({'bin_length' : 2})).analyse()
             PopulationMean(data_store,ParameterSet({})).analyse()
             
             data_store.print_content(full_ADS=True)
