@@ -41,7 +41,7 @@ def perform_analysis_and_visualization(data_store):
     l4_spike_exc_or_close_to_pi_half = numpy.array(spike_ids)[numpy.nonzero(numpy.array([circular_dist(o,pref_or,numpy.pi)  for o in l4_exc_or[0].get_value_by_id(spike_ids)]) < 0.1)[0]].tolist()
     l4_spike_inh_or_close_to_pi_half = numpy.array(spike_ids_inh)[numpy.nonzero(numpy.array([circular_dist(o,pref_or,numpy.pi)  for o in l4_inh_or[0].get_value_by_id(spike_ids_inh)]) < 0.1)[0]].tolist()
     
-    if False:  #ANALYSIS
+    if True:  #ANALYSIS
         dsv = param_filter_query(data_store,sheet_name='V1_Exc_L4')
         #ActionPotentialRemoval(dsv,ParameterSet({'window_length' : 10.0})).analyse()
         TrialAveragedFiringRate(param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],st_name="FullfieldDriftingSinusoidalGrating"),ParameterSet({})).analyse()
@@ -85,10 +85,10 @@ def perform_analysis_and_visualization(data_store):
 
             
                 
-                #dsv = param_filter_query(data_store,st_name='NaturalImageWithEyeMovement')    
-                #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[4], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,6)},plot_file_name='DGwEM.png').plot()    
-                import pylab
-                pylab.show()
+                dsv = param_filter_query(data_store,st_name='NaturalImageWithEyeMovement')    
+                OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[4], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,6)},plot_file_name='DGwEM.png').plot()    
+                #import pylab
+                #pylab.show()
 
 
 
