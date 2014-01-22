@@ -24,7 +24,7 @@ if True:
     data_store,model = run_workflow('SelfSustainedPushPull',SelfSustainedPushPull,create_experiments)
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SelfSustainedPushPull_BIG_OR_____'}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SelfSustainedPushPull_EyeMovements_____','store_stimuli' : False}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 

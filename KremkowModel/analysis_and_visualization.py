@@ -36,7 +36,7 @@ def perform_analysis_and_visualization(data_store):
         print l4_exc_phase[0].get_value_by_id(l4_exc)
 
 
-    if False:  #ANALYSIS
+    if True     :  #ANALYSIS
         #dsv = param_filter_query(data_store,sheet_name='V1_Exc_L4')
         #ActionPotentialRemoval(dsv,ParameterSet({'window_length' : 10.0})).analyse()
         #TrialAveragedFiringRate(param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],st_name="FullfieldDriftingSinusoidalGrating"),ParameterSet({})).analyse()
@@ -51,8 +51,8 @@ def perform_analysis_and_visualization(data_store):
         #Analog_MeanSTDAndFanoFactor(data_store,ParameterSet({})).analyse()
         #data_store.save()
         
-        TrialToTrialCrossCorrelation(param_filter_query(data_store,sheet_name='V1_Exc_L4',st_orientation=[0,numpy.pi/2]),ParameterSet({'neurons' : [l4_exc], 'bin_length' : 2.0 })).analyse()
-        data_store.save()
+        #TrialToTrialCrossCorrelation(param_filter_query(data_store,sheet_name='V1_Exc_L4',st_name="NaturalImageWithEyeMovement"),ParameterSet({'neurons' : [l4_exc], 'bin_length' : 2.0 })).analyse()
+        #TrialToTrialCrossCorrelation(param_filter_query(data_store,sheet_name='V1_Exc_L4',st_orientation=[0,numpy.pi/2]),ParameterSet({'neurons' : [l4_exc], 'bin_length' : 2.0 })).analyse()
         
         #TrialVariability(dsv,ParameterSet({'vm': True,  'cond_exc': False, 'cond_inh': False})).analyse()
         
@@ -62,12 +62,25 @@ def perform_analysis_and_visualization(data_store):
         
         #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=['V1_Exc_L4','V1_Inh_L4'])  
         #PeriodicTuningCurvePreferenceAndSelectivity_VectorAverage(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
-        
+        data_store.save()
      
-    if False:
+    if True:
        ConductanceSignalListPlot(param_filter_query(data_store,analysis_algorithm='GSTA'),ParameterSet({'normalize_individually': True})).plot()
-       #import pylab
-       #pylab.show()
+       dsv = param_filter_query(data_store,st_orientation=[0,numpy.pi/2],st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialToTrialCrossCorrelation',y_axis_name='trial-trial cross-correlation of Vm')    
+       AnalogSignalListPlot(dsv,ParameterSet({'neurons' : [l4_exc],'sheet_name' : 'V1_Exc_L4'})).plot()
+       
+       dsv = param_filter_query(data_store,st_orientation=[0,numpy.pi/2],st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialToTrialCrossCorrelation',y_axis_name='trial-trial cross-correlation of PSTH')    
+       AnalogSignalListPlot(dsv,ParameterSet({'neurons' : [l4_exc],'sheet_name' : 'V1_Exc_L4'})).plot()
+
+       #dsv = param_filter_query(data_store,st_name='NaturalImageWithEyeMovement',analysis_algorithm='TrialToTrialCrossCorrelation',y_axis_name='trial-trial cross-correlation of PSTH')    
+       #AnalogSignalListPlot(dsv,ParameterSet({'neurons' : [l4_exc],'sheet_name' : 'V1_Exc_L4'})).plot()
+       
+       dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['Analog_MeanSTDAndFanoFactor'])    
+       PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids), 'sheet_name' : 'V1_Exc_L4'})).plot()
+        
+
+       import pylab
+       pylab.show()
        
     if True: # PLOTTING
         #dsv = param_filter_query(data_store,st_orientation=[0,numpy.pi/2],st_name='FullfieldDriftingSinusoidalGrating',st_trial=0)    
