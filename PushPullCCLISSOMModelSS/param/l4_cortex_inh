@@ -57,8 +57,9 @@
     },
 
     'L4InhL4InhConnectionRand': ref('l4_cortex_inh.L4InhL4ExcConnectionRand'),    
-      
-        'AfferentConnection': {
+    'aff_inh_gain' : 1.5, 
+    
+    'AfferentConnection': {
             'aspect_ratio':            UniformDist(min=0.57, max=0.57),
             'size':                    UniformDist(min=0.46, max=0.46),
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
@@ -71,15 +72,8 @@
             'or_map_location' : './or_map_7x7',
             'phase_map' : False,
             'phase_map_location' : './phase_map',
-
-            'base_weight' : 0.0004*1.5,
-            'num_samples' : 94,
-            'short_term_plasticity':  {
-                            'u': 0.3, 
-                            'tau_rec': 30.0, 
-                            'tau_psc': 1.5,
-                            'tau_fac': 21.0,
-                        },
-    }        
-
+	    
+	    'base_weight' : ref('l4_cortex_exc.AfferentConnection.base_weight')*ref('l4_cortex_inh.aff_inh_gain'),
+            'num_samples' : ref('l4_cortex_exc.AfferentConnection.num_samples'),
+            'short_term_plasticity':  ref('l4_cortex_exc.AfferentConnection.short_term_plasticity'),
 }

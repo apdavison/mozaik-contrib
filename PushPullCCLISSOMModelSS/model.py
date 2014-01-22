@@ -12,8 +12,8 @@ class SelfSustainedPushPull(Model):
     required_parameters = ParameterSet({
         'l4_cortex_exc' : ParameterSet, 
         'l4_cortex_inh' : ParameterSet, 
-        'l23_cortex_exc' : ParameterSet, 
-        'l23_cortex_inh' : ParameterSet, 
+        #'l23_cortex_exc' : ParameterSet, 
+        #'l23_cortex_inh' : ParameterSet, 
         'retina_lgn' : ParameterSet ,
         'visual_field' : ParameterSet 
     })

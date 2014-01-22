@@ -34,7 +34,7 @@
                 'recorders' : url("param/l4_exc_rec"),
     },
 
-    'rand_struct_ratio' : 0.95, # the ratio of synapses due to random and strucured connectivity
+    'rand_struct_ratio' : 0.9, # the ratio of synapses due to random and strucured connectivity
     'K' : 500.0, # Number of synapses per neuron
 
     'L4ExcL4ExcConnection': {
