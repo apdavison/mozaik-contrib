@@ -44,12 +44,19 @@ def perform_analysis_and_visualization(data_store):
     if True:  #ANALYSIS
         dsv = param_filter_query(data_store,sheet_name='V1_Exc_L4')
         #ActionPotentialRemoval(dsv,ParameterSet({'window_length' : 10.0})).analyse()
-        TrialAveragedFiringRate(param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],st_name="FullfieldDriftingSinusoidalGrating"),ParameterSet({})).analyse()
+        #TrialAveragedFiringRate(param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],st_name="FullfieldDriftingSinusoidalGrating"),ParameterSet({})).analyse()
+
+	PSTH(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({'bin_length' : 2.0})).analyse()
+        TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
+        Irregularity(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
+        NeuronToNeuronAnalogSignalCorrelations(param_filter_query(data_store,analysis_algorithm='PSTH'),ParameterSet({'convert_nan_to_zero' : True})).analyse()
+        PopulationMean(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
+
                 
-        dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=['V1_Exc_L4','V1_Inh_L4'])    
-        GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
-        dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',sheet_name=['V1_Exc_L4','V1_Inh_L4'])   
-        Analog_F0andF1(dsv,ParameterSet({})).analyse()
+        #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=['V1_Exc_L4','V1_Inh_L4'])    
+        #GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
+        #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',sheet_name=['V1_Exc_L4','V1_Inh_L4'])   
+        #Analog_F0andF1(dsv,ParameterSet({})).analyse()
         #TrialVariability(dsv,ParameterSet({'vm': True,  'cond_exc': False, 'cond_inh': False})).analyse()
         #param_filter_query(data_store,sheet_name='V1_Exc_L4',st_name='InternalStimulus').print_content()
         #GSTA(param_filter_query(data_store,sheet_name='V1_Exc_L4',st_name='InternalStimulus'),ParameterSet({'neurons' : [l4_exc], 'length' : 250.0 }),tags=['GSTA']).analyse()
@@ -79,14 +86,14 @@ def perform_analysis_and_visualization(data_store):
                 #dsv = param_filter_query(data_store,st_name='DriftingGratingWithEyeMovement')    
                 #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[11], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,6)},plot_file_name='NIwEM.png').plot()
                     
-                dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],st_name='InternalStimulus',st_direct_stimulation_name='None')   
+                dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],st_name='InternalStimulus')   
                 RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neurons' : spike_ids,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (17,5)},plot_file_name='SSExcRaster.png').plot({'SpikeRasterPlot.group_trials':True})
                 RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neurons' : spike_ids_inh,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (17,5)},plot_file_name='SSInhRaster.png').plot({'SpikeRasterPlot.group_trials':True})
 
-            
+        	OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[4], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,6)},plot_file_name='SSOvervierview.png').plot()    
                 
-                dsv = param_filter_query(data_store,st_name='NaturalImageWithEyeMovement')    
-                OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[4], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,6)},plot_file_name='DGwEM.png').plot()    
+                #dsv = param_filter_query(data_store,st_name='NaturalImageWithEyeMovement')    
+                #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[4], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,6)},plot_file_name='DGwEM.png').plot()    
                 #import pylab
                 #pylab.show()
 

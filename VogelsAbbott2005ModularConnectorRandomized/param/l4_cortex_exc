@@ -55,13 +55,8 @@
         'weight_expression' : 'const',
         'delay_expression' : 'd1', 
         
-<<<<<<< HEAD
-        'base_weight': 0.00028,
-		'connection_probability' : 0.02,
-=======
         'base_weight': 0.00031,
 		'connection_probability' : 0.01,
->>>>>>> dc284c188bc868c4ea024f3c85c6611cf0da5b5d
     },
 
 
@@ -87,12 +82,7 @@
         'weight_expression' : 'const',
         'delay_expression' : 'd1', 
         
-<<<<<<< HEAD
-        'base_weight': 0.00028,
-		'connection_probability' : 0.02,
-=======
         'base_weight': 0.00031,
 		'connection_probability' : 0.01,
->>>>>>> dc284c188bc868c4ea024f3c85c6611cf0da5b5d
     },
 }

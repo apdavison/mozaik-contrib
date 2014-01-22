@@ -19,4 +19,8 @@
     'reset' : False,
     'null_stimulus_period' : 50.0,
     'store_stimuli' : False,
+    'min_delay' : 2.0,
+    'max_delay' : 100,
+    'time_step' : 0.1
+
 }

@@ -20,7 +20,7 @@ from mpi4py import MPI
 mpi_comm = MPI.COMM_WORLD
 
 
-if False:
+if True:
     data_store,model = run_workflow('SelfSustainedPushPull',SelfSustainedPushPull,create_experiments)
 else: 
     setup_logging()
