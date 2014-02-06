@@ -12,7 +12,7 @@ def create_experiments(model):
                            #Spontaneous Activity 
                            NoStimulation(model,duration=2*5*3*8*7),
                            # Measure orientation tuning with full-filed sinusoidal gratins
-                           MeasureOrientationTuningFullfield(model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[100],num_trials=5),
+                           MeasureOrientationTuningFullfield(model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[100],num_trials=1),
                            #MeasureOrientationTuningFullfield(model,num_orientations=12,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[50,100],num_trials=10),
                            
                            # Measure response to natural image with simulated eye movement

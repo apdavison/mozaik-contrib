@@ -41,7 +41,7 @@ def perform_analysis_and_visualization(data_store):
     l4_spike_exc_or_close_to_pi_half = numpy.array(spike_ids)[numpy.nonzero(numpy.array([circular_dist(o,pref_or,numpy.pi)  for o in l4_exc_or[0].get_value_by_id(spike_ids)]) < 0.1)[0]].tolist()
     l4_spike_inh_or_close_to_pi_half = numpy.array(spike_ids_inh)[numpy.nonzero(numpy.array([circular_dist(o,pref_or,numpy.pi)  for o in l4_inh_or[0].get_value_by_id(spike_ids_inh)]) < 0.1)[0]].tolist()
     
-    if True:  #ANALYSIS
+    if False:  #ANALYSIS
         dsv = param_filter_query(data_store,sheet_name='V1_Exc_L4')
         #ActionPotentialRemoval(dsv,ParameterSet({'window_length' : 10.0})).analyse()
         #TrialAveragedFiringRate(param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],st_name="FullfieldDriftingSinusoidalGrating"),ParameterSet({})).analyse()
@@ -112,28 +112,17 @@ def perform_analysis_and_visualization(data_store):
                 #dsv = param_filter_query(data_store,st_name='DriftingGratingWithEyeMovement')    
                 #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[11], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,3.9)},plot_file_name='NIwEM.png').plot()
                     
-<<<<<<< HEAD
                 #dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],st_name='InternalStimulus',st_direct_stimulation_name='None')   
                 #RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neurons' : spike_ids,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (17,5)},plot_file_name='SSExcRaster.png').plot({'SpikeRasterPlot.group_trials':True})
                 #RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neurons' : spike_ids_inh,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (17,5)},plot_file_name='SSInhRaster.png').plot({'SpikeRasterPlot.group_trials':True})
-=======
-                dsv = param_filter_query(data_store,sheet_name=['V1_Exc_L4','V1_Inh_L4'],st_name='InternalStimulus')   
-                RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neurons' : spike_ids,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (17,5)},plot_file_name='SSExcRaster.png').plot({'SpikeRasterPlot.group_trials':True})
-                RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neurons' : spike_ids_inh,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (17,5)},plot_file_name='SSInhRaster.png').plot({'SpikeRasterPlot.group_trials':True})
->>>>>>> fca072669c66506e58bbb4cf59d52d463525859a
 
-        	OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[4], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,6)},plot_file_name='SSOvervierview.png').plot()    
+                OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[4], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,6)},plot_file_name='SSOvervierview.png').plot()    
                 
                 #dsv = param_filter_query(data_store,st_name='NaturalImageWithEyeMovement')    
-<<<<<<< HEAD
-                #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[4], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,3.9)},plot_file_name='DGwEM.png').plot({'*.x_label' : None})    
-                import pylab
-                pylab.show()
-=======
                 #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[4], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (17,6)},plot_file_name='DGwEM.png').plot()    
                 #import pylab
                 #pylab.show()
->>>>>>> fca072669c66506e58bbb4cf59d52d463525859a
+
 
 
 

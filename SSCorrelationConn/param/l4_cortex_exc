@@ -5,7 +5,7 @@
                 'name':'V1_Exc_L4',
                 'sx':1000.0,
                 'sy':1000.0,
-                'density': 10000.0,
+                'density': 8000.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1.0,
                     
@@ -35,7 +35,7 @@
     },
 
     'K' : 500.0, # Number of synapses per neuron
-    'rand_struct_ratio' : 0.95, # The proportion of the random connections (the rest are functionally specific connections)
+    'rand_struct_ratio' : 0.9, # The proportion of the random connections (the rest are functionally specific connections)
     
     'L4ExcL4ExcConnection': {
         'target_synapses' : 'excitatory',             
@@ -45,7 +45,7 @@
                                 'f1' : {
                                          'component' : 'mozaik.connectors.vision.V1CorrelationBasedConnectivity',
                                          'params' : {
-                                             	        'sigma' : 0.26,
+                                             	        'sigma' : 0.3,
                                                         'target_synapses' : 'excitatory',  
 	                                            }
                                        }, 
@@ -61,8 +61,9 @@
                             },
         'weight_expression' : 'f1',
         'delay_expression' : '1.5', 
-        'base_weight': 0.0006,
-	    'connection_probability' : ref('l4_cortex_exc.K')/(ref('l4_cortex_exc.params.density')*5.0/4.0)*(1.0-ref('l4_cortex_exc.rand_struct_ratio')),
+        'base_weight': 0.0004,
+	    #'connection_probability' : ref('l4_cortex_exc.K')/(ref('l4_cortex_exc.params.density')*5.0/4.0)*(1.0-ref('l4_cortex_exc.rand_struct_ratio')),
+        'num_samples' : ref('l4_cortex_exc.K')*4.0/5.0*(1.0-ref('l4_cortex_exc.rand_struct_ratio'))
     },
 
 
@@ -73,8 +74,9 @@
         'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),
         'weight_expression' : 'f1',
         'delay_expression' : '1.5', 
-        'base_weight': 0.000731,
-	    'connection_probability' : ref('l4_cortex_exc.L4ExcL4ExcConnection.connection_probability'),
+        'base_weight': 0.0008,
+	    #'connection_probability' : ref('l4_cortex_exc.L4ExcL4ExcConnection.connection_probability'),
+        'num_samples' : ref('l4_cortex_exc.L4ExcL4ExcConnection.num_samples'),
     },
 
     'L4ExcL4ExcConnectionRand': {
@@ -102,19 +104,18 @@
             'frequency':               UniformDist(min=0.8, max=0.8),
             'delay': 2.0,    
             'topological' : False,
-            'probabilistic' : True,
-	    
-	    'or_map' : False,
-	    'or_map_location' : './or_map',
-	    'phase_map' : False,
-	    'phase_map_location' : './phase_map',
-        'base_weight' : 0.0006,
-        'num_samples' : 94,
-        'short_term_plasticity':  {
-                            'U': 0.3, 
-                            'tau_rec': 30.0, 
-                            'tau_psc': 0.0,
-                            'tau_fac': 21.0,
-                        },	    
-    }        
+ 	    
+            'or_map' : False,
+            'or_map_location' : './or_map',
+            'phase_map' : False,
+            'phase_map_location' : './phase_map',
+            'base_weight' : 0.0004,
+            'num_samples' : 50,
+            'short_term_plasticity':  {
+                                'U': 0.3, 
+                                'tau_rec': 30.0, 
+                                'tau_psc': 0.0,
+                                'tau_fac': 21.0,
+                            },	    
+        }        
 }

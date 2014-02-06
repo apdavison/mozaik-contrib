@@ -63,7 +63,7 @@
         'weight_expression' : 'f1',
         'delay_expression' : '2', 
         
-        'base_weight': 0.009,
+        'base_weight': 0.0005,
 	'num_samples' : 18,
     },
     
@@ -85,7 +85,7 @@
         'weight_expression' : 'f1',
         'delay_expression' : '2', 
         
-        'base_weight': 0.009,
+        'base_weight': 0.0005,
 		'num_samples' : 18,
     },
     
