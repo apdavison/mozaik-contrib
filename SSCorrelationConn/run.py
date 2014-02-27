@@ -29,4 +29,4 @@ else:
 if mpi_comm.rank == 0:
    print "Starting visualization" 
    perform_analysis_and_visualization(data_store)
-   data_store.save() 
+#   data_store.save() 
