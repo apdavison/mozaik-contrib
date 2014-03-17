@@ -22,6 +22,7 @@ MPI_ROOT = 0
 
 if True:
     data_store,model = run_workflow('SSCorrelationConnectivity',SSCorrelationConnectivity,create_experiments)
+    data_store.save() 
 else: 
     setup_logging()
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SSCorrelationConnectivity_A_____', 'store_stimuli' : False}),replace=True)

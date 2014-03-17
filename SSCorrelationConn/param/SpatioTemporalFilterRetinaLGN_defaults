@@ -27,13 +27,13 @@
                 'sigma_s': 1.0, #1.0, # sigma_c*1.5+0.4 Allen 2006 # 2.95 # sigma of surround gauss degree
                 'subtract_mean': True,
             },
-            'width': 2.6, # degrees
-            'height': 2.6, # degrees
+            'width': 6.0, # degrees
+            'height': 6.0, # degrees
             'spatial_resolution': 0.1, # degrees
             'temporal_resolution': 7.0, # ms
             'duration': 100.0,
         },
-        'gain': 1.0, # nA.m²/cd
+        'gain': 4.0, # nA.m²/cd
         'cell': {
             'model': 'IF_cond_exp',
             'params': {

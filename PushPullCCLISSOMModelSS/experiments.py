@@ -16,5 +16,9 @@ def create_experiments(model):
                            MeasureOrientationTuningFullfield(model,num_orientations=10,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[50,100],num_trials=5),
                            
                            # Measure response to natural image with simulated eye movement
-                           MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=147*7,num_trials=5),
+                           MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=6*147*7,num_trials=15),
+                           
+                           #GRATINGS WITH EYEMOVEMENT
+                           MeasureDriftingSineGratingWithEyeMovement(model,spatial_frequency=0.8,temporal_frequency=2,stimulus_duration=6*147*7,num_trials=15,contrast=100),
+
             ]

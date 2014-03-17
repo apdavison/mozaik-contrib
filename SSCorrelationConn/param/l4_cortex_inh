@@ -12,7 +12,7 @@
                 'artificial_stimulators' : ref('l4_cortex_exc.params.artificial_stimulators'),
                 'recorders' : url("param/l4_inh_rec"),    
     },
-        
+
     'L4InhL4ExcConnection': {
         'target_synapses' : 'inhibitory',               
         'short_term_plasticity': None,        
@@ -48,6 +48,8 @@
     },
 
     'L4InhL4InhConnectionRand': ref('l4_cortex_inh.L4InhL4ExcConnectionRand'),    
+    
+    'ExcInhAfferentRatio ': 1.5,
       
     'AfferentConnection': {
             'aspect_ratio':            UniformDist(min=0.57, max=0.57),
@@ -61,7 +63,7 @@
             'or_map_location' : './or_map',
             'phase_map' : False,
             'phase_map_location' : './phase_map',
-            'base_weight' : ref('l4_cortex_exc.AfferentConnection.base_weight')*1.5,
+            'base_weight' : ref('l4_cortex_exc.AfferentConnection.base_weight')*ref('l4_cortex_inh.ExcInhAfferentRatio'),
             'num_samples' : ref('l4_cortex_exc.AfferentConnection.num_samples'),
             'short_term_plasticity':  ref('l4_cortex_exc.AfferentConnection.short_term_plasticity'),
     }        
