@@ -5,7 +5,7 @@
                 'name':'V1_Exc_L4',
                 'sx':1000.0,
                 'sy':1000.0,
-                'density': 8000.0,
+                'density': 10000.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1.0,
                     
@@ -74,8 +74,8 @@
         'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),
         'weight_expression' : 'f1',
         'delay_expression' : '1.5', 
-        'base_weight': 0.0008,
-	    #'connection_probability' : ref('l4_cortex_exc.L4ExcL4ExcConnection.connection_probability'),
+        'base_weight': 0.0009,
+        #'connection_probability' : ref('l4_cortex_exc.L4ExcL4ExcConnection.connection_probability'),
         'num_samples' : ref('l4_cortex_exc.L4ExcL4ExcConnection.num_samples'),
     },
 

@@ -20,13 +20,14 @@ if MPI:
     mpi_comm = MPI.COMM_WORLD
 MPI_ROOT = 0
 
-if True:
+if False:
     data_store,model = run_workflow('SSCorrelationConnectivity',SSCorrelationConnectivity,create_experiments)
+    data_store.save() 
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SSCorrelationConnectivity_A_____', 'store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SSCorrelationConnectivity_orig_N=5000_____', 'store_stimuli' : False}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 
    perform_analysis_and_visualization(data_store)
-   data_store.save() 
+#   data_store.save() 
