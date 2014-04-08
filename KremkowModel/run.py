@@ -22,8 +22,6 @@ if MPI:
     mpi_comm = MPI.COMM_WORLD
 MPI_ROOT = 0
 
-
-
 logger = mozaik.getMozaikLogger()
 
 if True:
