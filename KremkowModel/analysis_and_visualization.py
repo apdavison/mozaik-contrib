@@ -58,7 +58,7 @@ def perform_analysis_and_visualization(data_store):
         
         TrialVariability(dsv,ParameterSet({'vm': True,  'cond_exc': False, 'cond_inh': False})).analyse()
         
-        GSTA(param_filter_query(data_store,sheet_name='V1_Exc_L4',stimulus_name='InternalStimulus',direct_stimulation_name='Kick'),ParameterSet({'neurons' : [l4_exc], 'length' : 250.0 }),tags=['GSTA']).analyse()
+        GSTA(param_filter_query(data_store,sheet_name='V1_Exc_L4',stimulus_name='InternalStimulus',direct_stimulation_name='None'),ParameterSet({'neurons' : [l4_exc], 'length' : 250.0 }),tags=['GSTA']).analyse()
         GSTA(param_filter_query(data_store,sheet_name='V1_Exc_L4',st_name='FullfieldDriftingSinusoidalGrating',st_orientation=[0,numpy.pi/2]),ParameterSet({'neurons' : [l4_exc], 'length' : 250.0 }),tags=['GSTA']).analyse()
         
         #data_store.print_content(full_ADS=True)

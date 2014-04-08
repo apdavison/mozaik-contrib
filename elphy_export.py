@@ -84,7 +84,7 @@ def exportToElphy(data_store_location,elphy_export_location):
           os.makedirs(elphy_export_location)
               
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':data_store_location}))
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':data_store_location, 'store_stimuli' : False}))
     ps = MP.parameter_value_list([MP.MozaikParametrized.idd(s) for s in data_store.get_stimuli()],'name')
     for i,sn in enumerate(ps):
         for shn in data_store.sheets():

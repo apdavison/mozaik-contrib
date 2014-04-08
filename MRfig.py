@@ -21,6 +21,13 @@ class MRfig(Plotting):
         
           dsv_simple = self.datastore.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.SimpleSheetName,analysis_algorithm='ModulationRatio')
           dsv_complex = self.datastore.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.ComplexSheetName,analysis_algorithm='ModulationRatio')
+          
+          dsv_simple_v_F0 = self.datastore.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.SimpleSheetName,value_name='F0_Vm-Mean(VM)')
+          dsv_complex_v_F0 = self.datastore.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.ComplexSheetName,value_name='F0_Vm-Mean(VM)')
+          dsv_simple_v_F1 = self.datastore.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.SimpleSheetName,value_name='F1_Vm')
+          dsv_complex_v_F1 = self.datastore.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.ComplexSheetName,value_name='F1_Vm')
+          
+          
           print len(dsv_simple)
           assert len(dsv_simple) == 1
           assert len(dsv_complex) == 1
@@ -50,8 +57,10 @@ class MRfig(Plotting):
           three_tick_axis(ax.xaxis)
           remove_y_tick_labels()
           pylab.xlabel('Modulation ratio',fontsize=15)
+          
           for label in ax.get_xticklabels() + ax.get_yticklabels(): 
               label.set_fontsize(15) 
+          
           if self.plot_file_name:
                         pylab.savefig(self.plot_file_name)
         
