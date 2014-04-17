@@ -16,7 +16,7 @@ from mozaik.tools.mozaik_parametrized import MozaikParametrized
 from mozaik.tools.circ_stat import circular_dist
 from mozaik.visualization.simple_plot import StandardStyle
 import pylab
-
+from mozaik.controller import Global
 
 class KremkowOverviewFigure(Plotting):
     required_parameters = ParameterSet({
@@ -161,31 +161,31 @@ class ConductanceAndVmTuningSummary(Plotting):
             if self.parameters.many:
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond','F0_Inh_Cond'],sheet_name='V1_Exc_L4')
-                plots['F0a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[20:30]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[:2,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Exc_Cond contrast : 100' : '#FF0000' , 'F0_Exc_Cond contrast : 50' : '#FFACAC','F0_Inh_Cond contrast : 100' : '#0000FF' , 'F0_Inh_Cond contrast : 50' : '#ACACFF'}})
+                plots['F0a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[0:10]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[:2,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Exc_Cond contrast : 100' : '#FF0000' , 'F0_Exc_Cond contrast : 50' : '#FFACAC','F0_Inh_Cond contrast : 100' : '#0000FF' , 'F0_Inh_Cond contrast : 50' : '#ACACFF'}})
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond','F0_Inh_Cond'],sheet_name='V1_Exc_L4')
-                plots['F0b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[30:40]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[2:4,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Exc_Cond contrast : 100' : '#FF0000' , 'F0_Exc_Cond contrast : 50' : '#FFACAC','F0_Inh_Cond contrast : 100' : '#0000FF' , 'F0_Inh_Cond contrast : 50' : '#ACACFF'}})
+                plots['F0b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[10:20]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[2:4,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Exc_Cond contrast : 100' : '#FF0000' , 'F0_Exc_Cond contrast : 50' : '#FFACAC','F0_Inh_Cond contrast : 100' : '#0000FF' , 'F0_Inh_Cond contrast : 50' : '#ACACFF'}})
 
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Exc_Cond','F1_Inh_Cond'],sheet_name='V1_Exc_L4')
-                plots['F1a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[20:30]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[4:6,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Exc_Cond contrast : 100' : '#FF0000' , 'F1_Exc_Cond contrast : 50' : '#FFACAC','F1_Inh_Cond contrast : 100' : '#0000FF' , 'F1_Inh_Cond contrast : 50' : '#ACACFF'}})
+                plots['F1a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[0:10]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[4:6,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Exc_Cond contrast : 100' : '#FF0000' , 'F1_Exc_Cond contrast : 50' : '#FFACAC','F1_Inh_Cond contrast : 100' : '#0000FF' , 'F1_Inh_Cond contrast : 50' : '#ACACFF'}})
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Exc_Cond','F1_Inh_Cond'],sheet_name='V1_Exc_L4')
-                plots['F1b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[30:40]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[6:8,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Exc_Cond contrast : 100' : '#FF0000' , 'F1_Exc_Cond contrast : 50' : '#FFACAC','F1_Inh_Cond contrast : 100' : '#0000FF' , 'F1_Inh_Cond contrast : 50' : '#ACACFF'}})
+                plots['F1b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[10:20]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[6:8,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Exc_Cond contrast : 100' : '#FF0000' , 'F1_Exc_Cond contrast : 50' : '#FFACAC','F1_Inh_Cond contrast : 100' : '#0000FF' , 'F1_Inh_Cond contrast : 50' : '#ACACFF'}})
 
 
-                dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Vm'],sheet_name='V1_Exc_L4')
-                plots['VMF0a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[20:30]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[8:10,3:],{'y_label': None ,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Vm contrast : 100' : '#000000' , 'F0_Vm contrast : 50' : '#ACACAC'}})
+                dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Vm-Mean(VM)'],sheet_name='V1_Exc_L4')
+                plots['VMF0a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[0:10]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[8:10,3:],{'y_label': None ,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Vm contrast : 100' : '#000000' , 'F0_Vm contrast : 50' : '#ACACAC'}})
 
-                dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Vm'],sheet_name='V1_Exc_L4')
-                plots['VMF0b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[30:40]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[10:12,3:],{'y_label': None ,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Vm contrast : 100' : '#000000' , 'F0_Vm contrast : 50' : '#ACACAC'}})
+                dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Vm-Mean(VM)'],sheet_name='V1_Exc_L4')
+                plots['VMF0b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[10:20]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[10:12,3:],{'y_label': None ,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Vm contrast : 100' : '#000000' , 'F0_Vm contrast : 50' : '#ACACAC'}})
 
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Vm'],sheet_name='V1_Exc_L4')
-                plots['VMF1a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[20:30]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[12:14,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Vm contrast : 100' : '#000000' , 'F1_Vm contrast : 50' : '#ACACAC'}})
+                plots['VMF1a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[0:10]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[12:14,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Vm contrast : 100' : '#000000' , 'F1_Vm contrast : 50' : '#ACACAC'}})
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Vm'],sheet_name='V1_Exc_L4')
-                plots['VMF1b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[30:40]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[14:16,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Vm contrast : 100' : '#000000' , 'F1_Vm contrast : 50' : '#ACACAC'}})
+                plots['VMF1b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[10:20]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[14:16,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Vm contrast : 100' : '#000000' , 'F1_Vm contrast : 50' : '#ACACAC'}})
 
             else:
                 #dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond-Mean(ECond)','F0_Inh_Cond-Mean(ICond)'],sheet_name='V1_Exc_L4')
@@ -194,7 +194,8 @@ class ConductanceAndVmTuningSummary(Plotting):
                 #dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Exc_Cond','F1_Inh_Cond'],sheet_name='V1_Exc_L4')
                 #plots['F1'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[:5]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : False,'polar' : False})),gs[5:9,3:],{'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'contrast : 100' : '#FF0000' , 'contrast : 50' : '#FFACAC'}})
                 
-                neurons = [5,15,3,38,18,24]
+                neurons = [0,1,2,3,4,5]
+                #neurons = [5,15,3,38,18,24]
                 #neurons = [30,31,32,33,34,35,36,37,38,39,40]
                 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond-Mean(ECond)','F0_Inh_Cond-Mean(ICond)'],sheet_name='V1_Exc_L4')
@@ -271,9 +272,9 @@ class TrialToTrialVariabilityComparison(Plotting):
         #lets calculate the mean of trial-to-trial variances across the neurons in the datastore for gratings 
         dsv = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement',sheet_name='V1_Exc_L4',y_axis_name='Vm (no AP) trial-to-trial variance',ads_unique=True)
         ids = dsv.get_analysis_result()[0].ids
-        var_ni = numpy.mean([numpy.mean(1/numpy.sqrt(dsv.get_analysis_result()[0].get_asl_by_id(i).magnitude)) / sp[idd] for i in ids])
+        var_ni = numpy.mean([numpy.mean(1/numpy.sqrt(dsv.get_analysis_result()[0].get_asl_by_id(i).magnitude)) / sp[i] for i in ids])
         
-        plots['Bar'] = (BarComparisonPlot({"NI" : var_ni*100, "GR" : var_gr*100}),gs[:,:],{})
+        plots['Bar'] = (BarComparisonPlot({"NI" : var_ni*100.0, "GR" : var_gr*100.0}),gs[:,:],{})
         return plots
 
 
@@ -350,6 +351,10 @@ class SNRAnalysis(Plotting):
             ax = pylab.subplot(gs[3,1])            
             ax.imshow(snr,aspect='auto',origin='lower')
             pylab.xlabel('time')
+            
+            if self.plot_file_name:
+               pylab.savefig(Global.root_directory+self.plot_file_name)              
+            
             
         def gabor_wavelet(self,f,sf):
             sigma = 2.0/f
