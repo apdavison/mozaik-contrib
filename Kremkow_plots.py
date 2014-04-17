@@ -9,6 +9,8 @@ import mozaik.storage.queries as queries
 from mozaik.visualization.plotting import (Plotting, GSynPlot,
                                            VmPlot, ConductanceSignalListPlot,
                                            AnalogSignalListPlot,OverviewPlot,PerNeuronValueScatterPlot,PlotTuningCurve,PerNeuronValuePlot)
+                                           
+from mozaik.analysis.analysis import TrialToTrialCrossCorrelationOfPSTHandVM                                    
 from parameters import ParameterSet
 import matplotlib.gridspec as gridspec
 from mozaik.visualization.simple_plot import SpikeRasterPlot, SpikeHistogramPlot
@@ -16,6 +18,7 @@ from mozaik.tools.mozaik_parametrized import MozaikParametrized
 from mozaik.tools.circ_stat import circular_dist
 from mozaik.visualization.simple_plot import StandardStyle
 import pylab
+from mozaik.controller import Global
 
 
 class KremkowOverviewFigure(Plotting):
@@ -159,33 +162,32 @@ class ConductanceAndVmTuningSummary(Plotting):
         
         if True:
             if self.parameters.many:
+                dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond','F0_Inh_Cond'],sheet_name='V1_Exc_L4')
+                plots['F0a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[0:10]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[:2,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Exc_Cond contrast : 100' : '#FF0000' , 'F0_Exc_Cond contrast : 50' : '#FFACAC','F0_Inh_Cond contrast : 100' : '#0000FF' , 'F0_Inh_Cond contrast : 50' : '#ACACFF'}})
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond','F0_Inh_Cond'],sheet_name='V1_Exc_L4')
-                plots['F0a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[20:30]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[:2,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Exc_Cond contrast : 100' : '#FF0000' , 'F0_Exc_Cond contrast : 50' : '#FFACAC','F0_Inh_Cond contrast : 100' : '#0000FF' , 'F0_Inh_Cond contrast : 50' : '#ACACFF'}})
-
-                dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond','F0_Inh_Cond'],sheet_name='V1_Exc_L4')
-                plots['F0b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[30:40]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[2:4,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Exc_Cond contrast : 100' : '#FF0000' , 'F0_Exc_Cond contrast : 50' : '#FFACAC','F0_Inh_Cond contrast : 100' : '#0000FF' , 'F0_Inh_Cond contrast : 50' : '#ACACFF'}})
+                plots['F0b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[10:20]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[2:4,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Exc_Cond contrast : 100' : '#FF0000' , 'F0_Exc_Cond contrast : 50' : '#FFACAC','F0_Inh_Cond contrast : 100' : '#0000FF' , 'F0_Inh_Cond contrast : 50' : '#ACACFF'}})
 
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Exc_Cond','F1_Inh_Cond'],sheet_name='V1_Exc_L4')
-                plots['F1a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[20:30]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[4:6,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Exc_Cond contrast : 100' : '#FF0000' , 'F1_Exc_Cond contrast : 50' : '#FFACAC','F1_Inh_Cond contrast : 100' : '#0000FF' , 'F1_Inh_Cond contrast : 50' : '#ACACFF'}})
+                plots['F1a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[0:10]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[4:6,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Exc_Cond contrast : 100' : '#FF0000' , 'F1_Exc_Cond contrast : 50' : '#FFACAC','F1_Inh_Cond contrast : 100' : '#0000FF' , 'F1_Inh_Cond contrast : 50' : '#ACACFF'}})
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Exc_Cond','F1_Inh_Cond'],sheet_name='V1_Exc_L4')
-                plots['F1b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[30:40]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[6:8,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Exc_Cond contrast : 100' : '#FF0000' , 'F1_Exc_Cond contrast : 50' : '#FFACAC','F1_Inh_Cond contrast : 100' : '#0000FF' , 'F1_Inh_Cond contrast : 50' : '#ACACFF'}})
+                plots['F1b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[10:20]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[6:8,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Exc_Cond contrast : 100' : '#FF0000' , 'F1_Exc_Cond contrast : 50' : '#FFACAC','F1_Inh_Cond contrast : 100' : '#0000FF' , 'F1_Inh_Cond contrast : 50' : '#ACACFF'}})
 
 
-                dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Vm'],sheet_name='V1_Exc_L4')
-                plots['VMF0a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[20:30]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[8:10,3:],{'y_label': None ,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Vm contrast : 100' : '#000000' , 'F0_Vm contrast : 50' : '#ACACAC'}})
+                dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Vm-Mean(VM)'],sheet_name='V1_Exc_L4')
+                plots['VMF0a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[0:10]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[8:10,3:],{'y_label': None ,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Vm-Mean(VM) contrast : 100' : '#000000' , 'F0_Vm-Mean(VM) contrast : 50' : '#ACACAC'}})
 
-                dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Vm'],sheet_name='V1_Exc_L4')
-                plots['VMF0b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[30:40]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[10:12,3:],{'y_label': None ,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Vm contrast : 100' : '#000000' , 'F0_Vm contrast : 50' : '#ACACAC'}})
+                dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Vm-Mean(VM)'],sheet_name='V1_Exc_L4')
+                plots['VMF0b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[10:20]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[10:12,3:],{'y_label': None ,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Vm-Mean(VM) contrast : 100' : '#000000' , 'F0_Vm-Mean(VM) contrast : 50' : '#ACACAC'}})
 
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Vm'],sheet_name='V1_Exc_L4')
-                plots['VMF1a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[20:30]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[12:14,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Vm contrast : 100' : '#000000' , 'F1_Vm contrast : 50' : '#ACACAC'}})
+                plots['VMF1a'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[0:10]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[12:14,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Vm contrast : 100' : '#000000' , 'F1_Vm contrast : 50' : '#ACACAC'}})
 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Vm'],sheet_name='V1_Exc_L4')
-                plots['VMF1b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[30:40]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[14:16,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Vm contrast : 100' : '#000000' , 'F1_Vm contrast : 50' : '#ACACAC'}})
+                plots['VMF1b'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[10:20]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : True,'polar' : True})),gs[14:16,3:],{'y_label': None,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F1_Vm contrast : 100' : '#000000' , 'F1_Vm contrast : 50' : '#ACACAC'}})
 
             else:
                 #dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond-Mean(ECond)','F0_Inh_Cond-Mean(ICond)'],sheet_name='V1_Exc_L4')
@@ -238,13 +240,18 @@ class TrialToTrialVariabilityComparison(Plotting):
         
         var_gr = 0
         var_ni = 0
-        
+        std_gr = 0
+        std_ni = 0
+                
         orr = list(set([MozaikParametrized.idd(s).orientation for s in queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100).get_stimuli()]))        
         l4_exc_or = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L4')
         
         
         # lets calculate spont. activity trial to trial variability
         # we assume that the spontaneous activity had already the spikes removed
+        #queries.param_filter_query(self.datastore,st_name='InternalStimulus',st_direct_stimulation_name='None',sheet_name='V1_Exc_L4',ads_unique=True).print_content(full_ADS=True)
+        
+        
         dsv = queries.param_filter_query(self.datastore,st_name='InternalStimulus',st_direct_stimulation_name='None',sheet_name='V1_Exc_L4',analysis_algorithm='ActionPotentialRemoval',ads_unique=True)
         ids = dsv.get_analysis_result()[0].ids
         sp = {}
@@ -262,18 +269,21 @@ class TrialToTrialVariabilityComparison(Plotting):
         for i in ids:
             # find the or pereference of the neuron
             o = orr[numpy.argmin([circular_dist(o,l4_exc_or[0].get_value_by_id(i),numpy.pi) for o in orr])]
-            var_gr = var_gr + numpy.mean(1/numpy.sqrt(queries.param_filter_query(dsv,st_orientation=o,ads_unique=True).get_analysis_result()[0].get_asl_by_id(i).magnitude))/ sp[i]
+            a = numpy.mean(1/numpy.sqrt(queries.param_filter_query(dsv,st_orientation=o,ads_unique=True).get_analysis_result()[0].get_asl_by_id(i).magnitude))
+            var_gr = var_gr + a / sp[i]
+            std_gr = std_gr + a
         var_gr = var_gr / len(ids)
-        
+        std_gr = std_gr / len(ids)
         
         
         
         #lets calculate the mean of trial-to-trial variances across the neurons in the datastore for gratings 
         dsv = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement',sheet_name='V1_Exc_L4',y_axis_name='Vm (no AP) trial-to-trial variance',ads_unique=True)
         ids = dsv.get_analysis_result()[0].ids
-        var_ni = numpy.mean([numpy.mean(1/numpy.sqrt(dsv.get_analysis_result()[0].get_asl_by_id(i).magnitude)) / sp[idd] for i in ids])
+        var_ni = numpy.mean([numpy.mean(1/numpy.sqrt(dsv.get_analysis_result()[0].get_asl_by_id(i).magnitude)) / sp[i] for i in ids])
+        std_ni = numpy.mean([numpy.mean(1/numpy.sqrt(dsv.get_analysis_result()[0].get_asl_by_id(i).magnitude)) for i in ids])
         
-        plots['Bar'] = (BarComparisonPlot({"NI" : var_ni*100, "GR" : var_gr*100}),gs[:,:],{})
+        plots['Bar'] = (BarComparisonPlot({"NI" : var_ni, "GR" : var_gr, "STD SP" : numpy.mean(sp.values()), "STD NI" : std_ni, "STD GR" : std_gr}),gs[:,:],{})
         return plots
 
 
@@ -299,57 +309,91 @@ class SNRAnalysis(Plotting):
             gs.update(left=0.07, right=0.97, top=0.9, bottom=0.1)
             gs = gs[0,0]
             
-            gs = gridspec.GridSpecFromSubplotSpec(4, 2,subplot_spec=gs)
+            gs = gridspec.GridSpecFromSubplotSpec(4, 5,subplot_spec=gs)
 
             orr = list(set([MozaikParametrized.idd(s).orientation for s in queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100).get_stimuli()]))        
             l4_exc_or = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L4')
 
             
             col = orr[numpy.argmin([circular_dist(o,l4_exc_or[0].get_value_by_id(self.parameters.neuron),numpy.pi)  for o in orr])]
-            segs = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100,st_orientation=col,sheet_name='V1_Exc_L4').get_segments()
-            signals = [seg.get_vm(self.parameters.neuron) for seg in segs] 
+            #segs = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100,st_orientation=col,sheet_name='V1_Exc_L4').get_segments()
+            #signals = [seg.get_vm(self.parameters.neuron) for seg in segs] 
+            dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',sheet_name='V1_Exc_L4',st_contrast=100,analysis_algorithm='ActionPotentialRemoval',st_orientation=col)
+            assert queries.equal_ads_except(dsv,["st_trial"])
+            adss = dsv.get_analysis_result()
+            signals = [ads.get_asl_by_id(self.parameters.neuron) for ads in adss] 
             
             (signal,noise,snr) = self.wavelet_decomposition(signals)
             
-            ax = pylab.subplot(gs[0,0])            
+            ax = pylab.subplot(gs[0,0:2])            
             for s in signals:
                 ax.plot(s,c='k')
             pylab.ylabel('Vm')
             pylab.title("Gratings",fontsize=20)
             pylab.xlim(0,len(signals[0]))
             
-            ax = pylab.subplot(gs[1,0])            
+            ax = pylab.subplot(gs[1,0:2])            
             ax.imshow(signal,aspect='auto',origin='lower')
             pylab.ylabel('Signal')
              
-            ax = pylab.subplot(gs[2,0])            
+            ax = pylab.subplot(gs[2,0:2])            
             ax.imshow(noise,aspect='auto',origin='lower')
             pylab.ylabel('Noise')
 
-            ax = pylab.subplot(gs[3,0])            
+            ax = pylab.subplot(gs[3,0:2])            
             ax.imshow(snr,aspect='auto',origin='lower')
             pylab.ylabel('SNR')
             pylab.xlabel('time')
             
             
-            segs = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement',sheet_name='V1_Exc_L4').get_segments()
-            signals = [seg.get_vm(self.parameters.neuron) for seg in segs] 
-            (signal,noise,snr) = self.wavelet_decomposition(signals)
+            #segs = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement',sheet_name='V1_Exc_L4').get_segments()
+            #signals = [seg.get_vm(self.parameters.neuron) for seg in segs] 
+            dsv = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement',sheet_name='V1_Exc_L4',analysis_algorithm='ActionPotentialRemoval')
+            assert queries.equal_ads_except(dsv,["st_trial"])
+            adss = dsv.get_analysis_result()
+            signals = [ads.get_asl_by_id(self.parameters.neuron) for ads in adss] 
+           
+            (signal_ni,noise_ni,snr_ni) = self.wavelet_decomposition(signals)
             
-            ax = pylab.subplot(gs[0,1])            
+            ax = pylab.subplot(gs[0,2:4])            
             for s in signals:
                 ax.plot(s,c='k')
             pylab.xlim(0,len(signals[0]))                
             pylab.title("NI",fontsize=20)
-            ax = pylab.subplot(gs[1,1])            
-            ax.imshow(signal,aspect='auto',origin='lower')
+            ax = pylab.subplot(gs[1,2:4])            
+            ax.imshow(signal_ni,aspect='auto',origin='lower')
 
-            ax = pylab.subplot(gs[2,1])            
-            ax.imshow(noise,aspect='auto',origin='lower')
+            ax = pylab.subplot(gs[2,2:4])            
+            ax.imshow(noise_ni,aspect='auto',origin='lower')
 
-            ax = pylab.subplot(gs[3,1])            
-            ax.imshow(snr,aspect='auto',origin='lower')
+            ax = pylab.subplot(gs[3,2:4])            
+            ax.imshow(snr_ni,aspect='auto',origin='lower')
             pylab.xlabel('time')
+            
+            ax = pylab.subplot(gs[1,4])            
+            ax.plot(numpy.mean(signal,axis=1),label="GR")
+            ax.plot(numpy.mean(signal_ni,axis=1),label="NI")
+            ax.set_xscale('log')
+            ax.set_yscale('log')
+            pylab.legend()
+            
+            ax = pylab.subplot(gs[2,4])            
+            ax.plot(numpy.mean(noise,axis=1))
+            ax.plot(numpy.mean(noise_ni,axis=1))
+            ax.set_xscale('log')
+            ax.set_yscale('log')
+            
+            ax = pylab.subplot(gs[3,4])            
+            ax.plot(numpy.mean(snr,axis=1))
+            ax.plot(numpy.mean(snr_ni,axis=1))
+            ax.set_xscale('log')
+            ax.set_yscale('log')
+            pylab.xlabel("frequency")
+            
+            
+            if self.plot_file_name:
+               pylab.savefig(Global.root_directory+self.plot_file_name)              
+
             
         def gabor_wavelet(self,f,sf):
             sigma = 2.0/f
@@ -359,12 +403,13 @@ class SNRAnalysis(Plotting):
             return y
 
         def wavelet_decomposition(self,signals):
+            import scipy.signal
+            
             signal = []
             noise = []
             snr = []
             for freq in xrange(1,75):
-                print freq
-                dec = numpy.array([numpy.convolve(s-numpy.mean(s),self.gabor_wavelet(freq,s.sampling_rate.rescale(qt.Hz).magnitude),mode='same') for s in signals])
+                dec = numpy.array([scipy.signal.fftconvolve(s-numpy.mean(s),self.gabor_wavelet(freq,s.sampling_rate.rescale(qt.Hz).magnitude),mode='same') for s in signals])
                 l = len(dec[0])
                 l1 = len(signals[0])
                 if l > l1:
@@ -374,7 +419,71 @@ class SNRAnalysis(Plotting):
                 noise.append(numpy.mean(numpy.absolute(dec - m),axis=0))
                 snr.append(numpy.divide(signal[-1], noise[-1]))
             return (numpy.array(signal),numpy.array(noise),numpy.array(snr))
+
+
+class TrialCrossCorrelationAnalysis(Plotting):
+        """
+        Trial-to-trial crosscorrelation analysis replicated from figure 4D:
+        Baudot, P., Levy, M., Marre, O., Monier, C., Pananceau, M., & Frégnac, Y. (2013). Animation of natural scene by virtual eye-movements evokes high precision and low noise in V1 neurons. Frontiers in neural circuits, 7(December), 206. doi:10.3389/fncir.2013.00206
+        
+        Differences:
+        
+        Notes:
+        It assumes that the TrialToTrialCrossCorrelationOfPSTHandVM analysis was run on natural images, and that it was run with the same bin_lentgth for 
+        calculating of PSTH as below.
+        """
+        
+        required_parameters = ParameterSet({
+            'neurons': list,  # The list of neurons to include in the analysis
+        })
+
+        
+        def plot(self):
+            self.fig = pylab.figure(facecolor='w', **self.fig_param)
+            gs = gridspec.GridSpec(1, 1)
+            gs.update(left=0.07, right=0.97, top=0.9, bottom=0.1)
+            gs = gs[0,0]
+            gs = gridspec.GridSpecFromSubplotSpec(1, 2,subplot_spec=gs)
+
+            orr = list(set([MozaikParametrized.idd(s).orientation for s in queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100).get_stimuli()]))        
+            l4_exc_or = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L4')
             
+            #for neuron_idd in self.parameters.neurons:
+            #    col = orr[numpy.argmin([circular_dist(o,l4_exc_or[0].get_value_by_id(neuron_idd),numpy.pi)  for o in orr])]
+            #    dsv =  queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100,st_orientation=col,sheet_name='V1_Exc_L4')
+            #    TrialToTrialCrossCorrelationOfPSTHandVM(dsv,ParameterSet({'neurons' : [neuron_idd], 'bin_length' : 2.0 }),tags=['helper']).analyse()
+                
+            dsv =  queries.tag_based_query(self.datastore,['helper'])   
+            dsv1 =  queries.param_filter_query(dsv,y_axis_name='trial-trial cross-correlation of Vm')
+            vm_cc_gr = numpy.mean(numpy.array([asl.asl[0] for asl in dsv1.get_analysis_result()]),axis=0)
+            dsv1 =  queries.param_filter_query(dsv,y_axis_name='trial-trial cross-correlation of PSTH')
+            psth_cc_gr = numpy.mean(numpy.array([asl.asl[0] for asl in dsv1.get_analysis_result()]),axis=0)
 
 
-    
+            dsv =  queries.param_filter_query(self.datastore,y_axis_name='trial-trial cross-correlation of Vm',st_name="NaturalImageWithEyeMovement",ads_unique=True)
+            vm_cc_ni = numpy.mean(numpy.array(dsv.get_analysis_result()[0].asl),axis=0)
+            dsv =  queries.param_filter_query(self.datastore,y_axis_name='trial-trial cross-correlation of PSTH',st_name="NaturalImageWithEyeMovement",ads_unique=True)
+            psth_cc_ni = numpy.mean(numpy.array(dsv.get_analysis_result()[0].asl),axis=0)
+            
+            print len(numpy.linspace(-250,250,5001))
+            print len(vm_cc_gr[int(len(vm_cc_gr)/2)-2500:int(len(vm_cc_gr)/2)+2501])
+            
+            ax = pylab.subplot(gs[0,0])       
+            ax.plot(vm_cc_ni,label="vm_cc_ni")
+            #ax.plot(numpy.linspace(-250,250,5001),vm_cc_gr[int(len(vm_cc_gr)/2)-2500:int(len(vm_cc_gr)/2)+2501],label="vm_cc_gr")
+            #ax.plot(numpy.linspace(-250,250,5001),vm_cc_ni[int(len(vm_cc_ni)/2)-2500:int(len(vm_cc_ni)/2)+2501],label="vm_cc_ni")
+            #pylab.legend()
+            
+            #ax = pylab.subplot(gs[0,1])
+            #ax.plot(numpy.linspace(-250,250,251),psth_cc_gr[int(len(psth_cc_gr)/2)-125:int(len(psth_cc_gr)/2)+126],label="psth_cc_gr")
+            #ax.plot(numpy.linspace(-250,250,251),psth_cc_ni[int(len(psth_cc_ni)/2)-125:int(len(psth_cc_ni)/2)+126],label="psth_cc_ni")
+            
+            if self.plot_file_name:
+               pylab.savefig(Global.root_directory+self.plot_file_name)              
+                
+                
+                
+                
+                
+                
+                

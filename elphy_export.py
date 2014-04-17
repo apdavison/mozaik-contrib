@@ -74,8 +74,22 @@ def createFileFromSegmentList(list_segment, fileName):
     r = neo.io.ElphyIO( filename=fileName )
     r.write_block( bl )
 
+def addSpikes(segment,threshold):
+    ids = segment.get_stored_vm_ids()
+    
+    for i in ids:
+        vm = segment.get_vm(i)
+        for time in segment.get_spiketrain(i):
+            if vm[int(time/vm.sampling_period)+1].magnitude == threshold:
+               vm[int(time/vm.sampling_period)+1] = -20 * pq.mV
+            elif vm[int(time/vm.sampling_period)+2].magnitude == threshold: 
+               vm[int(time/vm.sampling_period)+2] = -20 * pq.mV 
+            else:
+               raise ValueError("The Vm was not at the threshold level after the spike as expected:  [%g , %g]  Tr: %g" % (vm[int(time/vm.sampling_period)+1],vm[int(time/vm.sampling_period)+2],threshold))
+            
+    
 
-def exportToElphy(data_store_location,elphy_export_location):
+def exportToElphy(data_store_location,elphy_export_location,sheets=None,threshold=None):
     import os.path
     if not os.path.isdir(elphy_export_location):
        if os.path.exists(elphy_export_location):
@@ -87,7 +101,9 @@ def exportToElphy(data_store_location,elphy_export_location):
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':data_store_location, 'store_stimuli' : False}))
     ps = MP.parameter_value_list([MP.MozaikParametrized.idd(s) for s in data_store.get_stimuli()],'name')
     for i,sn in enumerate(ps):
-        for shn in data_store.sheets():
+        if sheets == None: sheets = data_store.sheets() 
+        
+        for shn in sheets:
             dsv = param_filter_query(data_store,st_name = sn,sheet_name = shn)
             if dsv.get_stimuli() == []: continue
             varying_parameters = MP.varying_parameters([MP.MozaikParametrized.idd(s) for s in dsv.get_stimuli()])
@@ -104,6 +120,11 @@ def exportToElphy(data_store_location,elphy_export_location):
                     if pn != "trial":
                         filename += "#" + str(pn) + "=" + str(getattr(MP.MozaikParametrized.idd(st),pn)) 
                 path = os.path.join(elphy_export_location,filename+".dat")
+                
+                # if the threshold is defined add spikes into Vms
+                if threshold != None:
+                    for seg in segs : addSpikes(seg,threshold)
+                    
                 createFileFromSegmentList( segs, path)
                 print "Finished saving file %d/%d for sheet %s and %d-th stimulus" % (j+1,len(segments),shn,i)
                 # release segments from memory
