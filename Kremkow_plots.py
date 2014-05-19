@@ -10,7 +10,7 @@ from mozaik.visualization.plotting import (Plotting, GSynPlot,
                                            VmPlot, ConductanceSignalListPlot,
                                            AnalogSignalListPlot,OverviewPlot,PerNeuronValueScatterPlot,PlotTuningCurve,PerNeuronValuePlot)
                                            
-from mozaik.analysis.analysis import TrialToTrialCrossCorrelationOfPSTHandVM                                    
+#from mozaik.analysis.analysis import TrialToTrialCrossCorrelationOfPSTHandVM                                    
 from parameters import ParameterSet
 import matplotlib.gridspec as gridspec
 from mozaik.visualization.simple_plot import SpikeRasterPlot, SpikeHistogramPlot
@@ -124,7 +124,7 @@ class OrientationTuningSummary(Plotting):
 
         plots['InhORTCMean'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[11:15,:3],{'title' : None, 'y_label' : 'INH\nfiring rate (sp/s)','colors' : ['#FFAB00','#000000']})
         plots['InhORTC1'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[0:7]), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[11:13,3:],{'title' : None,'x_label' : None,'y_axis' : False,'x_axis' : False,'colors' : ['#FFAB00','#000000']})
-        plots['InhORTC2'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[7:14]), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[13:15,3:],{'title' : None,'y_axis' : None,'colors' : ['#FFAB00','#000000']})
+        #plots['InhORTC2'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[7:14]), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[13:15,3:],{'title' : None,'y_axis' : None,'colors' : ['#FFAB00','#000000']})
 
         
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH'],sheet_name=['V1_Exc_L4'])    
