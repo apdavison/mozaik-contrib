@@ -120,8 +120,14 @@ def perform_analysis_and_visualization_or(data_store):
     dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',st_orientation=0,st_contrast=100)   
     KremkowOverviewFigure(dsv,ParameterSet({'neuron' : analog_ids[10],'sheet_name' : 'V1_Exc_L4'}),fig_param={'dpi' : 100,'figsize': (25,12)},plot_file_name='ExcOverview11.png').plot()
 
+    dsv = param_filter_query(data_store,identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation')
+    mozaik.visualization.plotting.ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_exc, 'reversed' : True,'sheet_name' : 'V1_Exc_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='ExcConnections1.png').plot()
+    mozaik.visualization.plotting.ConnectivityPlot(data_store,ParameterSet({'neuron' : analog_ids[0], 'reversed' : True,'sheet_name' : 'V1_Exc_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='ExcConnections2.png').plot()
+    mozaik.visualization.plotting.ConnectivityPlot(data_store,ParameterSet({'neuron' : analog_ids[1], 'reversed' : True,'sheet_name' : 'V1_Exc_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='ExcConnections3.png').plot()
 
-
+    mozaik.visualization.plotting.ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_inh, 'reversed' : True,'sheet_name' : 'V1_Inh_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='InhConnections1.png').plot()
+    mozaik.visualization.plotting.ConnectivityPlot(data_store,ParameterSet({'neuron' : analog_ids_inh[0], 'reversed' : True,'sheet_name' : 'V1_Inh_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='InhConnections2.png').plot()
+    mozaik.visualization.plotting.ConnectivityPlot(data_store,ParameterSet({'neuron' : analog_ids_inh[1], 'reversed' : True,'sheet_name' : 'V1_Inh_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='InhConnections3.png').plot()
 
 
 
@@ -153,7 +159,7 @@ def perform_analysis_and_visualization(data_store):
                    'scatter' :  True,
                    'resolution' : 0
             }    
-
+        
             Kremkow_plots.ConductanceAndVmTuningSummary(data_store,ParameterSet({'many' : True}),fig_param={'dpi' : 100,'figsize': (25,16)},plot_file_name='Cond&VMTuning.png').plot()
             
             # self sustained plotting
@@ -209,10 +215,18 @@ def perform_analysis_and_visualization(data_store):
             SNRAnalysis(data_store,ParameterSet({"neuron" : analog_ids[0]}),fig_param={'dpi' : 100,'figsize': (25,12)},plot_file_name='SNR1.png').plot()                        
             SNRAnalysis(data_store,ParameterSet({"neuron" : analog_ids[1]}),fig_param={'dpi' : 100,'figsize': (25,12)},plot_file_name='SNR2.png').plot()                        
             SNRAnalysis(data_store,ParameterSet({"neuron" : analog_ids[2]}),fig_param={'dpi' : 100,'figsize': (25,12)},plot_file_name='SNR3.png').plot()                        
-        
+    
         
             Kremkow_plots.OrientationTuningSummary(data_store,ParameterSet({}),fig_param={'dpi' : 100,'figsize': (20,12)},plot_file_name='OrientationTuningSummary.png').plot()
             
+            dsv = param_filter_query(data_store,identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation')
+            ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_exc, 'reversed' : True,'sheet_name' : 'V1_Exc_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='ExcConnections1.png').plot()
+            ConnectivityPlot(data_store,ParameterSet({'neuron' : analog_ids[0], 'reversed' : True,'sheet_name' : 'V1_Exc_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='ExcConnections2.png').plot()
+            ConnectivityPlot(data_store,ParameterSet({'neuron' : analog_ids[1], 'reversed' : True,'sheet_name' : 'V1_Exc_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='ExcConnections3.png').plot()
+
+            ConnectivityPlot(data_store,ParameterSet({'neuron' : l4_inh, 'reversed' : True,'sheet_name' : 'V1_Inh_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='InhConnections1.png').plot()
+            ConnectivityPlot(data_store,ParameterSet({'neuron' : analog_ids_inh[0], 'reversed' : True,'sheet_name' : 'V1_Inh_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='InhConnections2.png').plot()
+            ConnectivityPlot(data_store,ParameterSet({'neuron' : analog_ids_inh[1], 'reversed' : True,'sheet_name' : 'V1_Inh_L4'}),pnv_dsv=dsv,fig_param={'dpi' : 100,'figsize': (34,12)},plot_file_name='InhConnections3.png').plot()
 
             dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating')    
             RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neurons' : spike_ids,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name='EvokedExcRaster.png').plot({'SpikeRasterPlot.group_trials':True})

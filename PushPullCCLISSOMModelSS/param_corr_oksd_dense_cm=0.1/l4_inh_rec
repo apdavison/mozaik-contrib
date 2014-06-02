@@ -7,10 +7,14 @@
                   }
     },
     "2" : {
-      'component' :  'mozaik.sheets.population_selector.RCRandomN',
+      'component' :  'mozaik.sheets.population_selector.SimilarAnnotationSelector',
       'variables' : ("spikes","v","gsyn_exc" , "gsyn_inh"),
       'params' :  {
                     'num_of_cells' : 15,
+                    'annotation' : 'LGNAfferentOrientation',
+                    'distance' : 0.3,
+                    'value': 0.0,
+                    'period' :  3.14159265359, 
                   }
     },
 }

@@ -107,15 +107,15 @@ class OrientationTuningSummary(Plotting):
         
         dsv1 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['LGNAfferentOrientation'],sheet_name='V1_Exc_L4')
         dsv2 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['orientation preference'],sheet_name='V1_Exc_L4',st_contrast=100,analysis_algorithm='GaussianTuningCurveFit')
-        plots['Or_corr_exc'] = (PerNeuronValueScatterPlot(dsv1+dsv2, ParameterSet({})),gs[0:4,3:5],{'x_label' : 'OR measured','y_label' : 'OR set','x_lim': (0.0,numpy.pi),'y_lim' : (0.0,numpy.pi), 'colormap' : None})
+        plots['Or_corr_exc'] = (PerNeuronValueScatterPlot(dsv1+dsv2, ParameterSet({})),gs[0:4,3:5],{'x_label' : 'OR measured','y_label' : 'OR set','x_lim': (0.0,numpy.pi),'y_lim' : (0.0,numpy.pi), 'cmp' : None})
         dsv1 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['LGNAfferentOrientation'],sheet_name='V1_Inh_L4')
         dsv2 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['orientation preference'],sheet_name='V1_Inh_L4',st_contrast=100,analysis_algorithm='GaussianTuningCurveFit')
-        plots['Or_corr_ing'] = (PerNeuronValueScatterPlot(dsv1+dsv2, ParameterSet({})),gs[0:4,5:7],{'x_label' : 'OR measured','y_label' : None,'x_lim': (0.0,numpy.pi),'y_lim' : (0.0,numpy.pi), 'colormap' : None})
+        plots['Or_corr_ing'] = (PerNeuronValueScatterPlot(dsv1+dsv2, ParameterSet({})),gs[0:4,5:7],{'x_label' : 'OR measured','y_label' : None,'x_lim': (0.0,numpy.pi),'y_lim' : (0.0,numpy.pi), 'cmp' : None})
         
         
                 
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH'],sheet_name=['V1_Exc_L4','V1_Inh_L4'])    
-        plots['HWHH'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({})),gs[0:4,8:12],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : 'HWHH Cont. 100%','y_label' : 'HWHH Cont. 50%', 'colormap' : None})
+        plots['HWHH'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({})),gs[0:4,8:12],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : 'HWHH Cont. 100%','y_label' : 'HWHH Cont. 50%', 'cmp' : None})
 
         dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate'])
         plots['ExcORTCMean'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids), 'sheet_name' : 'V1_Exc_L4','centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[6:10,:3],{'title' : None,'x_label' : None , 'y_label' : 'EXC\nfiring rate (sp/s)','colors' : ['#FFAB00','#000000']})
