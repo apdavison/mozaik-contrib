@@ -2,8 +2,7 @@ import sys
 from parameters import ParameterSet
 from mozaik.models import Model
 from mozaik.connectors.meta_connectors import GaborConnector
-from mozaik.connectors.modular import ModularSingleWeightProbabilisticConnector
-from mozaik.connectors.fast import UniformProbabilisticArborization
+from mozaik.connectors.modular import ModularSamplingProbabilisticConnector,ModularSingleWeightProbabilisticConnector
 from mozaik import load_component
 from mozaik.space import VisualRegion
 
@@ -42,8 +41,8 @@ class SelfSustainedPushPull(Model):
         ModularSingleWeightProbabilisticConnector(self,'V1L4InhL4InhConnectionRand',cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnectionRand).connect()
 
         # initialize projections
-        ModularSingleWeightProbabilisticConnector(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.l4_cortex_exc.L4ExcL4ExcConnection).connect()
-        ModularSingleWeightProbabilisticConnector(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.l4_cortex_exc.L4ExcL4InhConnection).connect()
-        ModularSingleWeightProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.l4_cortex_inh.L4InhL4ExcConnection).connect()
-        ModularSingleWeightProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnection).connect()
+        ModularSamplingProbabilisticConnector(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.l4_cortex_exc.L4ExcL4ExcConnection).connect()
+        ModularSamplingProbabilisticConnector(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.l4_cortex_exc.L4ExcL4InhConnection).connect()
+        ModularSamplingProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.l4_cortex_inh.L4InhL4ExcConnection).connect()
+        ModularSamplingProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnection).connect()
 

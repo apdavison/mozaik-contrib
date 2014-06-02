@@ -21,25 +21,32 @@ def perform_analysis_and_visualization(data_store):
                    'resolution' : 0
             }       
             
-            
-            #PSTH(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({'bin_length' : 5.0})).analyse()
-            #TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
-            #Irregularity(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
-            #NeuronToNeuronAnalogSignalCorrelations(param_filter_query(data_store,analysis_algorithm='PSTH'),ParameterSet({'convert_nan_to_zero' : True})).analyse()
-            #PopulationMean(data_store,ParameterSet({})).analyse()
+            PSTH(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({'bin_length' : 5.0})).analyse()
+            TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
+            Irregularity(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
+            Analog_MeanSTDAndFanoFactor(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
+            TrialAveragedVarianceAndVarianceRatioOfConductances(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
+            CrossCorrelationOfExcitatoryAndInhibitoryConductances(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({})).analyse()
+            #GSTA(param_filter_query(data_store,st_direct_stimulation_name="None"),ParameterSet({'length' : 50, 'neurons' : analog_ids})).analyse()
+            NeuronToNeuronAnalogSignalCorrelations(param_filter_query(data_store,analysis_algorithm='PSTH'),ParameterSet({'convert_nan_to_zero' : True})).analyse()
+            PopulationMean(data_store,ParameterSet({})).analyse()
             
             data_store.print_content(full_ADS=True)
+            
+            dsv = param_filter_query(data_store,analysis_algorithm=['PSTH','CrossCorrelationOfExcitatoryAndInhibitoryConductances'])    
+            dsv.remove_ads_from_datastore()
             
             OverviewPlot(data_store,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[0], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (19,12)},plot_file_name='ExcAnalog1.png').plot({'Vm_plot.y_lim' : (-80,-50),'Conductance_plot.y_lim' : (0,500.0)})
             OverviewPlot(data_store,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[1], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (19,12)},plot_file_name='ExcAnalog2.png').plot({'Vm_plot.y_lim' : (-80,-50),'Conductance_plot.y_lim' : (0,500.0)})    
             OverviewPlot(data_store,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[2], 'sheet_activity' : {}}),fig_param={'dpi' : 100,'figsize': (19,12)},plot_file_name='ExcAnalog3.png').plot({'Vm_plot.y_lim' : (-80,-50),'Conductance_plot.y_lim' : (0,500.0)})
             
-            
             RasterPlot(data_store,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neurons' : spike_ids,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (17,5)},plot_file_name='ExcRaster.png').plot({'SpikeRasterPlot.group_trials':True})
             RasterPlot(data_store,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neurons' : spike_ids_inh,'trial_averaged_histogram': False}),fig_param={'dpi' : 100,'figsize': (17,5)},plot_file_name='InhRaster.png').plot({'SpikeRasterPlot.group_trials':True})
-
-            import pylab
-            pylab.show()
+            
+            dsv = param_filter_query(data_store,y_axis_name='Conductance^2')    
+            AnalogSignalPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4'}),fig_param={'dpi' : 100,'figsize': (19,12)},plot_file_name='ExcExcCross.png').plot()
+            AnalogSignalPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4'}),fig_param={'dpi' : 100,'figsize': (19,12)},plot_file_name='ExcInhCross.png').plot()
+            data_store.save()
             
             
     

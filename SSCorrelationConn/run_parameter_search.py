@@ -15,8 +15,12 @@ import numpy
 
 #'l4_cortex_exc.AfferentConnection.base_weight' : numpy.linspace(0.0,0.0004,2)
 
-CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=16),{'l4_cortex_exc.L4ExcL4InhConnection.base_weight' : numpy.linspace(0.0007,0.0009,5),'l4_cortex_inh.L4InhL4ExcConnection.base_weight' : numpy.linspace(0.0007,0.002,5)}).run_parameter_search()
+#CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=16),{'l4_cortex_exc.L4ExcL4InhConnection.base_weight' : numpy.linspace(0.0007,0.0009,5),'l4_cortex_inh.L4InhL4ExcConnection.base_weight' : numpy.linspace(0.0007,0.002,5)}).run_parameter_search()
 #CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=16),{'l4_cortex_exc.L4ExcL4InhConnection.base_weight' : numpy.linspace(0.0007,0.0011,5),'l4_cortex_inh.L4InhL4ExcConnection.base_weight' : numpy.linspace(0.0005,0.002,5)}).run_parameter_search()
+
+#CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=16),{'l4_cortex_exc.L4ExcL4InhConnection.base_weight' : numpy.linspace(0.0007,0.0009,2),'l4_cortex_inh.L4InhL4ExcConnection.base_weight' : numpy.linspace(0.0015,0.002,2), 'l4_cortex_inh.ExcInhAfferentRatio' : numpy.linspace(1.8,1.2,3),'retina_lgn.params.gain' : (4.0,6.0)}).run_parameter_search()
+#CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=16),{'l4_cortex_exc.L4ExcL4ExcConnection.base_weight' : numpy.linspace(0.0005,0.00045,2),'l4_cortex_exc.L4ExcL4InhConnection.base_weight' : numpy.linspace(0.0007,0.00065,2),'l4_cortex_inh.L4InhL4ExcConnection.base_weight' : numpy.linspace(0.0006,0.0007,2), 'l4_cortex_inh.ExcInhAfferentRatio' : numpy.linspace(1.2,1.5,2),'retina_lgn.params.gain' : (4.0,6.0,8.0)}).run_parameter_search()
+CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=16),{'l4_cortex_exc.L4ExcL4ExcConnection.base_weight' : [0.00045],'l4_cortex_exc.L4ExcL4InhConnection.base_weight' : [0.0007],'l4_cortex_inh.L4InhL4ExcConnection.base_weight' : [0.0007,0.0008,0.0009], 'l4_cortex_inh.ExcInhAfferentRatio' : [1.0],'retina_lgn.params.gain' : [15.0],'l4_cortex_exc.rand_struct_ratio' : (0.5,0.6,0.7),'l4_cortex_exc.L4ExcL4ExcConnection.weight_functions.f1.params.sigma' : (0.5,0.7,1.0)}).run_parameter_search()
 
 
 #CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=16),{'l4_cortex_exc.L4ExcL4InhConnection.base_weight' : numpy.linspace(0.00042,0.00044,3),'l4_cortex_inh.L4InhL4ExcConnection.base_weight' : numpy.linspace(0.0048,0.0058,4),'l4_cortex_exc.AfferentConnection.num_samples' : numpy.linspace(20,90,2)}).run_parameter_search()

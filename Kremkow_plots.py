@@ -20,7 +20,6 @@ from mozaik.visualization.simple_plot import StandardStyle
 import pylab
 from mozaik.controller import Global
 
-
 class KremkowOverviewFigure(Plotting):
     required_parameters = ParameterSet({
         'sheet_name': str,  # the name of the sheet for which to plot
@@ -59,7 +58,7 @@ class KremkowOverviewFigure(Plotting):
         plots['Vm_Plot'] = (VmPlot(dsv1, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron})),gs[4:8, 6:14],p)                                  
         p = {}
         p['title']=None
-        plots['Gsyn_Plot'] = (GSynPlot(dsv1, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron})),gs[8:12, 6:14],p)                                  
+        plots['Gsyn_Plot'] = (GSynPlot(dsv1, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron,'spontaneous' : True})),gs[8:12, 6:14],p)                                  
         plots['GSTA_Plot'] = (ConductanceSignalListPlot(queries.TagBasedQuery(ParameterSet({'tags': ['GSTA']})).query(dsv1),ParameterSet({'normalize_individually': True, 'neurons' : [self.parameters.neuron]})),gs[7:10, 15:],{})                                  
         
         #p = {}
@@ -125,7 +124,7 @@ class OrientationTuningSummary(Plotting):
 
         plots['InhORTCMean'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[11:15,:3],{'title' : None, 'y_label' : 'INH\nfiring rate (sp/s)','colors' : ['#FFAB00','#000000']})
         plots['InhORTC1'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[0:7]), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[11:13,3:],{'title' : None,'x_label' : None,'y_axis' : False,'x_axis' : False,'colors' : ['#FFAB00','#000000']})
-        plots['InhORTC2'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[7:14]), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[13:15,3:],{'title' : None,'y_axis' : None,'colors' : ['#FFAB00','#000000']})
+        #plots['InhORTC2'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[7:14]), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[13:15,3:],{'title' : None,'y_axis' : None,'colors' : ['#FFAB00','#000000']})
 
         
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH'],sheet_name=['V1_Exc_L4'])    
@@ -200,7 +199,8 @@ class ConductanceAndVmTuningSummary(Plotting):
                 #dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Exc_Cond','F1_Inh_Cond'],sheet_name='V1_Exc_L4')
                 #plots['F1'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[:5]), 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : False,'pool' : False,'polar' : False})),gs[5:9,3:],{'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'contrast : 100' : '#FF0000' , 'contrast : 50' : '#FFACAC'}})
                 
-                neurons = [5,15,3,38,18,24]
+                neurons = [0,1,2,3,4,5]
+                #neurons = [5,15,3,38,18,24]
                 #neurons = [30,31,32,33,34,35,36,37,38,39,40]
                 
                 dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond-Mean(ECond)','F0_Inh_Cond-Mean(ICond)'],sheet_name='V1_Exc_L4')
@@ -285,9 +285,7 @@ class TrialToTrialVariabilityComparison(Plotting):
         dsv = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement',sheet_name='V1_Exc_L4',y_axis_name='Vm (no AP) trial-to-trial variance',ads_unique=True)
         ids = dsv.get_analysis_result()[0].ids
         var_ni = numpy.mean([numpy.mean(1/numpy.sqrt(dsv.get_analysis_result()[0].get_asl_by_id(i).magnitude)) / sp[i] for i in ids])
-        std_ni = numpy.mean([numpy.mean(1/numpy.sqrt(dsv.get_analysis_result()[0].get_asl_by_id(i).magnitude)) for i in ids])
-        
-        plots['Bar'] = (BarComparisonPlot({"NI" : var_ni, "GR" : var_gr, "STD SP" : numpy.mean(sp.values()), "STD NI" : std_ni, "STD GR" : std_gr}),gs[:,:],{})
+        plots['Bar'] = (BarComparisonPlot({"NI" : var_ni*100.0, "GR" : var_gr*100.0}),gs[:,:],{})
         return plots
 
 
@@ -485,10 +483,4 @@ class TrialCrossCorrelationAnalysis(Plotting):
             
             if self.plot_file_name:
                pylab.savefig(Global.root_directory+self.plot_file_name)              
-                
-                
-                
-                
-                
-                
                 
