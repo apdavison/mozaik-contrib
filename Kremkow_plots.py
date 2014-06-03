@@ -10,7 +10,7 @@ from mozaik.visualization.plotting import (Plotting, GSynPlot,
                                            VmPlot, ConductanceSignalListPlot,
                                            AnalogSignalListPlot,OverviewPlot,PerNeuronValueScatterPlot,PlotTuningCurve,PerNeuronValuePlot)
                                            
-#from mozaik.analysis.analysis import TrialToTrialCrossCorrelationOfPSTHandVM                                    
+from mozaik.analysis.analysis import TrialToTrialCrossCorrelationOfAnalogSignalList                                    
 from parameters import ParameterSet
 import matplotlib.gridspec as gridspec
 from mozaik.visualization.simple_plot import SpikeRasterPlot, SpikeHistogramPlot
@@ -58,7 +58,7 @@ class KremkowOverviewFigure(Plotting):
         plots['Vm_Plot'] = (VmPlot(dsv1, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron})),gs[4:8, 6:14],p)                                  
         p = {}
         p['title']=None
-        plots['Gsyn_Plot'] = (GSynPlot(dsv1, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron})),gs[8:12, 6:14],p)                                  
+        plots['Gsyn_Plot'] = (GSynPlot(dsv1, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron,'spontaneous' : True})),gs[8:12, 6:14],p)                                  
         plots['GSTA_Plot'] = (ConductanceSignalListPlot(queries.TagBasedQuery(ParameterSet({'tags': ['GSTA']})).query(dsv1),ParameterSet({'normalize_individually': True, 'neurons' : [self.parameters.neuron]})),gs[7:10, 15:],{})                                  
         
         #p = {}
@@ -148,6 +148,10 @@ class ConductanceAndVmTuningSummary(Plotting):
         analog_ids = sorted(queries.param_filter_query(self.datastore,sheet_name="V1_Exc_L4").get_analysis_result()[0].ids)
                 
         dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond-Mean(ECond)','F0_Inh_Cond-Mean(ICond)'],sheet_name='V1_Exc_L4')
+        for a in dsv.get_analysis_result():
+            print a.ids
+
+
         plots['MeanF0'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids), 'sheet_name' : 'V1_Exc_L4','centered'  : True,'mean' : True,'pool' : True,'polar' : True})),gs[:4,:3],{'legend' : True, 'y_label': 'F0(Cond)' ,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Exc_Cond-Mean(ECond) contrast : 100' : '#FF0000' , 'F0_Exc_Cond-Mean(ECond) contrast : 50' : '#FFACAC','F0_Inh_Cond-Mean(ICond) contrast : 100' : '#0000FF' , 'F0_Inh_Cond-Mean(ICond) contrast : 50' : '#ACACFF'}})
 
         dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F1_Exc_Cond','F1_Inh_Cond'],sheet_name='V1_Exc_L4')
@@ -257,7 +261,7 @@ class TrialToTrialVariabilityComparison(Plotting):
         sp = {}
         for idd in ids:
             s = dsv.get_analysis_result()[0].get_asl_by_id(idd).magnitude
-            sp[idd] = numpy.mean(1/numpy.std([s[i*int(len(s)/10):(i+1)*int(len(s)/10)]for i in xrange(0,10)],axis=0))
+            sp[idd] = numpy.mean(1/numpy.std([s[i*int(len(s)/10):(i+1)*int(len(s)/10)] for i in xrange(0,10)],axis=0))
 
             
             
@@ -446,42 +450,37 @@ class TrialCrossCorrelationAnalysis(Plotting):
             orr = list(set([MozaikParametrized.idd(s).orientation for s in queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100).get_stimuli()]))        
             l4_exc_or = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L4')
             
-            #for neuron_idd in self.parameters.neurons:
-            #    col = orr[numpy.argmin([circular_dist(o,l4_exc_or[0].get_value_by_id(neuron_idd),numpy.pi)  for o in orr])]
-            #    dsv =  queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100,st_orientation=col,sheet_name='V1_Exc_L4')
-            #    TrialToTrialCrossCorrelationOfPSTHandVM(dsv,ParameterSet({'neurons' : [neuron_idd], 'bin_length' : 2.0 }),tags=['helper']).analyse()
+            for neuron_idd in self.parameters.neurons:
+                col = orr[numpy.argmin([circular_dist(o,l4_exc_or[0].get_value_by_id(neuron_idd),numpy.pi)  for o in orr])]
+                dsv =  queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100,st_orientation=col,sheet_name='V1_Exc_L4',analysis_algorithm='ActionPotentialRemoval')
+                TrialToTrialCrossCorrelationOfAnalogSignalList(dsv,ParameterSet({'neurons' : [neuron_idd]}),tags=['helper']).analyse()
+                dsv =  queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100,st_orientation=col,sheet_name='V1_Exc_L4',analysis_algorithm='PSTH')
+                TrialToTrialCrossCorrelationOfAnalogSignalList(dsv,ParameterSet({'neurons' : [neuron_idd]}),tags=['helper']).analyse()
+                
                 
             dsv =  queries.tag_based_query(self.datastore,['helper'])   
-            dsv1 =  queries.param_filter_query(dsv,y_axis_name='trial-trial cross-correlation of Vm')
+            dsv1 =  queries.param_filter_query(dsv,y_axis_name='trial-trial cross-correlation of Vm (no AP)')
             vm_cc_gr = numpy.mean(numpy.array([asl.asl[0] for asl in dsv1.get_analysis_result()]),axis=0)
-            dsv1 =  queries.param_filter_query(dsv,y_axis_name='trial-trial cross-correlation of PSTH')
+            dsv1 =  queries.param_filter_query(dsv,y_axis_name='trial-trial cross-correlation of psth (bin=2.0)')
             psth_cc_gr = numpy.mean(numpy.array([asl.asl[0] for asl in dsv1.get_analysis_result()]),axis=0)
+            
 
-
-            dsv =  queries.param_filter_query(self.datastore,y_axis_name='trial-trial cross-correlation of Vm',st_name="NaturalImageWithEyeMovement",ads_unique=True)
+            dsv =  queries.param_filter_query(self.datastore,y_axis_name='trial-trial cross-correlation of Vm (no AP)',st_name="NaturalImageWithEyeMovement",ads_unique=True)
             vm_cc_ni = numpy.mean(numpy.array(dsv.get_analysis_result()[0].asl),axis=0)
-            dsv =  queries.param_filter_query(self.datastore,y_axis_name='trial-trial cross-correlation of PSTH',st_name="NaturalImageWithEyeMovement",ads_unique=True)
+            dsv =  queries.param_filter_query(self.datastore,y_axis_name='trial-trial cross-correlation of psth (bin=2.0)',st_name="NaturalImageWithEyeMovement",ads_unique=True)
             psth_cc_ni = numpy.mean(numpy.array(dsv.get_analysis_result()[0].asl),axis=0)
             
-            print len(numpy.linspace(-250,250,5001))
-            print len(vm_cc_gr[int(len(vm_cc_gr)/2)-2500:int(len(vm_cc_gr)/2)+2501])
-            
             ax = pylab.subplot(gs[0,0])       
-            ax.plot(vm_cc_ni,label="vm_cc_ni")
-            #ax.plot(numpy.linspace(-250,250,5001),vm_cc_gr[int(len(vm_cc_gr)/2)-2500:int(len(vm_cc_gr)/2)+2501],label="vm_cc_gr")
-            #ax.plot(numpy.linspace(-250,250,5001),vm_cc_ni[int(len(vm_cc_ni)/2)-2500:int(len(vm_cc_ni)/2)+2501],label="vm_cc_ni")
-            #pylab.legend()
+            ax.plot(numpy.linspace(-250,250,5001),vm_cc_gr[int(len(vm_cc_gr)/2)-2500:int(len(vm_cc_gr)/2)+2501],label="Gratings")
+            ax.plot(numpy.linspace(-250,250,5001),vm_cc_ni[int(len(vm_cc_ni)/2)-2500:int(len(vm_cc_ni)/2)+2501],label="Natural images")
+            pylab.legend()
+            pylab.title("VM")
             
-            #ax = pylab.subplot(gs[0,1])
-            #ax.plot(numpy.linspace(-250,250,251),psth_cc_gr[int(len(psth_cc_gr)/2)-125:int(len(psth_cc_gr)/2)+126],label="psth_cc_gr")
-            #ax.plot(numpy.linspace(-250,250,251),psth_cc_ni[int(len(psth_cc_ni)/2)-125:int(len(psth_cc_ni)/2)+126],label="psth_cc_ni")
+            ax = pylab.subplot(gs[0,1])
+            ax.plot(numpy.linspace(-250,250,251),psth_cc_gr[int(len(psth_cc_gr)/2)-125:int(len(psth_cc_gr)/2)+126],label="Gratings")
+            ax.plot(numpy.linspace(-250,250,251),psth_cc_ni[int(len(psth_cc_ni)/2)-125:int(len(psth_cc_ni)/2)+126],label="Natural images")
+            pylab.title("Spikes")
             
             if self.plot_file_name:
                pylab.savefig(Global.root_directory+self.plot_file_name)              
-                
-                
-                
-                
-                
-                
                 

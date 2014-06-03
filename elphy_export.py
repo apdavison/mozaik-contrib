@@ -76,17 +76,20 @@ def createFileFromSegmentList(list_segment, fileName):
 
 def addSpikes(segment,threshold):
     ids = segment.get_stored_vm_ids()
+
+    for a in segment.analogsignalarrays:
+        if a.name == 'v':
+           vs =a          
     
     for i in ids:
-        vm = segment.get_vm(i)
+        index = vs.annotations['source_ids'].tolist().index(i)
         for time in segment.get_spiketrain(i):
-            if vm[int(time/vm.sampling_period)+1].magnitude == threshold:
-               vm[int(time/vm.sampling_period)+1] = -20 * pq.mV
-            elif vm[int(time/vm.sampling_period)+2].magnitude == threshold: 
-               vm[int(time/vm.sampling_period)+2] = -20 * pq.mV 
+            if vs[int(time/vs.sampling_period)+1,index].magnitude == threshold:
+               vs[int(time/vs.sampling_period)+1,index] = -20 * pq.mV
+            elif vs[int(time/vs.sampling_period)+2,index].magnitude == threshold:
+                 vs[int(time/vs.sampling_period)+2,index] = -20 * pq.mV
             else:
                raise ValueError("The Vm was not at the threshold level after the spike as expected:  [%g , %g]  Tr: %g" % (vm[int(time/vm.sampling_period)+1],vm[int(time/vm.sampling_period)+2],threshold))
-            
     
 
 def exportToElphy(data_store_location,elphy_export_location,sheets=None,threshold=None):

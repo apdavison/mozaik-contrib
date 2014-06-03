@@ -9,7 +9,6 @@
                 'density': 64.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 5000.0,
-                    
                 'cell': {
                         'model': 'IF_cond_exp',
                         'params': {
@@ -41,6 +40,7 @@
                                                                                  }
                                                                    }
                                             },
+                'recording_interval'  :  1.0,                                            
                 'recorders' : url("param/l4_exc_rec"),
     },
 

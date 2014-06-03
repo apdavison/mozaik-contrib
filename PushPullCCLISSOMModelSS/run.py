@@ -38,10 +38,9 @@ if True:
     
 else: 
     setup_logging()
-    #data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SelfSustainedPushPull_EyeMovements_____','store_stimuli' : False}),replace=True)
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SelfSustainedPushPull_BIG_OR____','store_stimuli' : False}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 
-   perform_analysis_and_visualization(data_store)
-   data_store.save() 
+#   perform_analysis_and_visualization(data_store)
+#   data_store.save() 

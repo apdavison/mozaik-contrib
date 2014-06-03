@@ -13,13 +13,14 @@ def create_experiments(model):
                 NoStimulation(model,duration=2*5*3*8*7),
 
                 # Measure orientation tuning with full-filed sinusoidal gratins
-                MeasureOrientationTuningFullfield(model,num_orientations=12,spatial_frequency=0.8,temporal_frequency=6,grating_duration=285*7,contrasts=[50,100],num_trials=15),
+
+                MeasureOrientationTuningFullfield(model,num_orientations=8,spatial_frequency=0.8,temporal_frequency=6,grating_duration=285*7,contrasts=[50,100],num_trials=7),
 
                 # Measure response to natural image with simulated eye movement
-                MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=6*147*7,num_trials=15),
+                MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=6*147*7,num_trials=7),
 
                 #GRATINGS WITH EYEMOVEMENT
-                MeasureDriftingSineGratingWithEyeMovement(model,spatial_frequency=0.8,temporal_frequency=6,stimulus_duration=2*147*7,num_trials=15,contrast=100),
+                MeasureDriftingSineGratingWithEyeMovement(model,spatial_frequency=0.8,temporal_frequency=6,stimulus_duration=2*147*7,num_trials=7,contrast=100),
 
             ]
 
@@ -36,7 +37,7 @@ def create_experiments_or(model):
                            # Measure orientation tuning with full-filed sinusoidal gratins
                            MeasureOrientationTuningFullfield(model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=6,grating_duration=143*7,contrasts=[100],num_trials=1),
 	       
-	                   # Measure response to natural image with simulated eye movement
-        		   MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=2*147*7,num_trials=1),
+                           # Measure response to natural image with simulated eye movement
+                           MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=2*147*7,num_trials=1),
 
             ]
