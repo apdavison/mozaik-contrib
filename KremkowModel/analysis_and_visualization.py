@@ -9,7 +9,7 @@ from mozaik.storage.queries import *
 from mozaik.storage.datastore import PickledDataStore
 from mozaik.tools.circ_stat import circular_dist
 import sys
-sys.path.append('/home/jan/projects/mozaik/contrib')
+sys.path.append('/home/do/mozaik/mozaik-contrib')
 from Kremkow_plots import *
 
 def perform_analysis_and_visualization(data_store):
@@ -38,7 +38,7 @@ def perform_analysis_and_visualization(data_store):
         print "Prefered phase of plotted inh neurons:"
         print l4_exc_phase[0].get_value_by_id(l4_exc)
     
-    if True:
+    if False:
             #data_store.remove_ads_from_datastore()
             
             dsv = param_filter_query(data_store,sheet_name='V1_Exc_L4')
@@ -74,9 +74,6 @@ def perform_analysis_and_visualization(data_store):
             dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=['V1_Exc_L4','V1_Inh_L4'])  
             PeriodicTuningCurvePreferenceAndSelectivity_VectorAverage(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
         
-            dsv = param_filter_query(data_store,st_name='InternalStimulus',sheet_name='V1_Exc_L4')
-            Analog_MeanSTDAndFanoFactor(dsv,ParameterSet({})).analyse()
-
             pnv = param_filter_query(data_store,st_name='InternalStimulus',sheet_name='V1_Exc_L4',analysis_algorithm=['Analog_MeanSTDAndFanoFactor'],value_name='Mean(ECond)',st_direct_stimulation_name='None').get_analysis_result()[0]
             dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',sheet_name='V1_Exc_L4',analysis_algorithm=['Analog_F0andF1'],value_name='F0_Exc_Cond')
             SubtractPNVfromPNVS(pnv,dsv,ParameterSet({})).analyse()
@@ -94,8 +91,10 @@ def perform_analysis_and_visualization(data_store):
 
             data_store.save()
     
-        
-    if False: # PLOTTING
+    dsv = param_filter_query(data_store,analysis_algorithm='TrialToTrialCrossCorrelationOfAnalogSignalList')                
+    dsv.print_content(full_ADS=True)
+
+    if True: # PLOTTING
         TrialCrossCorrelationAnalysis(data_store,ParameterSet({'neurons' : list(analog_ids)}),fig_param={"dpi" : 100,"figsize": (25,12)},plot_file_name="trial-to-trial-cross-correlation.png").plot()
         SNRAnalysis(data_store,ParameterSet({"neuron" : analog_ids[0]}),fig_param={'dpi' : 100,'figsize': (25,12)},plot_file_name='SNR1.png').plot()                        
         SNRAnalysis(data_store,ParameterSet({"neuron" : analog_ids[1]}),fig_param={'dpi' : 100,'figsize': (25,12)},plot_file_name='SNR2.png').plot()                        
