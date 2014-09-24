@@ -6,7 +6,7 @@ import quantities as qt
 import numpy
 import numpy.random
 import mozaik.storage.queries as queries
-from mozaik.visualization.plotting import (Plotting, GSynPlot,
+from mozaik.visualization.plotting import (Plotting, GSynPlot,RasterPlot,PerNeuronAnalogSignalScatterPlot,
                                            VmPlot, ConductanceSignalListPlot,
                                            AnalogSignalListPlot,OverviewPlot,PerNeuronValueScatterPlot,PlotTuningCurve,PerNeuronValuePlot)
                                            
@@ -46,16 +46,17 @@ class KremkowOverviewFigure(Plotting):
         plots['LGN_SHP2'] = (SpikeHistogramPlot(lgn_spikes_b),gs[10:11, 0:5],{'colors':['#FACC2E', '#0080FF']})
                      
         dsv1 = queries.param_filter_query(self.datastore,sheet_name=self.parameters.sheet_name)
-        sp = [[[s.get_spiketrain(self.parameters.neuron)] for s in dsv1.get_segments()]]
+        #print self.parameters.neuron
+        #sp = [[[s.get_spiketrain(self.parameters.neuron)] for s in dsv1.get_segments()]]
         
-        plots['V1_SRP1'] = (SpikeRasterPlot(sp),gs[:3, 6:14],{'x_axis' : False, 'x_label': None})
-        plots['V1_SHP1'] = (SpikeRasterPlot(sp),gs[:3, 6:14],{'x_axis' : False, 'x_label': None})
+        plots['V1_SRP1'] = (RasterPlot(dsv1,ParameterSet({'sheet_name' : self.parameters.sheet_name, 'spontaneous' : True,'neurons' : [self.parameters.neuron],'trial_averaged_histogram': False})),gs[:3, 6:14],{'x_axis' : False, 'x_label': None})
+        plots['V1_SHP1'] = (RasterPlot(dsv1,ParameterSet({'sheet_name' :self.parameters.sheet_name, 'spontaneous' : True,'neurons' : [self.parameters.neuron],'trial_averaged_histogram': False})),gs[:3, 6:14],{'x_axis' : False, 'x_label': None})
 
         p = {}
         p['title']=None
         p['x_axis']=None
         p['x_label']=None
-        plots['Vm_Plot'] = (VmPlot(dsv1, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron})),gs[4:8, 6:14],p)                                  
+        plots['Vm_Plot'] = (VmPlot(dsv1, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron, 'spontaneous' : True})),gs[4:8, 6:14],p)                                  
         p = {}
         p['title']=None
         plots['Gsyn_Plot'] = (GSynPlot(dsv1, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron,'spontaneous' : True})),gs[8:12, 6:14],p)                                  
@@ -83,11 +84,11 @@ class StimulusResponseComparison(Plotting):
         l4_exc_or = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L4')
         
         dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_orientation=orr[numpy.argmin([circular_dist(o,l4_exc_or[0].get_value_by_id(self.parameters.neuron),numpy.pi)  for o in orr])],st_contrast=100)             
-        plots['Gratings'] = (OverviewPlot(dsv, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron, 'sheet_activity' : {}})),gs[0:2,:],{'x_label': None})
+        plots['Gratings'] = (OverviewPlot(dsv, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron,'spontaneous' : True, 'sheet_activity' : {}})),gs[0:2,:],{'x_label': None})
         dsv = queries.param_filter_query(self.datastore,st_name='DriftingGratingWithEyeMovement')            
-        plots['GratingsWithEM'] = (OverviewPlot(dsv, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron, 'sheet_activity' : {}})),gs[2:4,:],{})
+        plots['GratingsWithEM'] = (OverviewPlot(dsv, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron, 'spontaneous' : True,'sheet_activity' : {}})),gs[2:4,:],{})
         dsv = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement')            
-        plots['NIwEM'] = (OverviewPlot(dsv, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron, 'sheet_activity' : {}})),gs[4:6,:],{'x_label': None})
+        plots['NIwEM'] = (OverviewPlot(dsv, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron,'spontaneous' : True, 'sheet_activity' : {}})),gs[4:6,:],{'x_label': None})
         
         
         return plots
@@ -106,15 +107,15 @@ class OrientationTuningSummary(Plotting):
         analog_ids_inh = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name="V1_Inh_L4").get_segments()[0].get_stored_esyn_ids()))
         
         dsv1 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['LGNAfferentOrientation'],sheet_name='V1_Exc_L4')
-        dsv2 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['orientation preference'],sheet_name='V1_Exc_L4',st_contrast=100,analysis_algorithm='GaussianTuningCurveFit')
+        dsv2 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['orientation preference of Firing rate'],sheet_name='V1_Exc_L4',st_contrast=100,analysis_algorithm='GaussianTuningCurveFit')
         plots['Or_corr_exc'] = (PerNeuronValueScatterPlot(dsv1+dsv2, ParameterSet({})),gs[0:4,3:5],{'x_label' : 'OR measured','y_label' : 'OR set','x_lim': (0.0,numpy.pi),'y_lim' : (0.0,numpy.pi), 'cmp' : None})
         dsv1 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['LGNAfferentOrientation'],sheet_name='V1_Inh_L4')
-        dsv2 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['orientation preference'],sheet_name='V1_Inh_L4',st_contrast=100,analysis_algorithm='GaussianTuningCurveFit')
+        dsv2 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['orientation preference of Firing rate'],sheet_name='V1_Inh_L4',st_contrast=100,analysis_algorithm='GaussianTuningCurveFit')
         plots['Or_corr_ing'] = (PerNeuronValueScatterPlot(dsv1+dsv2, ParameterSet({})),gs[0:4,5:7],{'x_label' : 'OR measured','y_label' : None,'x_lim': (0.0,numpy.pi),'y_lim' : (0.0,numpy.pi), 'cmp' : None})
         
         
                 
-        dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH'],sheet_name=['V1_Exc_L4','V1_Inh_L4'])    
+        dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=['V1_Exc_L4','V1_Inh_L4'])    
         plots['HWHH'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({})),gs[0:4,8:12],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : 'HWHH Cont. 100%','y_label' : 'HWHH Cont. 50%', 'cmp' : None})
 
         dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate'])
@@ -127,9 +128,9 @@ class OrientationTuningSummary(Plotting):
         #plots['InhORTC2'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[7:14]), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[13:15,3:],{'title' : None,'y_axis' : None,'colors' : ['#FFAB00','#000000']})
 
         
-        dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH'],sheet_name=['V1_Exc_L4'])    
+        dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=['V1_Exc_L4'])    
         plots['HWHHHistogramExc'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[17:,1:7],{'title' : 'Excitatory' , 'x_lim' : (0.0,50.0), 'x_label' : 'HWHH'})
-        dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH'],sheet_name=['V1_Inh_L4'])    
+        dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=['V1_Inh_L4'])    
         plots['HWHHHistogramInh'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[17:,8:14],{'title' : 'Inhibitory' , 'x_lim' : (0.0,50.0), 'x_label' : 'HWHH'})
 
         return plots
@@ -148,9 +149,6 @@ class ConductanceAndVmTuningSummary(Plotting):
         analog_ids = sorted(queries.param_filter_query(self.datastore,sheet_name="V1_Exc_L4").get_analysis_result()[0].ids)
                 
         dsv = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['F0_Exc_Cond-Mean(ECond)','F0_Inh_Cond-Mean(ICond)'],sheet_name='V1_Exc_L4')
-        for a in dsv.get_analysis_result():
-            print a.ids
-
 
         plots['MeanF0'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids), 'sheet_name' : 'V1_Exc_L4','centered'  : True,'mean' : True,'pool' : True,'polar' : True})),gs[:4,:3],{'legend' : True, 'y_label': 'F0(Cond)' ,'title' : None, 'x_ticks' : None, 'x_label' : None,'colors': {'F0_Exc_Cond-Mean(ECond) contrast : 100' : '#FF0000' , 'F0_Exc_Cond-Mean(ECond) contrast : 50' : '#FFACAC','F0_Inh_Cond-Mean(ICond) contrast : 100' : '#0000FF' , 'F0_Inh_Cond-Mean(ICond) contrast : 50' : '#ACACFF'}})
 
@@ -239,8 +237,7 @@ class TrialToTrialVariabilityComparison(Plotting):
 
     def subplot(self, subplotspec):
         plots = {}
-        gs = gridspec.GridSpecFromSubplotSpec(6, 18, subplot_spec=subplotspec,
-                                              hspace=1.0, wspace=1.0)
+        gs = gridspec.GridSpecFromSubplotSpec(6, 18, subplot_spec=subplotspec,hspace=1.0, wspace=1.0)
         
         var_gr = 0
         var_ni = 0
@@ -261,13 +258,13 @@ class TrialToTrialVariabilityComparison(Plotting):
         sp = {}
         for idd in ids:
             s = dsv.get_analysis_result()[0].get_asl_by_id(idd).magnitude
-            sp[idd] = numpy.mean(1/numpy.std([s[i*int(len(s)/10):(i+1)*int(len(s)/10)] for i in xrange(0,10)],axis=0))
+            sp[idd] = numpy.mean(1/numpy.std([s[i*int(len(s)/10):(i+1)*int(len(s)/10)] for i in xrange(0,10)],axis=0,ddof=1))
 
             
             
         #lets calculate the mean of trial-to-trial variances across the neurons in the datastore for gratings 
         dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',sheet_name='V1_Exc_L4',st_contrast=100,analysis_algorithm='TrialVariability',y_axis_name='Vm (no AP) trial-to-trial variance')
-        assert queries.equal_ads_except(dsv, ['stimulus_id'])
+        assert queries.equal_ads(dsv, except_params=['stimulus_id'])
         ids = dsv.get_analysis_result()[0].ids
         
         for i in ids:
@@ -321,7 +318,7 @@ class SNRAnalysis(Plotting):
             #segs = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100,st_orientation=col,sheet_name='V1_Exc_L4').get_segments()
             #signals = [seg.get_vm(self.parameters.neuron) for seg in segs] 
             dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',sheet_name='V1_Exc_L4',st_contrast=100,analysis_algorithm='ActionPotentialRemoval',st_orientation=col)
-            assert queries.equal_ads_except(dsv,["st_trial"])
+            assert queries.ads_with_equal_stimuli(dsv,except_params=["trial"])
             adss = dsv.get_analysis_result()
             signals = [ads.get_asl_by_id(self.parameters.neuron) for ads in adss] 
             
@@ -333,6 +330,7 @@ class SNRAnalysis(Plotting):
             pylab.ylabel('Vm')
             pylab.title("Gratings",fontsize=20)
             pylab.xlim(0,len(signals[0]))
+            pylab.ylim(-80,-50)
             
             ax = pylab.subplot(gs[1,0:2])            
             ax.imshow(signal,aspect='auto',origin='lower')
@@ -351,7 +349,7 @@ class SNRAnalysis(Plotting):
             #segs = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement',sheet_name='V1_Exc_L4').get_segments()
             #signals = [seg.get_vm(self.parameters.neuron) for seg in segs] 
             dsv = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement',sheet_name='V1_Exc_L4',analysis_algorithm='ActionPotentialRemoval')
-            assert queries.equal_ads_except(dsv,["st_trial"])
+            assert queries.ads_with_equal_stimuli(dsv,except_params=["trial"])
             adss = dsv.get_analysis_result()
             signals = [ads.get_asl_by_id(self.parameters.neuron) for ads in adss] 
            
@@ -361,6 +359,7 @@ class SNRAnalysis(Plotting):
             for s in signals:
                 ax.plot(s,c='k')
             pylab.xlim(0,len(signals[0]))                
+            pylab.ylim(-80,-50)
             pylab.title("NI",fontsize=20)
             ax = pylab.subplot(gs[1,2:4])            
             ax.imshow(signal_ni,aspect='auto',origin='lower')
@@ -431,12 +430,13 @@ class TrialCrossCorrelationAnalysis(Plotting):
         Differences:
         
         Notes:
-        It assumes that the TrialToTrialCrossCorrelationOfPSTHandVM analysis was run on natural images, and that it was run with the same bin_lentgth for 
-        calculating of PSTH as below.
+        It assumes that the TrialToTrialCrossCorrelationOfPSTHandVM analysis was run on natural images, and that it was run with the 2.0 ms  bin lentgth for calculating of PSTH
+        and that the optimal preferred orientation for all the neurons for which the .
         """
         
         required_parameters = ParameterSet({
             'neurons': list,  # The list of neurons to include in the analysis
+            'window_length' : int, #ms
         })
 
         
@@ -459,28 +459,81 @@ class TrialCrossCorrelationAnalysis(Plotting):
                 
                 
             dsv =  queries.tag_based_query(self.datastore,['helper'])   
-            dsv1 =  queries.param_filter_query(dsv,y_axis_name='trial-trial cross-correlation of Vm (no AP)')
+            dsv1 =  queries.param_filter_query(dsv,y_axis_name='trial-trial cross-correlation of Vm (no AP)',st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100,st_orientation=col,sheet_name='V1_Exc_L4')
             vm_cc_gr = numpy.mean(numpy.array([asl.asl[0] for asl in dsv1.get_analysis_result()]),axis=0)
             dsv1 =  queries.param_filter_query(dsv,y_axis_name='trial-trial cross-correlation of psth (bin=2.0)')
             psth_cc_gr = numpy.mean(numpy.array([asl.asl[0] for asl in dsv1.get_analysis_result()]),axis=0)
             
-
+            
+            #queries.param_filter_query(self.datastore,analysis_algorithm='TrialToTrialCrossCorrelationOfAnalogSignalList').print_content(full_ADS=True)
+            
             dsv =  queries.param_filter_query(self.datastore,y_axis_name='trial-trial cross-correlation of Vm (no AP)',st_name="NaturalImageWithEyeMovement",ads_unique=True)
             vm_cc_ni = numpy.mean(numpy.array(dsv.get_analysis_result()[0].asl),axis=0)
             dsv =  queries.param_filter_query(self.datastore,y_axis_name='trial-trial cross-correlation of psth (bin=2.0)',st_name="NaturalImageWithEyeMovement",ads_unique=True)
             psth_cc_ni = numpy.mean(numpy.array(dsv.get_analysis_result()[0].asl),axis=0)
             
+            z = int(min(self.parameters.window_length,len(vm_cc_gr-1)/2,len(vm_cc_ni-1)/2)/2)*2
+                
             ax = pylab.subplot(gs[0,0])       
-            ax.plot(numpy.linspace(-250,250,5001),vm_cc_gr[int(len(vm_cc_gr)/2)-2500:int(len(vm_cc_gr)/2)+2501],label="Gratings")
-            ax.plot(numpy.linspace(-250,250,5001),vm_cc_ni[int(len(vm_cc_ni)/2)-2500:int(len(vm_cc_ni)/2)+2501],label="Natural images")
+            ax.plot(numpy.linspace(-z,z,2*z+1),vm_cc_gr[int(len(vm_cc_gr)/2)-z:int(len(vm_cc_gr)/2)+z+1],label="Gratings")
+            ax.plot(numpy.linspace(-z,z,2*z+1),vm_cc_ni[int(len(vm_cc_ni)/2)-z:int(len(vm_cc_ni)/2)+z+1],label="Natural images")
             pylab.legend()
             pylab.title("VM")
+            pylab.xlabel("time (ms)")
+            pylab.ylabel("corr coef")
             
             ax = pylab.subplot(gs[0,1])
-            ax.plot(numpy.linspace(-250,250,251),psth_cc_gr[int(len(psth_cc_gr)/2)-125:int(len(psth_cc_gr)/2)+126],label="Gratings")
-            ax.plot(numpy.linspace(-250,250,251),psth_cc_ni[int(len(psth_cc_ni)/2)-125:int(len(psth_cc_ni)/2)+126],label="Natural images")
+            ax.plot(numpy.linspace(-z,z,z+1),psth_cc_gr[int(len(psth_cc_gr)/2)-z/2:int(len(psth_cc_gr)/2)+z/2+1],label="Gratings")
+            ax.plot(numpy.linspace(-z,z,z+1),psth_cc_ni[int(len(psth_cc_ni)/2)-z/2:int(len(psth_cc_ni)/2)+z/2+1],label="Natural images")
+            pylab.legend()
             pylab.title("Spikes")
-            
+            pylab.xlabel("time (ms)")
             if self.plot_file_name:
                pylab.savefig(Global.root_directory+self.plot_file_name)              
                 
+
+
+class FanoFactor_Baudot_et_al(Plotting):
+    """
+    Fano factor analysis replicated from figure 4C:
+    Baudot, P., Levy, M., Marre, O., Monier, C., Pananceau, M., & Frégnac, Y. (2013). Animation of natural scene by virtual eye-movements evokes high precision and low noise in V1 neurons. Frontiers in neural circuits, 7(December), 206. doi:10.3389/fncir.2013.00206
+    
+    Notes:
+    ------
+    It assumes all neurons for which Vm was recorded had 0 degree orientation preference!!!!
+    """
+
+    def subplot(self, subplotspec):
+        plots = {}
+        gs = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=subplotspec,hspace=1.0, wspace=1.0)
+
+        dsv = queries.param_filter_query(self.datastore,value_name='Fano Factor (spike count (bin=13.0))')   
+        a= queries.param_filter_query(dsv,analysis_algorithm='TrialToTrialFanoFactorOfAnalogSignal',st_name="NaturalImageWithEyeMovement").get_analysis_result()[0].values
+        b= queries.param_filter_query(dsv,analysis_algorithm='TrialToTrialFanoFactorOfAnalogSignal',st_name="FullfieldDriftingSinusoidalGrating",st_orientation=0).get_analysis_result()[0].values
+        
+        a = a[~numpy.isnan(a)]
+        b = b[~numpy.isnan(b)]
+        
+        plots['Bar'] = (BarComparisonPlot({"NI" : numpy.mean(a), "GR" : numpy.mean(b)}),gs[:,:],{})
+        return plots
+
+
+
+class MeanVsVarainceOfVM(Plotting):
+    """
+    Shows the realtionship between the trial-to-trial mean and varaince of the Vm, after spike removal.
+    """
+    
+    required_parameters = ParameterSet({
+            'neurons': list,  # The list of neurons to include in the analysis
+        })
+
+    def subplot(self, subplotspec):
+        plots = {}
+        gs = gridspec.GridSpecFromSubplotSpec(20, 1, subplot_spec=subplotspec,hspace=1.0, wspace=1.0)
+        
+        dsv = queries.param_filter_query(self.datastore,y_axis_name=['Vm (no AP) trial-to-trial mean','Vm (no AP) trial-to-trial variance'],st_name="NaturalImageWithEyeMovement")
+        plots['plot1'] = (PerNeuronAnalogSignalScatterPlot(dsv,ParameterSet({'neurons' : self.parameters.neurons})),gs[2:10,0],{})
+        dsv = queries.param_filter_query(self.datastore,y_axis_name=['Vm (no AP) trial-to-trial mean','Vm (no AP) trial-to-trial variance'],st_name="FullfieldDriftingSinusoidalGrating",st_orientation=0,st_contrast=100)
+        plots['plot2'] = (PerNeuronAnalogSignalScatterPlot(dsv,ParameterSet({'neurons' : self.parameters.neurons})),gs[12:,0],{})
+        return plots
