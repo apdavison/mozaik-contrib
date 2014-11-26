@@ -1,13 +1,12 @@
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
-from NeuroTools.parameters import ParameterSet
-from mozaik.models.model import Model
+from parameters import ParameterSet
+from mozaik.models import Model
 from mozaik.connectors.meta_connectors import GaborConnector
-from mozaik.connectors.modular_connectors import ModularSingleWeightProbabilisticConnector
-from mozaik.framework import load_component
-from mozaik.framework.space import VisualRegion
+from mozaik.connectors.modular import ModularSingleWeightProbabilisticConnector
+from mozaik import load_component
+from mozaik.space import VisualRegion
 
-class VogelsAbbottGaussian(Model):
+class VogelsAbbottPushPull(Model):
     
     required_parameters = ParameterSet({
         'l4_cortex_exc' : ParameterSet, 
@@ -16,8 +15,8 @@ class VogelsAbbottGaussian(Model):
         'visual_field' : ParameterSet 
     })
     
-    def __init__(self,simulator,parameters):
-        Model.__init__(self,simulator,parameters)        
+    def __init__(self, sim, num_threads, parameters):
+        Model.__init__(self, sim, num_threads, parameters)
         # Load components
         CortexExcL4 = load_component(self.parameters.l4_cortex_exc.component)
         CortexInhL4 = load_component(self.parameters.l4_cortex_inh.component)
@@ -38,3 +37,4 @@ class VogelsAbbottGaussian(Model):
         ModularSingleWeightProbabilisticConnector(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.l4_cortex_exc.L4ExcL4InhConnection).connect()
         ModularSingleWeightProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.l4_cortex_inh.L4InhL4ExcConnection).connect()
         ModularSingleWeightProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnection).connect()
+

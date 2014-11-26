@@ -1,13 +1,13 @@
 {
     #CorticalUniformSheet parameters
     
-    'component': 'mozaik.framework.sheets.CorticalUniformSheet',
+    'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
     
     'params':{
                 'name':'V1_Exc_L2/3',
                 'sx':7000.0,
                 'sy':7000.0,
-                'density':500.0,
+                'density': 250.0,
         	    'mpi_safe' : False,
                 'magnification_factor': 1000.0,
                     
@@ -31,13 +31,19 @@
 
                     },
                 'recorders' :  url("param/l23_exc_rec"),           
-                'artificial_stimulation' : False,
-                'background_noise' : {
-                                        'exc_firing_rate' : 2000.0, 
-                                        'exc_weight' : 0.00145,
-                                        'inh_firing_rate' : 2000.0,
-                                        'inh_weight' : 0.00030,
-                                    },
+                
+                'artificial_stimulators' : {
+                                'background_act' : {
+                                                      'component' :  'mozaik.sheets.direct_stimulator.BackgroundActivityBombardment',   
+                                                      'params' : {
+                                                                   'exc_firing_rate' : 2000.0, 
+                                                                    'exc_weight' : 0.00145,
+                                                                    'inh_firing_rate' : 2000.0,
+                                                                    'inh_weight' : 0.00030,
+
+                                                                 }
+                                                   }
+                                            },
     },
 
 
@@ -51,7 +57,7 @@
                         },        
 
         'weight_functions' : {  'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.MapDependentModularConnectorFunction',
+                                         'component' : 'mozaik.connectors.vision.MapDependentModularConnectorFunction',
                                          'params' : {
                                                 	    'sigma' : 0.3,
                                                         'map_location' : './or_map_7x7',
@@ -76,18 +82,18 @@
                                                     }
                                        }, 
                             },
-        'weight_expression' : 'f1*(f2+0.01)',
+        'weight_expression' : 'f1*(f2+0.1)',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.1,
-		'num_samples' : 280,
+        'base_weight': 0.2,
+		'num_samples' : 560,
     },
 
     'L23ExcL23InhConnection': {
         'target_synapses' : 'excitatory',             
         'short_term_plasticity': None, 
         'weight_functions' : {  'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.MapDependentModularConnectorFunction',
+                                         'component' : 'mozaik.connectors.vision.MapDependentModularConnectorFunction',
                                          'params' : {
                                                 	    'sigma' : 0.3,
                                                         'map_location' : './or_map_7x7',
@@ -112,11 +118,11 @@
                                                     }
                                        }, 
                             },
-        'weight_expression' : 'f1*(f2+0.01)',
+        'weight_expression' : 'f1*(f2+0.1)',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.2,
-		'num_samples' : 280,
+        'base_weight': 0.4,
+		'num_samples' : 560,
     },
 
 

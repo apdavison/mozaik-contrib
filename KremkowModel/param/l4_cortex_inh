@@ -1,7 +1,7 @@
 {
     #CorticalUniformSheet parameters
     
-    'component': 'mozaik.framework.sheets.CorticalUniformSheet',
+    'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
 
     'params':{
                 'name':'V1_Inh_L4',
@@ -30,13 +30,19 @@
                                                     'v': -60.0,
                                                 }
                         },
-                'artificial_stimulation' : False,                    
-                'background_noise' : {
-                                            'exc_firing_rate' : 2000.0, 
-                                            'exc_weight' : 0.002,
-                                            'inh_firing_rate' : 2000.0,
-                                            'inh_weight' : 0.0007,
-                                      },
+                'artificial_stimulators' : {
+                                                'background_act' : {
+                                                                      'component' :  'mozaik.sheets.direct_stimulator.BackgroundActivityBombardment',   
+                                                                      'params' : {
+                                                                                   'exc_firing_rate' : 2000.0, 
+                                                                                    'exc_weight' : 0.002,
+                                                                                    'inh_firing_rate' : 2000.0,
+                                                                                    'inh_weight' : 0.0007,
+
+                                                                                 }
+                                                                   }
+                                            },
+                'recording_interval'  :  ref('l4_cortex_exc.params.recording_interval'),                                            
                 'recorders' : url("param/l4_inh_rec"),    
     },
     
@@ -44,11 +50,12 @@
         'target_synapses' : 'inhibitory',             
         'short_term_plasticity': None ,
         'weight_functions' : {  'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
+                                         'component' : 'mozaik.connectors.vision.V1PushPullArborization',
                                          'params' : {
-                                                	    'or_sigma' : 0.26,
+                                            	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,
-                                                        'target_synapses' : 'inhibitory',             
+                                                        'target_synapses' : 'inhibitory',    
+                                                        'push_pull_ratio' : 1.0,         
                                          }
                                        }, 
                                        
@@ -57,19 +64,20 @@
         'weight_expression' : 'f1',
         'delay_expression' : '2', 
         
-        'base_weight': 0.009,
-		'num_samples' : 18,
+        'base_weight': 0.0003,
+	    'num_samples' : 18,
     },
     
     'L4InhL4InhConnection': {
         'target_synapses' : 'inhibitory',             
         'short_term_plasticity': None, 
         'weight_functions' : {  'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
+                                         'component' : 'mozaik.connectors.vision.V1PushPullArborization',
                                          'params' : {
                                                 	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,
-                                                        'target_synapses' : 'inhibitory',             
+                                                        'target_synapses' : 'inhibitory',    
+                                                        'push_pull_ratio' : 1.0,         
                                          }
                                        }, 
                                        
@@ -78,8 +86,8 @@
         'weight_expression' : 'f1',
         'delay_expression' : '2', 
         
-        'base_weight': 0.009,
-		'num_samples' : 18,
+        'base_weight': 0.0003,
+	    'num_samples' : 18,
     },
     
     'AfferentConnection': {
@@ -90,24 +98,20 @@
             'frequency':               UniformDist(min=0.8, max=0.8),
             'delay': 2.0,    
             'topological' : False,
-            'probabilistic' : True,
+
             'or_map' : False,
             'or_map_location' : './or_map',
             'phase_map' : False,
             'phase_map_location' : './phase_map',
+
+            'base_weight' : 0.002,
+            'num_samples' : 50,
 	    
-	    'specific_arborization': {
-		    'weight_factor': 0.1316,
-		    'num_samples' : 94,
-		    'target_synapses' : 'excitatory',
-	            'short_term_plasticity': {
-                        'u': 0.3, 
+	        'short_term_plasticity': {
+                        'U': 1.0, 
                         'tau_rec': 30.0, 
-                        'tau_psc': 3.0,
+                        'tau_psc': 0.0,
                         'tau_fac': 21.0,
                     },
-	    },
-
-
     }        
 }

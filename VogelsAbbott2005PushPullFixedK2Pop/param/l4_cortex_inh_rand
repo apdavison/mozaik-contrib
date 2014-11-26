@@ -1,0 +1,20 @@
+{
+    #CorticalUniformSheet parameters
+    'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
+    'params': {
+                'name':'V1_Inh_L4_Rand',
+                'sx': ref('l4_cortex_inh_pp.params.sx'),
+                'sy': ref('l4_cortex_inh_pp.params.sy'),
+                'density': ref('l4_cortex_inh_pp.params.density'),
+                'mpi_safe' : ref('l4_cortex_inh_pp.params.mpi_safe'),
+                'magnification_factor': ref('l4_cortex_inh_pp.params.magnification_factor'),
+                'cell': ref('l4_cortex_inh_pp.params.cell'),
+                'artificial_stimulators' : ref('l4_cortex_exc.params.artificial_stimulators'),
+                'recorders' : ref('l4_cortex_inh_pp.params.recorders'),    
+    },
+
+    'L4InhRandL4ExcPPConnection': ref('l4_cortex_inh_pp.L4InhPPL4ExcRandConnection'),
+    'L4InhRandL4InhPPConnection': ref('l4_cortex_inh_pp.L4InhPPL4ExcRandConnection'),
+    'L4InhRandL4ExcRandConnection': ref('l4_cortex_inh_pp.L4InhPPL4ExcRandConnection'),    
+    'L4InhRandL4InhRandConnection': ref('l4_cortex_inh_pp.L4InhPPL4ExcRandConnection'),    
+}

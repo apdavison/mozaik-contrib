@@ -1,15 +1,13 @@
 #!/usr/local/bin/ipython -i 
-from mozaik.framework.experiment import *
-from mozaik.framework.population_selector import RCRandomPercentage
-from NeuroTools.parameters import ParameterSet
+from mozaik.experiments import *
+from mozaik.sheets.population_selector import RCRandomPercentage
+from parameters import ParameterSet
     
 def create_experiments(model):
-    l4exc_kick = RCRandomPercentage(model.sheets["V1_Exc_L4"],ParameterSet({'percentage': 20.0}))
-    l4inh_kick = RCRandomPercentage(model.sheets["V1_Inh_L4"],ParameterSet({'percentage': 20.0}))
-
+    
     return  [
                            #Lets kick the network up into activation
-                           PoissonNetworkKick(model,duration=10*7,sheet_list=["V1_Exc_L4","V1_Inh_L4"],recording_configuration_list=[l4exc_kick,l4inh_kick],lambda_list=[100,100]),
+                           PoissonNetworkKick(model,duration=10*5*8*7,drive_period=200.0,sheet_list=["V1_Exc_L4","V1_Inh_L4"],stimulation_configuration={'component' : 'mozaik.sheets.population_selector.RCRandomPercentage','params' : {'percentage' : 100.0}},lambda_list=[3000.0,3000.0],weight_list=[0.002,0.002]),
                            #Spontaneous Activity 
-                           NoStimulation(model,duration=70*7),
+                           NoStimulation(model,duration=30*8*7),
             ]

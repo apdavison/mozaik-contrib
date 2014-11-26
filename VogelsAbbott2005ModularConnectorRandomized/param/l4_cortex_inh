@@ -28,13 +28,7 @@
                                                        'v': PyNNDistribution(name='uniform',params=(-60,-50)),
                                                 }
                         },
-                'artificial_stimulation' : True,                    
-                'background_noise' : {
-                                            'exc_firing_rate' : 0.0, 
-                                            'exc_weight' : 0.02,
-                                            'inh_firing_rate' : 0.0,
-                                            'inh_weight' : 0.0,
-                                      },
+                'artificial_stimulators' : {},
                 'recorders' : url("param/l4_inh_rec"),    
     },
         
@@ -59,9 +53,8 @@
                             },
         'weight_expression' : 'const',
         'delay_expression' : 'd1', 
-        
         'base_weight': 0.0015,
-		'connection_probability' : 0.01,
+	'connection_probability' : 0.01,
     },
 
 
@@ -88,7 +81,8 @@
         'delay_expression' : 'd1', 
         
         'base_weight': 0.0015,
-		'connection_probability' : 0.01,
+	'connection_probability' : 0.01,
+
     },
 
 }

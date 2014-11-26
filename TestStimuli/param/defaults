@@ -7,10 +7,11 @@
     'retina_lgn': url("param/SpatioTemporalFilterRetinaLGN_defaults"),
     'visual_field': {
         'centre': (0.0, 0.0), # degrees (x,y)
-        'size': (6.8, 6.8), # degrees (width, height)
+        'size': (7.0, 7.0), # degrees (width, height)
     },
-    'results_dir': '.',
+    'results_dir': '/home/antolikjan/projects/mozaik/contrib/TestStimuli/',
     'name' : 'Jens Model',
     'reset' : False,
     'null_stimulus_period' : 140.0,
+    'store_stimuli' : False,
 }

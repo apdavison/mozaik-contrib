@@ -1,9 +1,8 @@
 import sys
-sys.path.append('/home/jan/projects/mozaik/')
 from NeuroTools.parameters import ParameterSet
-from mozaik.models.model import Model
-from mozaik.connectors.modular_connectors import ModularSingleWeightProbabilisticConnector
-from mozaik.framework import load_component
+from mozaik.models import Model
+from mozaik.connectors.modular import ModularSingleWeightProbabilisticConnector
+from mozaik import load_component
 
 class VogelsAbbott(Model):
     
@@ -12,8 +11,8 @@ class VogelsAbbott(Model):
         'l4_cortex_inh' : ParameterSet, 
     })
     
-    def __init__(self,simulator,parameters):
-        Model.__init__(self,simulator,parameters)        
+    def __init__(self, sim, num_threads, parameters):
+        Model.__init__(self, sim, num_threads, parameters)        
         # Load components
         CortexExcL4 = load_component(self.parameters.l4_cortex_exc.component)
         CortexInhL4 = load_component(self.parameters.l4_cortex_inh.component)

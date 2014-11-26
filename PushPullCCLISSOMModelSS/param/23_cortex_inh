@@ -1,0 +1,92 @@
+    {
+    #CorticalUniformSheet parameters
+    
+    'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
+
+    'params':{
+                'name':'V1_Inh_L2/3',
+                'sx': ref('l4_cortex_exc.params.sx'),
+                'sy': ref('l4_cortex_exc.params.sy'),
+                'density': ref('l4_cortex_exc.params.density')/4,
+                'mpi_safe' : False,
+                'magnification_factor': ref('l4_cortex_exc.params.magnification_factor'),
+                'cell':ref('l4_cortex_exc.params.cell'),
+                'artificial_stimulators' : ref('l4_cortex_exc.params.artificial_stimulators'),
+    },
+
+
+    'L23InhL23ExcConnection': {
+        'target_synapses' : 'inhibitory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.vision.MapDependentModularConnectorFunction',
+                                         'params' : {
+                                                	    'sigma' : 0.3,
+                                                        'map_location' : './or_map_7x7',
+                                                        'periodic' : True,
+                                                    }
+                                       }, 
+                                'f2' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.HyperbolicModularConnectorFunction',
+                                         'params' : {
+                                                	            'theta':  189.59,
+                                                                'alpha': 0.014948,
+                                                    }
+                                       },                                        
+                             },
+
+        'delay_functions' : {
+                                'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.LinearModularConnectorFunction',
+                                         'params' : {
+                                                        'constant_scaler': 0.1,
+                                                        'linear_scaler': 0.0033333333,   
+                                                    }
+                                       }, 
+                            },
+        'weight_expression' : 'f1*f2',
+        'delay_expression' : 'f1', 
+        
+        'base_weight': 0.1,
+		'num_samples' : 160,
+    },
+
+    'L23InhL23InhConnection': {
+        'target_synapses' : 'inhibitory',             
+        'short_term_plasticity': None, 
+        'weight_functions' : {  'f1' : {
+                                         'component' : 'mozaik.connectors.vision.MapDependentModularConnectorFunction',
+                                         'params' : {
+                                                	    'sigma' : 0.3,
+                                                        'map_location' : './or_map_7x7',
+                                                        'periodic' : True,
+                                                    }
+                                       }, 
+                                'f2' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.HyperbolicModularConnectorFunction',
+                                         'params' : {
+                                                	            'theta':  188.61,
+                                                                'alpha': 0.015001,
+                                                    }
+                                       },                                        
+                             },
+
+        'delay_functions' : {
+                                'f1' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.LinearModularConnectorFunction',
+                                         'params' : {
+                                                        'constant_scaler': 0.1,
+                                                        'linear_scaler': 0.0033333333,   
+                                                    }
+                                       }, 
+                            },
+        'weight_expression' : 'f1*f2',
+        'delay_expression' : 'f1', 
+        
+        'base_weight': 0.1,
+		'num_samples' : 160,
+    },
+
+
+    
+}

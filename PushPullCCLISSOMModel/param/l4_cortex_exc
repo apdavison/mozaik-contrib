@@ -1,13 +1,13 @@
 {
     #CorticalUniformSheet parameters
     
-   'component': 'mozaik.framework.sheets.CorticalUniformSheet',
+    'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
     
     'params':{
                 'name':'V1_Exc_L4',
                 'sx':7000.0,
                 'sy':7000.0,
-                'density': 500.0,
+                'density': 250.0,
                 'mpi_safe' : False,    
                 'magnification_factor': 1000.0,
                     
@@ -30,13 +30,18 @@
                         }
 
                     },
-                'artificial_stimulation' : False,                    
-                'background_noise' : {
-                                        'exc_firing_rate' : 2000.0, 
-                                        'exc_weight' : 0.00145,
-                                        'inh_firing_rate' : 2000.0,
-                                        'inh_weight' : 0.00030,
-                                    },
+                    'artificial_stimulators' : {
+                                    'background_act' : {
+                                                          'component' :  'mozaik.sheets.direct_stimulator.BackgroundActivityBombardment',   
+                                                          'params' : {
+                                                                       'exc_firing_rate' : 2000.0, 
+                                                                        'exc_weight' : 0.00145,
+                                                                        'inh_firing_rate' : 2000.0,
+                                                                        'inh_weight' : 0.00030,
+
+                                                                     }
+                                                       }
+                                                },
                 'recorders' :  url("param/l4_exc_rec"),
     },
 
@@ -50,11 +55,12 @@
                         },        
     
         'weight_functions' : {  'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
+                                         'component' : 'mozaik.connectors.vision.V1PushPullArborization',
                                          'params' : {
                                                 	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,
-                                                        'target_synapses' : 'excitatory',             
+                                                        'target_synapses' : 'excitatory',          
+                                                        'push_pull_ratio' : 1.0,   
                                                     }
                                        }, 
                                 'f2' : {
@@ -75,22 +81,23 @@
                                        }, 
         
                             },
-        'weight_expression' : 'f1*(f2+0.01)',
+        'weight_expression' : 'f1*(f2+0.1)',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.108,
-		'num_samples' : 72,
+        'base_weight': 0.216,
+		'num_samples' : 144,
     },
 
     'L4ExcL4InhConnection': {
         'target_synapses' : 'excitatory',             
         'short_term_plasticity': None, 
         'weight_functions' : {  'f1' : {
-                                         'component' : 'mozaik.connectors.modular_connector_functions.V1PushPullArborization',
+                                         'component' : 'mozaik.connectors.vision.V1PushPullArborization',
                                          'params' : {
                                                 	    'or_sigma' : 0.26,
                                                         'phase_sigma' : 0.52,
-                                                        'target_synapses' : 'excitatory',             
+                                                        'target_synapses' : 'excitatory',  
+                                                        'push_pull_ratio' : 1.0,           
                                                     }
                                        }, 
                                 'f2' : {
@@ -111,11 +118,11 @@
                                                     }
                                        }, 
                             },
-        'weight_expression' : 'f1*(f2+0.01)',
+        'weight_expression' : 'f1*(f2+0.1)',
         'delay_expression' : 'f1', 
         
-        'base_weight': 0.108,
-		'num_samples' : 72,
+        'base_weight': 0.216,
+		'num_samples' : 144,
     },
 
     'AfferentConnection': {

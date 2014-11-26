@@ -1,0 +1,45 @@
+{
+    #CorticalUniformSheet parameters
+    'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
+    'params':{
+                'name':'V1_Exc_L4',
+                'sx':1000.0,
+                'sy':1000.0,
+                'density': 1.0,
+                'mpi_safe' : False,    
+                'magnification_factor': 1.0,
+
+                'cell': {
+                        'model': 'IF_cond_alpha',
+                        'params': {
+                            'v_thresh':-50.0,
+                            'v_rest': -70.0,
+                            'v_reset': -70.0,
+                            'tau_refrac': 2.0,
+                            'tau_m': 15.0,
+                            'cm': 0.25,
+            	            'e_rev_E': 0.0,
+                            'e_rev_I': -80.0,
+                    	    'tau_syn_E': 0.326,
+                            'tau_syn_I': 0.326, 
+                        },
+                       'initial_values': {
+                                                'v':  PyNNDistribution(name='uniform',params=(-80,-50)),
+                                },
+
+                    },
+                    'artificial_stimulators' : {
+                                    'background_act' : {
+                                                          'component' :  'mozaik.sheets.direct_stimulator.BackgroundActivityBombardment',   
+                                                          'params' : {
+                                                                       'exc_firing_rate' : 1600, 
+                                                                       'exc_weight' : 0.006,
+                                                                       'inh_firing_rate' : ref('l4_cortex_exc.params.artificial_stimulators.background_act.params.exc_firing_rate')/4.0,
+                                                                       'inh_weight' : 0.095,
+                                                                     }
+                                                       }
+                                },
+
+                'recorders' : url("param/l4_exc_rec"),
+    },
+}

@@ -1,0 +1,15 @@
+{
+    'l4_cortex_exc': url("param/l4_cortex_exc"),
+    'l4_cortex_inh': url("param/l4_cortex_inh"),
+    'results_dir': '',
+    'name' : 'Vogels&Abbott',
+    'reset' : False,
+    'null_stimulus_period' : 0.0,
+    'input_space' : None,
+    'input_space_type' : 'None',
+    'store_stimuli' : False,
+    'min_delay' : 0.2,
+    'max_delay' : 100,
+    'time_step' : 0.1
+
+}
