@@ -20,6 +20,7 @@ from mozaik.visualization.simple_plot import StandardStyle
 import pylab
 import mozaik
 from mozaik.controller import Global
+import mozaik.visualization.helper_functions as phf
 
 import logging
 
@@ -112,7 +113,7 @@ class OrientationTuningSummary(Plotting):
 
     def subplot(self, subplotspec):
         plots = {}
-        gs = gridspec.GridSpecFromSubplotSpec(20, 15, subplot_spec=subplotspec,
+        gs = gridspec.GridSpecFromSubplotSpec(20, 29, subplot_spec=subplotspec,
                                               hspace=1.0, wspace=1.0)
         
         
@@ -121,15 +122,15 @@ class OrientationTuningSummary(Plotting):
         
         dsv1 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['LGNAfferentOrientation'],sheet_name=self.parameters.exc_sheet_name)
         dsv2 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['orientation preference of Firing rate'],sheet_name=self.parameters.exc_sheet_name,st_contrast=100,analysis_algorithm='GaussianTuningCurveFit')
-        plots['Or_corr_exc'] = (PerNeuronValueScatterPlot(dsv1+dsv2, ParameterSet({'only_matching_units' : True})),gs[0:4,3:5],{'x_label' : 'OR measured','y_label' : 'OR set','x_lim': (0.0,numpy.pi),'y_lim' : (0.0,numpy.pi), 'cmp' : None})
+        plots['Or_corr_exc'] = (PerNeuronValueScatterPlot(dsv1+dsv2, ParameterSet({'only_matching_units' : True , 'ignore_nan' : True})),gs[0:4,3:5],{'x_label' : 'OR measured','y_label' : 'OR set','x_lim': (0.0,numpy.pi),'y_lim' : (0.0,numpy.pi), 'cmp' : None})
         dsv1 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['LGNAfferentOrientation'],sheet_name=self.parameters.inh_sheet_name)
         dsv2 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['orientation preference of Firing rate'],sheet_name=self.parameters.inh_sheet_name,st_contrast=100,analysis_algorithm='GaussianTuningCurveFit')
-        plots['Or_corr_ing'] = (PerNeuronValueScatterPlot(dsv1+dsv2, ParameterSet({'only_matching_units' : True})),gs[0:4,5:7],{'x_label' : 'OR measured','y_label' : None,'x_lim': (0.0,numpy.pi),'y_lim' : (0.0,numpy.pi), 'cmp' : None})
+        plots['Or_corr_ing'] = (PerNeuronValueScatterPlot(dsv1+dsv2, ParameterSet({'only_matching_units' : True , 'ignore_nan' : True})),gs[0:4,5:7],{'x_label' : 'OR measured','y_label' : None,'x_lim': (0.0,numpy.pi),'y_lim' : (0.0,numpy.pi), 'cmp' : None})
         
         
                 
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.exc_sheet_name,self.parameters.inh_sheet_name])    
-        plots['HWHH'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True})),gs[0:4,8:12],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : 'HWHH Cont. 100%','y_label' : 'HWHH Cont. 50%', 'cmp' : None})
+        plots['HWHH'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[0:4,8:12],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : 'HWHH Cont. 100%','y_label' : 'HWHH Cont. 50%', 'cmp' : None})
 
         dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate'])
         plots['ExcORTCMean'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids), 'sheet_name' : self.parameters.exc_sheet_name,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[6:10,:3],{'title' : None,'x_label' : None , 'y_label' : 'EXC\nfiring rate (sp/s)','colors' : ['#FFAB00','#000000']})
@@ -254,69 +255,6 @@ class BarComparisonPlot(StandardStyle):
             pylab.gca().text(rect.get_x()+rect.get_width()/2., 1.05*height, '%d'%int(height) + ' %',
                         ha='center', va='bottom')
         
-
-class TrialToTrialVariabilityComparison(Plotting):
-
-    required_parameters = ParameterSet({
-        'sheet_name' : str, # The name of the sheet in which to do the analysis
-    })
-
-
-    def subplot(self, subplotspec):
-        plots = {}
-        gs = gridspec.GridSpecFromSubplotSpec(1,2, subplot_spec=subplotspec,hspace=1.0, wspace=1.0)
-        
-        var_gr = 0
-        var_ni = 0
-        std_gr = 0
-        std_ni = 0
-                
-        orr = list(set([MozaikParametrized.idd(s).orientation for s in queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100).get_stimuli()]))        
-        l4_exc_or = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = self.parameters.sheet_name)
-        
-        
-        # lets calculate spont. activity trial to trial variability
-        # we assume that the spontaneous activity had already the spikes removed
-        dsv = queries.param_filter_query(self.datastore,st_name='InternalStimulus',st_direct_stimulation_name='None',sheet_name=self.parameters.sheet_name,analysis_algorithm='ActionPotentialRemoval',ads_unique=True)
-        ids = dsv.get_analysis_result()[0].ids
-        sp = {}
-        for idd in ids:
-            assert len(dsv.get_analysis_result()) == 1
-            s = dsv.get_analysis_result()[0].get_asl_by_id(idd).magnitude
-            sp[idd] = 1/numpy.mean(numpy.std([s[i*int(len(s)/10):(i+1)*int(len(s)/10)] for i in xrange(0,10)],axis=0,ddof=1))
-            #sp[idd]  = 1/numpy.std(s,ddof=1)
-        print sp[ids[1]]
-            
-        #lets calculate the mean of trial-to-trial variances across the neurons in the datastore for gratings 
-        dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',sheet_name=self.parameters.sheet_name,st_contrast=100,analysis_algorithm='TrialVariability',y_axis_name='Vm (no AP) trial-to-trial variance')
-        assert queries.equal_ads(dsv, except_params=['stimulus_id'])
-        ids = dsv.get_analysis_result()[0].ids
-        
-        var_gr_ind = []
-        logger.info("AA")
-        logger.info(str([sp[i]  for i in ids]))
-        for i in ids:
-            # find the or pereference of the neuron
-            o = orr[numpy.argmin([circular_dist(o,l4_exc_or[0].get_value_by_id(i),numpy.pi) for o in orr])]
-            assert len(queries.param_filter_query(dsv,st_orientation=o,ads_unique=True).get_analysis_result())==1
-            a = 1/numpy.mean(numpy.sqrt(queries.param_filter_query(dsv,st_orientation=o,ads_unique=True).get_analysis_result()[0].get_asl_by_id(i).magnitude))
-            var_gr = var_gr + a / sp[i]
-            var_gr_ind.append(a / sp[i])
-            std_gr = std_gr + a
-        var_gr = var_gr / len(ids)
-        std_gr = std_gr / len(ids)
-        
-        logger.info(str(var_gr_ind))
-        #lets calculate the mean of trial-to-trial variances across the neurons in the datastore for natural images 
-        dsv = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement',sheet_name=self.parameters.sheet_name,y_axis_name='Vm (no AP) trial-to-trial variance',ads_unique=True)
-        var_ni_ind = [1/numpy.mean(numpy.sqrt(dsv.get_analysis_result()[0].get_asl_by_id(i).magnitude)) / sp[i] for i in ids]
-        var_ni = numpy.mean(var_ni_ind)
-        
-        plots['Bar'] = (BarComparisonPlot({"NI" : var_ni*100.0, "GR" : var_gr*100.0}),gs[0,0],{})
-        plots['Scatter'] = (ScatterPlot(var_gr_ind*100, var_ni_ind*100),gs[0,1],{'x_label' : 'GR', 'y_label' : 'NI','identity_line' : True})
-        
-        return plots
-
 
 class SNRAnalysis(Plotting):
         """
@@ -617,3 +555,4 @@ class MeanVsVarainceOfVM(Plotting):
         dsv = queries.param_filter_query(self.datastore,y_axis_name=['Vm (no AP) trial-to-trial mean','Vm (no AP) trial-to-trial variance'],st_name="FullfieldDriftingSinusoidalGrating",st_orientation=0,st_contrast=100)
         plots['plot2'] = (PerNeuronAnalogSignalScatterPlot(dsv,ParameterSet({'neurons' : self.parameters.neurons})),gs[12:,0],{})
         return plots
+

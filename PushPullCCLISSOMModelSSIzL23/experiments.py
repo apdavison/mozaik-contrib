@@ -14,10 +14,10 @@ def create_experiments(model):
 
                 # Measure orientation tuning with full-filed sinusoidal gratins
 
-                MeasureOrientationTuningFullfield(model,num_orientations=10,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[5,100],num_trials=10),
+                MeasureOrientationTuningFullfield(model,num_orientations=8,spatial_frequency=0.8,temporal_frequency=2,grating_duration=4*147*7,contrasts=[5,100],num_trials=10),
 
                 # Measure response to natural image with simulated eye movement
-                MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=2*147*7,num_trials=10),
+                MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=4*147*7,num_trials=10),
 
                 #GRATINGS WITH EYEMOVEMENT
                 #MeasureDriftingSineGratingWithEyeMovement(model,spatial_frequency=0.8,temporal_frequency=6,stimulus_duration=3*147*7,num_trials=15,contrast=100),
