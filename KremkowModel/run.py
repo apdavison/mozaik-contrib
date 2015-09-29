@@ -4,6 +4,8 @@ This is implementation of model of push-pull connectvity:
 Jens Kremkow: Correlating Excitation and Inhibition in Visual Cortical Circuits: Functional Consequences and Biological Feasibility. PhD Thesis, 2009.
 """
 import sys
+
+sys.path.append("/home/jan/projects/mozaik-joel")
 from pyNN import nest
 from mozaik.controller import run_workflow, setup_logging
 import mozaik
@@ -38,7 +40,7 @@ if True:
     
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_test_____', 'store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_Test2_____', 'store_stimuli' : False}),replace=True)
     logger.info('Loaded data store')
     data_store.save()
 

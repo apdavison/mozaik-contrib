@@ -480,7 +480,7 @@ class TrialCrossCorrelationAnalysis(Plotting):
             pylab.legend()
             pylab.title("VM")
             pylab.xlabel("time (ms)")
-            pylab.ylabel("corr coef")
+            #pylab.ylabel("corr coef")
             
             ax = pylab.subplot(gs[0,1])
             ax.plot(numpy.linspace(-z,z,z+1),psth_cc_gr[int(len(psth_cc_gr)/2)-z/2:int(len(psth_cc_gr)/2)+z/2+1],label="Gratings")

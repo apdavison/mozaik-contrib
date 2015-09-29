@@ -1,7 +1,7 @@
 import sys
 sys.path.append('/home/jan/projects/mozaik/')
 import numpy
-from NeuroTools.parameters import ParameterSet
+from parameters import ParameterSet
 from mozaik.models import Model
 from mozaik import load_component
 from mozaik.space import VisualRegion
@@ -13,8 +13,8 @@ class TestStimuliModel(Model):
         'visual_field' : ParameterSet 
     })
     
-    def __init__(self,simulator,parameters):
-        Model.__init__(self,simulator,parameters)        
+    def __init__(self,simulator,num_threads,parameters):
+        Model.__init__(self,simulator,num_threads,parameters)        
         
         RetinaLGN = load_component(self.parameters.retina_lgn.component)
       
