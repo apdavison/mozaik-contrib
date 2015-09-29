@@ -14,10 +14,10 @@ def create_experiments(model):
 
                 # Measure orientation tuning with full-filed sinusoidal gratins
 
-                MeasureOrientationTuningFullfield(model,num_orientations=8,spatial_frequency=0.8,temporal_frequency=2,grating_duration=4*147*7,contrasts=[5,100],num_trials=10),
+                MeasureOrientationTuningFullfield(model,num_orientations=8,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[5,100],num_trials=10),
 
                 # Measure response to natural image with simulated eye movement
-                MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=4*147*7,num_trials=10),
+                MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=2*147*7,num_trials=10),
 
                 #GRATINGS WITH EYEMOVEMENT
                 #MeasureDriftingSineGratingWithEyeMovement(model,spatial_frequency=0.8,temporal_frequency=6,stimulus_duration=3*147*7,num_trials=15,contrast=100),
@@ -46,10 +46,10 @@ def create_experiments_or(model):
                            #Spontaneous Activity 
                            NoStimulation(model,duration=2*2*5*3*8*7),
                            # Measure orientation tuning with full-filed sinusoidal gratins
-                           MeasureOrientationTuningFullfield(model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[100],num_trials=2),
+                           MeasureOrientationTuningFullfield(model,num_orientations=2,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[5,100],num_trials=2),
 	       
                            # Measure response to natural image with simulated eye movement
-                           MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=2*147*7,num_trials=2),
+                           #MeasureNaturalImagesWithEyeMovement(model,stimulus_duration=4*147*7,num_trials=2),
 
             ]
 
@@ -64,7 +64,7 @@ def create_experiments_stc(model):
                            NoStimulation(model,duration=2*5*3*8*7),
  
                            #Size Tuning  
-                           MeasureSizeTuning(model,num_sizes=10,max_size=7.0,orientation=0,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[100],num_trials=10),
+                           MeasureSizeTuning(model,num_sizes=10,max_size=4.0,orientation=0,spatial_frequency=0.8,temporal_frequency=2,grating_duration=2*147*7,contrasts=[5,100],num_trials=10),
             ]
 
 

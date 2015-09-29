@@ -59,7 +59,7 @@ class SelfSustainedPushPull(Model):
             ModularSamplingProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.l4_cortex_inh.L4InhL4ExcConnection).connect()
             ModularSamplingProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnection).connect()
 
-	        # initialize afferent layer 4 to layer 2/3 projection
+            # initialize afferent layer 4 to layer 2/3 projection
             ModularSamplingProbabilisticConnector(self,'V1L4ExcL23ExcConnection',cortex_exc_l4,cortex_exc_l23,self.parameters.l23_cortex_exc.L4ExcL23ExcConnection).connect()
             ModularSamplingProbabilisticConnector(self,'V1L4ExcL23InhConnection',cortex_exc_l4,cortex_inh_l23,self.parameters.l23_cortex_inh.L4ExcL23InhConnection).connect()
             
