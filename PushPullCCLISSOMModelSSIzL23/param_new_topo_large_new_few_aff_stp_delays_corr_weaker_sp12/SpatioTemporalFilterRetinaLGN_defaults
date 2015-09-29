@@ -7,12 +7,11 @@
         'mpi_reproducible_noise' : False,
         'cached' : False,
         'cache_path' : 'retinal_cache/',
-        'recorders' :  url("param/lgn_rec"),
+        'recorders' :  url("param_new_topo_large_new_few_aff_stp_delays_corr_weaker_sp12/lgn_rec"),
         'recording_interval'  :  ref('l4_cortex_exc.params.recording_interval'),                                            
         'receptive_field': {
             #'func': 'lambda x,y,t,p: numpy.sin(t)',
             'func': 'cai97.stRF_2d',
-            'naka_rushton_output_function' : None,
             'func_params': {
                 'Ac': 1.0,
                 'As': 0.15, # changed from 1/3.0
@@ -35,7 +34,15 @@
             'temporal_resolution': 7.0, # ms
             'duration': 100.0,
         },
-        'gain': 1.3,#6.0, # nA.m²/cd
+        'gain_control' : {
+            'gain': 50,
+            'non_linear_gain' : {
+                        'luminance_gain' : 10.0,
+                        'luminance_scaler' : 0.1,
+                        'contrast_scaler' : 0.1,
+                    }
+        },
+
         'cell': {
             'model': 'IF_cond_exp',
             'params': {

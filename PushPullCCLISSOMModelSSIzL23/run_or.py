@@ -23,7 +23,7 @@ mpi_comm = MPI.COMM_WORLD
 if True:
     data_store,model = run_workflow('SelfSustainedPushPull',SelfSustainedPushPull,create_experiments_or)
     
-    if True:
+    if False:
         model.connectors['V1AffConnectionOn'].store_connections(data_store)    
         model.connectors['V1AffConnectionOff'].store_connections(data_store)    
         model.connectors['V1AffInhConnectionOn'].store_connections(data_store)    
@@ -35,9 +35,15 @@ if True:
         model.connectors['V1L4ExcL4ExcConnectionRand'].store_connections(data_store)    
         model.connectors['V1L4ExcL4InhConnectionRand'].store_connections(data_store)    
         model.connectors['V1L4InhL4ExcConnectionRand'].store_connections(data_store)    
-        model.connectors['V1L4InhL4InhConnectionRand'].store_connections(data_store)    
-        data_store.save() 
-
+        model.connectors['V1L4InhL4InhConnectionRand'].store_connections(data_store)
+        model.connectors['V1L23ExcL23ExcConnection'].store_connections(data_store)    
+        model.connectors['V1L23ExcL23InhConnection'].store_connections(data_store)    
+        model.connectors['V1L23InhL23ExcConnection'].store_connections(data_store)    
+        model.connectors['V1L23InhL23InhConnection'].store_connections(data_store)    
+        model.connectors['V1L4ExcL23ExcConnection'].store_connections(data_store)    
+        model.connectors['V1L4ExcL23InhConnection'].store_connections(data_store)    
+        
+    data_store.save() 
 else: 
     setup_logging()
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'SelfSustainedPushPull_BIG_OR____','store_stimuli' : False}),replace=True)

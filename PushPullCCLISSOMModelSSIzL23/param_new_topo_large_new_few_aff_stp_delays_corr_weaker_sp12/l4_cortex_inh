@@ -11,7 +11,7 @@
                 'cell': {
                         'model': 'EIF_cond_exp_isfa_ista',
                         'params': {
-                            'v_thresh':-50.0,
+                            'v_thresh':-53.0,
                             'v_rest': -80.0,
                             'v_reset': -53.0,
                             'tau_refrac': 0.5,
@@ -25,7 +25,6 @@
                             'b' : ref('l4_cortex_exc.params.cell.params.b'),
                             'delta_T' : ref('l4_cortex_exc.params.cell.params.delta_T'),
                             'tau_w' : ref('l4_cortex_exc.params.cell.params.tau_w'),
-                            'v_thresh' : ref('l4_cortex_exc.params.cell.params.v_thresh'),
                         }, 
                         'initial_values': {
                                     'v': PyNNDistribution(name='uniform',params=(-70,-51)),
@@ -34,15 +33,15 @@
                     },
                 'artificial_stimulators' : ref('l4_cortex_exc.params.artificial_stimulators'),
                 'recording_interval'  :  ref('l4_cortex_exc.params.recording_interval'),                                            
-                'recorders' : url("param/l4_inh_rec"),    
+                'recorders' : url("param_new_topo_large_new_few_aff_stp_delays_corr_weaker_sp12/l4_inh_rec"),    
     },
         
     'L4InhL4ExcConnection': {
         'target_synapses' : 'inhibitory',               
         'short_term_plasticity': {
 				            'U': 0.2, 
-				            'tau_rec': 30.0, 
-	 		                'tau_psc': 0.0,
+				            'tau_rec': 15, 
+	 		    	            'tau_psc': 0.0,
 				            'tau_fac': 0.0,
                         },
         'weight_functions' : {  
@@ -66,14 +65,31 @@
         'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),
         'weight_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.weight_expression'),
         'delay_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),
-        'base_weight': 0.0013,
+        'base_weight': 0.0018,
         'num_samples' : ref('l4_cortex_exc.L4ExcL4ExcConnection.num_samples')/4,
     },
 
     'L4InhL4InhConnection':  {
         'target_synapses' : 'inhibitory',               
         'short_term_plasticity': None,        
-        'weight_functions' : ref('l4_cortex_inh.L4InhL4ExcConnection.weight_functions'),
+
+        'weight_functions' : {  
+                                'f1' : {
+                                         'component' : 'mozaik.connectors.vision.V1CorrelationBasedConnectivity',
+                                         'params' : {
+                                                        'sigma' : ref('l4_cortex_exc.L4ExcL4ExcConnection.weight_functions.f1.params.sigma'),
+                                                        'target_synapses' : 'inhibitory',  
+                                                    }
+                                        },  
+                                'f2' : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.HyperbolicModularConnectorFunction',
+                                         'params' : {
+                                                                'theta': 256.43,                                                                                             
+                                                	            'alpha': 0.011907,
+                                                    }
+                                       },                                        
+                             },
+
         'delay_functions' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_functions'),
         'weight_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.weight_expression'),
         'delay_expression' : ref('l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),
@@ -103,11 +119,11 @@
                 'connection_probability' : ref('l4_cortex_exc.L4ExcL4ExcConnectionRand.connection_probability'),  # probability of connection between two neurons from the two populations
     },
     
-    'ExcInhAfferentRatio' : 2.0, 
+    'ExcInhAfferentRatio' : 1.4, 
     
     'AfferentConnection': {
             'aspect_ratio':            UniformDist(min=0.57, max=0.57),
-            'size':                    UniformDist(min=0.46, max=0.46),
+            'size':                    UniformDist(min=0.2501, max=0.2501),
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
             'phase':                   UniformDist(min=0.0, max=6.283185307179586),
             'frequency':               UniformDist(min=0.8, max=0.8),
@@ -115,7 +131,7 @@
             'topological' : True,
 	    
             'or_map' : True,
-            'or_map_location' : './or_map_small',
+            'or_map_location' : './or_map_4x4',
             'phase_map' : False,
             'phase_map_location' : './phase_map',
 	    
