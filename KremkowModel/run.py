@@ -4,15 +4,21 @@ This is implementation of model of push-pull connectvity:
 Jens Kremkow: Correlating Excitation and Inhibition in Visual Cortical Circuits: Functional Consequences and Biological Feasibility. PhD Thesis, 2009.
 """
 import sys
+
+sys.path.insert(0,"/home/jan/cluster/mozaik/mozaik/")
+
 from pyNN import nest
 from mozaik.controller import run_workflow, setup_logging
 import mozaik
 from model import PushPullCCModel
 from experiments import create_experiments
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
-from analysis_and_visualization import perform_analysis_and_visualization
+from analysis_and_visualization_tiny import perform_analysis_and_visualization
 from parameters import ParameterSet
 
+
+print mozaik.__file__
+print sys.path
 
 try:
     from mpi4py import MPI
@@ -24,16 +30,16 @@ MPI_ROOT = 0
 
 logger = mozaik.getMozaikLogger()
 
-if True:
+if False:
     data_store,model = run_workflow('FFI',PushPullCCModel,create_experiments)
-    model.connectors['V1L4ExcL4ExcConnection'].store_connections(data_store)    
-    model.connectors['V1L4ExcL4InhConnection'].store_connections(data_store)    
-    model.connectors['V1L4InhL4ExcConnection'].store_connections(data_store)    
-    model.connectors['V1L4InhL4InhConnection'].store_connections(data_store)    
-    model.connectors['V1AffConnectionOn'].store_connections(data_store)    
-    model.connectors['V1AffConnectionOff'].store_connections(data_store)    
-    model.connectors['V1AffInhConnectionOn'].store_connections(data_store)    
-    model.connectors['V1AffInhConnectionOff'].store_connections(data_store)    
+    #model.connectors['V1L4ExcL4ExcConnection'].store_connections(data_store)    
+    #model.connectors['V1L4ExcL4InhConnection'].store_connections(data_store)    
+    #model.connectors['V1L4InhL4ExcConnection'].store_connections(data_store)    
+    #model.connectors['V1L4InhL4InhConnection'].store_connections(data_store)    
+    #model.connectors['V1AffConnectionOn'].store_connections(data_store)    
+    #model.connectors['V1AffConnectionOff'].store_connections(data_store)    
+    #model.connectors['V1AffInhConnectionOn'].store_connections(data_store)    
+    #model.connectors['V1AffInhConnectionOff'].store_connections(data_store)    
     data_store.save()
     
 else: 

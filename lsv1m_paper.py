@@ -236,10 +236,10 @@ class SpontActOverview(Plotting):
         analog_ids1 = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name='V1_Exc_L4').get_segments()[0].get_stored_esyn_ids()))
         
         tstop = queries.param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name="InternalStimulus",sheet_name = 'V1_Exc_L4').get_segments()[0].get_vm(analog_ids1[0]).t_stop.magnitude
-        tstop = min(5.0,tstop)
+        tstop = min(min(tstop,5.0),tstop)
         
         
-        plots['SpikingOverview'] = (CorticalColumnRasterPlot(dsv,ParameterSet({'spontaneous' : False, 'sheet_names' : ['V1_Inh_L4','V1_Exc_L4','V1_Inh_L2/3','V1_Exc_L2/3'], 'colors' : ['#666666', '#000000' , '#666666', '#000000'], 'labels' : ["L4i","L4e" , "L2/3i", "L2/3e"]})),gs[:,0],{'fontsize' : fontsize,'x_lim' : (0,tstop*1000)})
+        plots['SpikingOverview'] = (CorticalColumnRasterPlot(dsv,ParameterSet({'spontaneous' : False, 'sheet_names' : ['V1_Inh_L4','V1_Exc_L4','V1_Inh_L2/3','V1_Exc_L2/3'], 'colors' : ['#666666', '#000000' , '#666666', '#000000'], 'labels' : ["L4i","L4e" , "L2/3i", "L2/3e"]})),gs[:,0],{'fontsize' : fontsize,'x_lim' : (0,tstop)})
         plots['ExcL2/3Cond'] = (GSynPlot(dsv, ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : self.parameters.l23_exc_neuron, 'spontaneous' : False})),gs[0,1:],{'x_label': None,'fontsize' : fontsize, 'x_ticks' : [],'title' : None,'x_lim' : (0,tstop),'y_lim' : (0,25),'y_lim' : (0,25),'y_axis' : None})
         plots['ExcL2/3Vm'] = (VmPlot(dsv, ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : self.parameters.l23_exc_neuron, 'spontaneous' : False})),gs[1,1:],{'x_label': None,'fontsize' : fontsize, 'x_ticks' : [],'title' : None,'x_lim' : (0,tstop),'y_axis' : None})
         plots['InhL2/3Cond'] = (GSynPlot(dsv, ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : self.parameters.l23_inh_neuron, 'spontaneous' : False})),gs[2,1:],{'x_label': None,'fontsize' : fontsize, 'x_ticks' : [],'title' : None,'x_lim' : (0,tstop),'y_lim' : (0,25),'y_axis' : None})
@@ -263,20 +263,20 @@ class SpontStatisticsOverview(Plotting):
 
         fontsize=17
         
-        mean_firing_rate_L4E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
-        mean_firing_rate_L4I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
-        mean_firing_rate_L23E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
-        mean_firing_rate_L23I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
+        mean_firing_rate_L4E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
+        mean_firing_rate_L4I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
+        mean_firing_rate_L23E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
+        mean_firing_rate_L23I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
                 
-        mean_CV_L4E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
-        mean_CV_L4I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
-        mean_CV_L23E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
-        mean_CV_L23I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
+        mean_CV_L4E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
+        mean_CV_L4I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
+        mean_CV_L23E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
+        mean_CV_L23I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
         
-        mean_CC_L4E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
-        mean_CC_L4I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
-        mean_CC_L23E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
-        mean_CC_L23I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMean',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
+        mean_CC_L4E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
+        mean_CC_L4I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
+        mean_CC_L23E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
+        mean_CC_L23I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
         
         mean_VM_L4E = numpy.mean(param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(VM)',ads_unique=True).get_analysis_result()[0].values)
         mean_VM_L4I= numpy.mean(param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(VM)',ads_unique=True).get_analysis_result()[0].values)
@@ -294,7 +294,7 @@ class SpontStatisticsOverview(Plotting):
         mean_CondI_L23I = numpy.mean(param_filter_query(self.datastore,sheet_name='V1_Inh_L2/3',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(ICond)',ads_unique=True).get_analysis_result()[0].values)
         
         
-        pylab.rc('axes', linewidth=3)
+        pylab.rc('axes', linewidth=1)
         
         def plot_with_log_normal_fit(values,gs1,gs2,x_label=False,y_label=""):
             valuesnz = values[numpy.nonzero(values)[0]]
@@ -419,10 +419,194 @@ class SpontStatisticsOverview(Plotting):
         
         return plots
 
+
+class SpontStatisticsOverview1(Plotting):
+    required_parameters = ParameterSet({
+
+    })
+
+    def subplot(self, subplotspec):
+        plots = {}
+        gs = gridspec.GridSpecFromSubplotSpec(12,4, subplot_spec=subplotspec,hspace=10.0, wspace=0.5)
+        dsv = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name=['InternalStimulus'])    
+
+        fontsize=17
+        
+        mean_firing_rate_L4E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
+        mean_firing_rate_L4I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
+        mean_firing_rate_L23E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
+        mean_firing_rate_L23I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Mean(Firing rate)',ads_unique=True).get_analysis_result()[0].value
+        std_firing_rate_L4E = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Var(Firing rate)',ads_unique=True).get_analysis_result()[0].value)
+        std_firing_rate_L4I = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Var(Firing rate)',ads_unique=True).get_analysis_result()[0].value)
+        std_firing_rate_L23E = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Var(Firing rate)',ads_unique=True).get_analysis_result()[0].value)
+        std_firing_rate_L23I = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Var(Firing rate)',ads_unique=True).get_analysis_result()[0].value)
+                
+                
+        mean_CV_L4E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
+        mean_CV_L4I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
+        mean_CV_L23E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
+        mean_CV_L23I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Mean(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value
+        std_CV_L4E = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Var(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value)
+        std_CV_L4I = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Var(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value)
+        std_CV_L23E = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Var(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value)
+        std_CV_L23I = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Var(CV of ISI squared)',ads_unique=True).get_analysis_result()[0].value)
+        
+        mean_CC_L4E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
+        mean_CC_L4I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
+        mean_CC_L23E = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
+        mean_CC_L23I = param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Mean(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value
+        std_CC_L4E = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L4',identifier='SingleValue',value_name='Var(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value)
+        std_CC_L4I = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L4',identifier='SingleValue',value_name='Var(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value)
+        std_CC_L23E = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Exc_L2/3',identifier='SingleValue',value_name='Var(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value)
+        std_CC_L23I = numpy.sqrt(param_filter_query(self.datastore,st_direct_stimulation_name="None",st_name='InternalStimulus',analysis_algorithm='PopulationMeanAndVar',sheet_name='V1_Inh_L2/3',identifier='SingleValue',value_name='Var(Correlation coefficient(psth (bin=2.0)))',ads_unique=True).get_analysis_result()[0].value)
+                
+        
+        ms = lambda a: (numpy.mean(a),numpy.std(a))
+        mean_VM_L4E, std_VM_L4E = ms(param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(VM)',ads_unique=True).get_analysis_result()[0].values)
+        mean_VM_L4I, std_VM_L4I= ms(param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(VM)',ads_unique=True).get_analysis_result()[0].values)
+        mean_VM_L23E, std_VM_L23E = ms(param_filter_query(self.datastore,sheet_name='V1_Exc_L2/3',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(VM)',ads_unique=True).get_analysis_result()[0].values)
+        mean_VM_L23I, std_VM_L23I = ms(param_filter_query(self.datastore,sheet_name='V1_Inh_L2/3',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(VM)',ads_unique=True).get_analysis_result()[0].values)
+        
+        mean_CondE_L4E, std_CondE_L4E = ms(param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(ECond)',ads_unique=True).get_analysis_result()[0].values)
+        mean_CondE_L4I, std_CondE_L4I = ms(param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(ECond)',ads_unique=True).get_analysis_result()[0].values)
+        mean_CondE_L23E, std_CondE_L23E = ms(param_filter_query(self.datastore,sheet_name='V1_Exc_L2/3',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(ECond)',ads_unique=True).get_analysis_result()[0].values)
+        mean_CondE_L23I, std_CondE_L23I = ms(param_filter_query(self.datastore,sheet_name='V1_Inh_L2/3',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(ECond)',ads_unique=True).get_analysis_result()[0].values)
+
+        mean_CondI_L4E, std_CondI_L4E = ms(param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(ICond)',ads_unique=True).get_analysis_result()[0].values)
+        mean_CondI_L4I, std_CondI_L4I = ms(param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(ICond)',ads_unique=True).get_analysis_result()[0].values)
+        mean_CondI_L23E, std_CondI_L23E = ms(param_filter_query(self.datastore,sheet_name='V1_Exc_L2/3',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(ICond)',ads_unique=True).get_analysis_result()[0].values)
+        mean_CondI_L23I, std_CondI_L23I = ms(param_filter_query(self.datastore,sheet_name='V1_Inh_L2/3',st_direct_stimulation_name="None",st_name=['InternalStimulus'],analysis_algorithm='Analog_MeanSTDAndFanoFactor',value_name='Mean(ICond)',ads_unique=True).get_analysis_result()[0].values)
+        
+        
+        pylab.rc('axes', linewidth=1)
+        
+        def plot_with_log_normal_fit(values,gs1,gs2,x_label=False,y_label=""):
+            valuesnz = values[numpy.nonzero(values)[0]]
+            h,bin_edges = numpy.histogram(numpy.log10(valuesnz),range=(-2,2),bins=20,normed=True)
+            bin_centers = bin_edges[:-1] + (bin_edges[1:] - bin_edges[:-1])/2.0
+            
+            m = numpy.mean(numpy.log10(valuesnz))
+            nm = numpy.mean(valuesnz)
+            s = numpy.std(numpy.log10(valuesnz))
+
+            pylab.subplot(gs1)
+            pylab.plot(numpy.logspace(-2,2,100),numpy.exp(-((numpy.log10(numpy.logspace(-2,2,100))-m)**2)/(2*s*s))/(s*numpy.sqrt(2*numpy.pi)),linewidth=4,color="#666666")
+            pylab.plot(numpy.power(10,bin_centers),h,'ko',mec=None,mew=3)
+            pylab.xlim(10**-2,10**2)
+            pylab.gca().set_xscale("log")
+            if x_label:
+                pylab.xlabel('firing rate [Hz]',fontsize=fontsize)
+                pylab.xticks([0.01,0.1,1.0,10,100])
+            else:
+                pylab.xticks([])
+            pylab.ylabel(y_label,fontsize=fontsize)                
+            pylab.yticks([0.0,0.5,1.0])
+            for label in pylab.gca().get_xticklabels() + pylab.gca().get_yticklabels():
+                label.set_fontsize(fontsize)
+            phf.disable_top_right_axis(pylab.gca())
+            
+            pylab.subplot(gs2)
+            pylab.plot(numpy.logspace(-1,2,100),numpy.exp(-((numpy.log10(numpy.logspace(-1,2,100))-m)**2)/(2*s*s))/(s*numpy.sqrt(2*numpy.pi)),linewidth=4,color="#666666")
+            pylab.plot(numpy.logspace(-1,2,100),numpy.exp(-numpy.logspace(-1,2,100)/nm)/nm,'k--',linewidth=4)
+            pylab.plot(numpy.power(10,bin_centers),h,'ko',mec=None,mew=3)
+            pylab.xlim(10**-1,10**2)
+            pylab.ylim(0.00001,5.0)
+            pylab.gca().set_xscale("log")
+            pylab.gca().set_yscale("log")
+            if x_label:
+                pylab.xlabel('firing rate [Hz]',fontsize=fontsize)
+                pylab.xticks([0.1,1.0,10,100])
+            else:
+                pylab.xticks([])
+            pylab.yticks([0.0001,0.01,1.0])
+            for label in pylab.gca().get_xticklabels() + pylab.gca().get_yticklabels():
+                label.set_fontsize(fontsize)
+            phf.disable_top_right_axis(pylab.gca())
+        
+        
+        plot_with_log_normal_fit(param_filter_query(self.datastore,value_name=['Firing rate'],sheet_name=["V1_Exc_L4"],st_direct_stimulation_name="None",st_name=['InternalStimulus'],ads_unique=True).get_analysis_result()[0].values,gs[0:3,2],gs[0:3,3],y_label='L4e')
+        plot_with_log_normal_fit(param_filter_query(self.datastore,value_name=['Firing rate'],sheet_name=["V1_Inh_L4"],st_direct_stimulation_name="None",st_name=['InternalStimulus'],ads_unique=True).get_analysis_result()[0].values,gs[3:6,2],gs[3:6,3],y_label='L4i')
+        plot_with_log_normal_fit(param_filter_query(self.datastore,value_name=['Firing rate'],sheet_name=["V1_Exc_L2/3"],st_direct_stimulation_name="None",st_name=['InternalStimulus'],ads_unique=True).get_analysis_result()[0].values,gs[6:9,2],gs[6:9,3],y_label='L2/3e')
+        plot_with_log_normal_fit(param_filter_query(self.datastore,value_name=['Firing rate'],sheet_name=["V1_Inh_L2/3"],st_direct_stimulation_name="None",st_name=['InternalStimulus'],ads_unique=True).get_analysis_result()[0].values,gs[9:12,2],gs[9:12,3],x_label=True,y_label='L2/3i')
+        
+        if True:
+            pylab.subplot(gs[0:4,0])
+            pylab.barh(numpy.array([0.17,0.67])-0.06,[mean_firing_rate_L4E,mean_firing_rate_L23E],height = 0.12,color='#000000',xerr=[std_firing_rate_L4E,std_firing_rate_L23E],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.barh(numpy.array([0.33,0.83])-0.06,[mean_firing_rate_L4I,mean_firing_rate_L23I],height = 0.12,color='#FFFFFF',xerr=[std_firing_rate_L4I,std_firing_rate_L23I],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.ylim(0,1.0)
+            pylab.yticks([0.25,0.75],['L4','L2/3'])
+            pylab.xlabel('firing rate (Hz)',fontsize=fontsize)
+            phf.three_tick_axis(pylab.gca().xaxis)
+            for label in pylab.gca().get_xticklabels() + pylab.gca().get_yticklabels():
+                label.set_fontsize(fontsize)
+            phf.disable_top_right_axis(pylab.gca())
+            
+            pylab.subplot(gs[4:8,0])
+            pylab.barh(numpy.array([0.17,0.67])-0.06,[mean_CV_L4E,mean_CV_L23E],height = 0.12,color='#000000',xerr=[std_CV_L4E,std_CV_L23E],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.barh(numpy.array([0.33,0.83])-0.06,[mean_CV_L4I,mean_CV_L23I],height = 0.12,color='#FFFFFF',xerr=[std_CV_L4I,std_CV_L23I],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.ylim(0,1.0)
+            pylab.yticks([0.25,0.75],['L4','L2/3'])
+            pylab.xlabel('irregularity',fontsize=fontsize)
+            phf.three_tick_axis(pylab.gca().xaxis)
+            for label in pylab.gca().get_xticklabels() + pylab.gca().get_yticklabels():
+                label.set_fontsize(fontsize)
+            phf.disable_top_right_axis(pylab.gca())            
+
+            pylab.subplot(gs[8:12,0])
+            pylab.barh(numpy.array([0.17,0.67])-0.06,[mean_CC_L4E,mean_CC_L23E],height = 0.12,color='#000000',xerr=[std_CC_L4E,std_CC_L23E],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.barh(numpy.array([0.33,0.83])-0.06,[mean_CC_L4I,mean_CC_L23I],height = 0.12,color='#FFFFFF',xerr=[std_CC_L4I,std_CC_L23I],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.ylim(0,1.0)
+            pylab.yticks([0.25,0.75],['L4','L2/3'])
+            pylab.xlabel('synchrony',fontsize=fontsize)
+            phf.three_tick_axis(pylab.gca().xaxis)
+            for label in pylab.gca().get_xticklabels() + pylab.gca().get_yticklabels():
+                label.set_fontsize(fontsize)
+            phf.disable_top_right_axis(pylab.gca())
+
+
+            
+            pylab.subplot(gs[0:4,1])
+            pylab.barh(numpy.array([0.17,0.67])-0.06,[mean_VM_L4E,mean_VM_L23E],height = 0.12,color='#000000',xerr=[std_VM_L4E,std_VM_L23E],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.barh(numpy.array([0.33,0.83])-0.06,[mean_VM_L4I,mean_VM_L23I],height = 0.12,color='#FFFFFF',xerr=[std_VM_L4I,std_VM_L23I],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.ylim(0,1.0)
+            pylab.xlim(40,80)
+            pylab.yticks([0.25,0.75],['L4','L2/3'])
+            pylab.xlabel('membrane potential (mV)',fontsize=fontsize)
+            phf.three_tick_axis(pylab.gca().xaxis)
+            for label in pylab.gca().get_xticklabels() + pylab.gca().get_yticklabels():
+                label.set_fontsize(fontsize)
+            phf.disable_top_right_axis(pylab.gca())
+
+            pylab.subplot(gs[4:8,1])
+            pylab.barh(numpy.array([0.17,0.67])-0.06,[mean_CondE_L4E*1000,mean_CondE_L23E*1000],height = 0.12,color='#000000',xerr=[std_CondE_L4E*1000,std_CondE_L23E*1000],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.barh(numpy.array([0.33,0.83])-0.06,[mean_CondE_L4I*1000,mean_CondE_L23I*1000],height = 0.12,color='#FFFFFF',xerr=[std_CondE_L4I*1000,std_CondE_L23I*1000],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.ylim(0,1.0)
+            pylab.yticks([0.25,0.75],['L4','L2/3'])
+            pylab.xlabel('excitatory conductance (nS)',fontsize=fontsize)
+            phf.three_tick_axis(pylab.gca().xaxis)
+            for label in pylab.gca().get_xticklabels() + pylab.gca().get_yticklabels():
+                label.set_fontsize(fontsize)
+            phf.disable_top_right_axis(pylab.gca())            
+
+            pylab.subplot(gs[8:12,1])
+            pylab.barh(numpy.array([0.17,0.67])-0.06,[mean_CondI_L4E*1000,mean_CondI_L23E*1000],height = 0.12,color='#000000',xerr=[std_CondI_L4E*1000,std_CondI_L23E*1000],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.barh(numpy.array([0.33,0.83])-0.06,[mean_CondI_L4I*1000,mean_CondI_L23I*1000],height = 0.12,color='#FFFFFF',xerr=[std_CondI_L4I*1000,std_CondI_L23I*1000],error_kw=dict(ecolor='gray', lw=2, capsize=5, capthick=2))
+            pylab.ylim(0,1.0)
+            pylab.yticks([0.25,0.75],['L4','L2/3'])
+            pylab.xlabel('inhibitory conductance (nS)',fontsize=fontsize)
+            phf.three_tick_axis(pylab.gca().xaxis)
+            for label in pylab.gca().get_xticklabels() + pylab.gca().get_yticklabels():
+                label.set_fontsize(fontsize)
+            phf.disable_top_right_axis(pylab.gca())
+            
+            pylab.rc('axes', linewidth=1)
+        
+        return plots
+
         
 def VMVarianceSummary():
        
-        pylab.rc('axes', linewidth=3)
+        pylab.rc('axes', linewidth=1)
         
         
         
@@ -440,7 +624,7 @@ def VMVarianceSummary():
             pylab.xticks(x,["DG","NI"])
             #pylab.yticks([-30,0,70],["70%","100%","170%"])
             pylab.yticks([-30,0,70],["","",""])
-            pylab.axhline(0.0,color='k',linewidth=3)
+            pylab.axhline(0.0,color='k',linewidth=1)
             pylab.savefig("VMVarLayer23.png")
 
 
@@ -467,31 +651,31 @@ class OrientationTuningSummaryFiringRates(Plotting):
         analog_ids_inh2 = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2).get_segments()[0].get_stored_esyn_ids()))
         
         dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate'])
-        plots['ExcORTCMeanL4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids1), 'sheet_name' : self.parameters.exc_sheet_name1,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[0:6,:6],{'title' : None,'x_label' : None , 'y_label' : 'Layer 4 (EXC)\n\nfiring rate (sp/s)', 'x_ticks' : None})
-        plots['ExcORTC1L4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids1[0:3]), 'sheet_name' : self.parameters.exc_sheet_name1,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[0:3,6:15],{'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False, 'x_ticks' : False})
-        plots['ExcORTC2L4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids1[3:6]), 'sheet_name' : self.parameters.exc_sheet_name1,'centered'  : True,'mean' : False,'pool' : False,'polar': False})),gs[3:6,6:15],{'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False})
+        plots['ExcORTCMeanL4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids1), 'sheet_name' : self.parameters.exc_sheet_name1,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[0:6,:6],{'y_lim' : (0,None),'title' : None,'x_label' : None , 'y_label' : 'Layer 4 (EXC)\n\nfiring rate (sp/s)', 'x_ticks' : None})
+        plots['ExcORTC1L4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids1[0:3]), 'sheet_name' : self.parameters.exc_sheet_name1,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[0:3,6:15],{'y_lim' : (0,None),'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False, 'x_ticks' : False})
+        plots['ExcORTC2L4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids1[3:6]), 'sheet_name' : self.parameters.exc_sheet_name1,'centered'  : True,'mean' : False,'pool' : False,'polar': False})),gs[3:6,6:15],{'y_lim' : (0,None),'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False})
 
-        plots['InhORTCMeanL4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh1), 'sheet_name' : self.parameters.inh_sheet_name1,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[7:13,:6],{'title' : None, 'x_label' : None ,'y_label' : 'Layer 4 (INH)\n\nfiring rate (sp/s)', 'x_ticks' : None})
-        plots['InhORTC1L4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh1[0:3]), 'sheet_name' : self.parameters.inh_sheet_name1,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[7:10,6:15],{'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False})
-        plots['InhORTC2L4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh1[3:6]), 'sheet_name' : self.parameters.inh_sheet_name1,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[10:13,6:15],{'title' : None,'left_border' : None, 'x_label' : None ,'y_axis' : None,'x_axis' : False, 'x_ticks' : False})
+        plots['InhORTCMeanL4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh1), 'sheet_name' : self.parameters.inh_sheet_name1,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[7:13,:6],{'y_lim' : (0,None),'title' : None, 'x_label' : None ,'y_label' : 'Layer 4 (INH)\n\nfiring rate (sp/s)', 'x_ticks' : None})
+        plots['InhORTC1L4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh1[0:3]), 'sheet_name' : self.parameters.inh_sheet_name1,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[7:10,6:15],{'y_lim' : (0,None),'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False})
+        plots['InhORTC2L4'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh1[3:6]), 'sheet_name' : self.parameters.inh_sheet_name1,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[10:13,6:15],{'y_lim' : (0,None),'title' : None,'left_border' : None, 'x_label' : None ,'y_axis' : None,'x_axis' : False, 'x_ticks' : False})
 
-        plots['ExcORTCMeanL23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids2), 'sheet_name' : self.parameters.exc_sheet_name2,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[14:20,:6],{'title' : None,'x_label' : None , 'y_label' : 'Layer 2/3 (EXC)\n\nfiring rate (sp/s)', 'x_ticks' : None})
-        plots['ExcORTC1L23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids2[0:3]), 'sheet_name' : self.parameters.exc_sheet_name2,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[14:17,6:15],{'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False, 'x_ticks' : False})
-        plots['ExcORTC2L23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids2[3:6]), 'sheet_name' : self.parameters.exc_sheet_name2,'centered'  : True,'mean' : False,'pool' : False,'polar': False})),gs[17:20,6:15],{'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False})
+        plots['ExcORTCMeanL23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids2), 'sheet_name' : self.parameters.exc_sheet_name2,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[14:20,:6],{'y_lim' : (0,None),'title' : None,'x_label' : None , 'y_label' : 'Layer 2/3 (EXC)\n\nfiring rate (sp/s)', 'x_ticks' : None})
+        plots['ExcORTC1L23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids2[0:3]), 'sheet_name' : self.parameters.exc_sheet_name2,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[14:17,6:15],{'y_lim' : (0,None),'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False, 'x_ticks' : False})
+        plots['ExcORTC2L23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids2[3:6]), 'sheet_name' : self.parameters.exc_sheet_name2,'centered'  : True,'mean' : False,'pool' : False,'polar': False})),gs[17:20,6:15],{'y_lim' : (0,None),'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False})
 
-        plots['InhORTCMeanL23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh2), 'sheet_name' : self.parameters.inh_sheet_name2,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[21:27,:6],{'title' : None, 'y_label' : 'Layer 2/3 (INH)\n\nfiring rate (sp/s)'})
-        plots['InhORTC1L23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh2[0:3]), 'sheet_name' : self.parameters.inh_sheet_name2,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[21:24,6:15],{'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False})
-        plots['InhORTC2L23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh2[3:6]), 'sheet_name' : self.parameters.inh_sheet_name2,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[24:27,6:15],{'title' : None,'left_border' : None, 'y_axis' : None,'x_axis' : False})
+        plots['InhORTCMeanL23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh2), 'sheet_name' : self.parameters.inh_sheet_name2,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[21:27,:6],{'y_lim' : (0,None),'title' : None, 'y_label' : 'Layer 2/3 (INH)\n\nfiring rate (sp/s)'})
+        plots['InhORTC1L23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh2[0:3]), 'sheet_name' : self.parameters.inh_sheet_name2,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[21:24,6:15],{'y_lim' : (0,None),'title' : None,'left_border' : None, 'x_label' : None,'y_axis' : False,'x_axis' : False})
+        plots['InhORTC2L23'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh2[3:6]), 'sheet_name' : self.parameters.inh_sheet_name2,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[24:27,6:15],{'y_lim' : (0,None),'title' : None,'left_border' : None, 'y_axis' : None,'x_axis' : False})
 
         
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.exc_sheet_name1])    
-        plots['HWHHExcL4'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[0:6,17:23],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : None,'y_label' : 'HWHH Cont. 5%', 'cmp' : None,'title' : None})
+        plots['HWHHExcL4'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[0:6,17:23],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : None,'y_label' : 'HWHH cont. 5%', 'cmp' : None,'title' : None})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.inh_sheet_name1])    
-        plots['HWHHInhL4'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[7:13,17:23],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : None,'y_label' : 'HWHH Cont. 5%', 'cmp' : None,'title' : None})
+        plots['HWHHInhL4'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[7:13,17:23],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : None,'y_label' : 'HWHH cont. 5%', 'cmp' : None,'title' : None})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.exc_sheet_name2])    
-        plots['HWHHExcL23'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[14:20,17:23],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : None,'y_label' : 'HWHH Cont. 5%', 'cmp' : None,'title' : None})
+        plots['HWHHExcL23'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[14:20,17:23],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : None,'y_label' : 'HWHH cont. 5%', 'cmp' : None,'title' : None})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.inh_sheet_name2])    
-        plots['HWHHInhL23'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[21:27,17:23],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : 'HWHH Cont. 100%','y_label' : 'HWHH Cont. 5%', 'cmp' : None,'title' : None})
+        plots['HWHHInhL23'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[21:27,17:23],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : 'HWHH Cont. 100%','y_label' : 'HWHH cont. 5%', 'cmp' : None,'title' : None})
 
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.exc_sheet_name1],st_contrast=[100])    
         plots['HWHHHistogramExcL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:6,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
@@ -500,7 +684,7 @@ class OrientationTuningSummaryFiringRates(Plotting):
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.exc_sheet_name2],st_contrast=[100])    
         plots['HWHHHistogramExcL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[14:20,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.inh_sheet_name2],st_contrast=[100])    
-        plots['HWHHHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : 'HWHH (100% contrast)','title' : None,'y_label' : '# neurons'})
+        plots['HWHHHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : 'HWHH (100% cont.)','title' : None,'y_label' : '# neurons'})
 
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.exc_sheet_name1],st_contrast=[100])    
         plots['CVHistogramExcL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:6,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
@@ -509,7 +693,7 @@ class OrientationTuningSummaryFiringRates(Plotting):
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.exc_sheet_name2],st_contrast=[100])    
         plots['CVHistogramExcL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[14:20,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.inh_sheet_name2],st_contrast=[100])    
-        plots['CVHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : 'CV (100% contrast)','title' : None,'y_label' : None})
+        plots['CVHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : 'CV (100% cont.)','title' : None,'y_label' : None})
         
         return plots
 
@@ -533,10 +717,10 @@ class OrientationTuningSummaryAnalogSignals(Plotting):
         analog_ids2 = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name2).get_segments()[0].get_stored_esyn_ids()))
         analog_ids_inh2 = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2).get_segments()[0].get_stored_esyn_ids()))
         
-        or_tuning_exc1 = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = self.parameters.exc_sheet_name1)[0]
-        or_tuning_exc2 = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = self.parameters.exc_sheet_name2)[0]
-        or_tuning_inh1 = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = self.parameters.inh_sheet_name1)[0]
-        or_tuning_inh2 = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = self.parameters.inh_sheet_name2)[0]
+        or_tuning_exc1 = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = self.parameters.exc_sheet_name1)[0]
+        or_tuning_exc2 = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = self.parameters.exc_sheet_name2)[0]
+        or_tuning_inh1 = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = self.parameters.inh_sheet_name1)[0]
+        or_tuning_inh2 = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = self.parameters.inh_sheet_name2)[0]
             
         
         # L4 EXC
@@ -769,7 +953,7 @@ class TrialCrossCorrelationAnalysis(Plotting):
             
             vm_cc_gr_pool,psth_cc_gr_pool,vm_cc_ni_pool,psth_cc_ni_pool = (vm_cc_gr_s1+vm_cc_gr_s2)/2,(psth_cc_gr_s1+psth_cc_gr_s2)/2,(vm_cc_ni_s1+vm_cc_ni_s2)/2,(psth_cc_ni_s1+psth_cc_ni_s2)/2
             
-            z = int(min(self.parameters.window_length,len(vm_cc_gr_s1-1)/2,len(vm_cc_gr_s1-1)/2)/2)*2
+            z = int(min(self.parameters.window_length,(len(vm_cc_gr_s1)-1)/2,(len(vm_cc_gr_s2)-1)/2)/2)*2
             
             plots["Spike_sheet_1"] = (StandardStyleLinePlot([numpy.linspace(-z,z,z+1),numpy.linspace(-z,z,z+1)], [psth_cc_gr_s1[int(len(psth_cc_gr_s1)/2)-z/2:int(len(psth_cc_gr_s1)/2)+z/2+1],psth_cc_ni_s1[int(len(psth_cc_ni_s1)/2)-z/2:int(len(psth_cc_ni_s1)/2)+z/2+1]]),gs[0,0],{'colors':['r','k'], 'x_tick_style' : 'Custom', 'x_ticks' : [],'y_tick_style' : 'Custom', 'y_ticks' : [0,0.4], 'y_tick_labels' : [0.0,0.4], 'linewidth' : 2.0, 'y_lim' : (-0.05,0.4),'y_label' : 'spikes'})
             plots["Vm_sheet_1"] = (StandardStyleLinePlot([numpy.linspace(-z,z,2*z+1),numpy.linspace(-z,z,2*z+1)], [vm_cc_gr_s1[int(len(vm_cc_gr_s1)/2)-z:int(len(vm_cc_gr_s1)/2)+z+1],vm_cc_ni_s1[int(len(vm_cc_ni_s1)/2)-z:int(len(vm_cc_ni_s1)/2)+z+1]]),gs[1,0],{'x_label' : 'time(ms)', 'colors':['r','k'], 'x_tick_style' : 'Custom', 'x_ticks' : [-z,0,z], 'x_tick_labels' : [-self.parameters.window_length,0,self.parameters.window_length],'y_tick_style' : 'Custom', 'y_ticks' : [-1.0,0,1.0], 'y_tick_labels' : [-1.0,0.0,1.0], 'linewidth' : 2.0, 'y_lim' : (-1.0,1.0),'y_label' : 'Vm'})
@@ -780,4 +964,45 @@ class TrialCrossCorrelationAnalysis(Plotting):
                                     
                 
             return plots
+            
+class SizeTuningOverview(Plotting):
+    required_parameters = ParameterSet({
+        'l4_neurons' : list,
+        'l23_neurons' : list,
+    })
+
+    def subplot(self, subplotspec):
+        plots = {}
+        gs = gridspec.GridSpecFromSubplotSpec(8,24, subplot_spec=subplotspec,hspace=1.0, wspace=0.3)
+        fontsize = 20
+        
+        low_contrast = str(5)
+        
+        dsv = param_filter_query(self.datastore,st_name='DriftingSinusoidalGratingDisk',value_name=['Firing rate'])    
+        plots['L4ExcFR'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'radius', 'neurons': self.parameters.l4_neurons, 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : True, 'polar' : False, 'pool'  : False})),gs[0:4,0:4],{'fontsize' : fontsize,'title' : None,'x_label' : None , 'y_label' : r'Firing rate ($\frac{sp}{s}$)', 'x_axis' : False, 'x_ticks' : False,'colors' : {'contrast : 100' : '#000000' , 'contrast : ' + low_contrast : '#0073B3'}})
+        plots['L23ExcFR'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'radius', 'neurons': self.parameters.l23_neurons, 'sheet_name' : 'V1_Exc_L2/3','centered'  : False,'mean' : True, 'polar' : False, 'pool'  : False})),gs[4:8,0:4],{'fontsize' : fontsize,'title' : None,'y_label' : r'Firing rate ($\frac{sp}{s}$)','colors' : {'contrast : 100' : '#000000' , 'contrast : ' + low_contrast : '#0073B3'}})
+
+        dsv = param_filter_query(self.datastore,st_name='DriftingSinusoidalGratingDisk',value_name=['F1_Vm'])    
+        plots['L4ExcVm'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'radius', 'neurons': self.parameters.l4_neurons, 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : True, 'polar' : False, 'pool'  : False})),gs[0:4,5:9],{'fontsize' : fontsize,'title' : None,'x_label' : None , 'y_label' : r'Vm (mV)', 'x_axis' : False, 'x_ticks' : False,'colors' : {'contrast : 100' : '#000000' , 'contrast : ' + low_contrast : '#0073B3'}})
+        dsv = param_filter_query(self.datastore,st_name='DriftingSinusoidalGratingDisk',value_name=['F0_Vm'])    
+        plots['L23ExcVm'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'radius', 'neurons': self.parameters.l23_neurons, 'sheet_name' : 'V1_Exc_L2/3','centered'  : False,'mean' : True, 'polar' : False, 'pool'  : False})),gs[4:8,5:9],{'fontsize' : fontsize,'title' : None,'y_label' : r'Vm (mV)','colors' : {'contrast : 100' : '#000000' , 'contrast : ' + low_contrast : '#0073B3'}})
+        
+        dsv = param_filter_query(self.datastore,value_name=['Suppression index of Firing rate'],sheet_name='V1_Exc_L4')   
+        plots['L4ExcSI'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:4,10:14],{'fontsize' : fontsize,'title' : None,'x_label' : None , 'y_label' : '# neurons', 'x_axis' : False, 'x_ticks' : False,'num_bins': 10,'mark_mean' : True,'x_lim' : (0,1.0), 'y_lim' : (0,25),'colors' : {'contrast : 100' : '#000000' , 'contrast : ' + low_contrast : '#0073B3'}})
+        dsv = param_filter_query(self.datastore,value_name=['Suppression index of Firing rate'],sheet_name='V1_Exc_L2/3')   
+        plots['L2/3ExcSI'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[4:8,10:14],{'fontsize' : fontsize,'title' : None,'x_label' : None , 'y_label' : '# neurons', 'x_label' : 'Suppression index' ,'num_bins': 10,'mark_mean' : True,'x_lim' : (0,1.0), 'y_lim' : (0,25),'colors' : {'contrast : 100' : '#000000' , 'contrast : ' + low_contrast : '#0073B3'}})
+
+        dsv = param_filter_query(self.datastore,value_name=['Max. facilitation radius of Firing rate'],sheet_name='V1_Exc_L4')   
+        plots['L4ExcMaxFacilitationRadius'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:4,15:19],{'fontsize' : fontsize,'title' : None,'x_label' : None , 'y_label' : '# neurons', 'x_axis' : False, 'x_ticks' : False,'num_bins': 8,'mark_mean' : True,'x_lim' : (0,4.0), 'y_lim' : (0,16),'colors' : {'contrast : 100' : '#000000' , 'contrast : ' + low_contrast : '#0073B3'}})
+        dsv = param_filter_query(self.datastore,value_name=['Max. facilitation radius of Firing rate'],sheet_name='V1_Exc_L2/3')   
+        plots['L2/3ExcMaxFacilitationRadius'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[4:8,15:19],{'fontsize' : fontsize,'title' : None,'x_label' : None , 'y_label' : '# neurons', 'x_label' : 'Maximum facillitation radius' ,'num_bins': 8,'mark_mean' : True,'x_lim' : (0,4.0), 'y_lim' : (0,16),'colors' : {'contrast : 100' : '#000000' , 'contrast : ' + low_contrast : '#0073B3'}})
+
+        dsv = param_filter_query(self.datastore,st_name='DriftingSinusoidalGratingDisk',value_name=['F0_Exc_Cond','F0_Inh_Cond'])    
+        plots['L4ExcCond,'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'radius', 'neurons': self.parameters.l4_neurons, 'sheet_name' : 'V1_Exc_L4','centered'  : False,'mean' : True, 'polar' : False, 'pool'  : True})),gs[0:4,20:24],{'fontsize' : fontsize,'title' : None,'x_label' : None , 'x_axis' : False, 'x_ticks' : False, 'colors' : {'F0_Exc_Cond contrast : 100' : '#FF0000' , 'F0_Exc_Cond contrast : ' + low_contrast : '#FFACAC','F0_Inh_Cond contrast : 100' : '#0000FF' , 'F0_Inh_Cond contrast : ' + low_contrast : '#ACACFF'},'y_label' : 'Conductance (nS)'})
+        dsv = param_filter_query(self.datastore,st_name='DriftingSinusoidalGratingDisk',value_name=['F0_Exc_Cond','F0_Inh_Cond'])    
+        plots['L23ExcCond'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'radius', 'neurons': self.parameters.l23_neurons, 'sheet_name' : 'V1_Exc_L2/3','centered'  : False,'mean' : True, 'polar' : False, 'pool'  : True})),gs[4:8,20:24],{'fontsize' : fontsize,'title' : None,'colors' : {'F0_Exc_Cond contrast : 100' : '#FF0000' , 'F0_Exc_Cond contrast : ' + low_contrast : '#FFACAC','F0_Inh_Cond contrast : 100' : '#0000FF' , 'F0_Inh_Cond contrast : ' + low_contrast : '#ACACFF'},'y_label' : 'Conductance (nS)'})
+
+        
+        return plots
+
                         
