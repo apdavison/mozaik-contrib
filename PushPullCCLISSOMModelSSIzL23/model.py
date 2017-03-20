@@ -17,6 +17,7 @@ class SelfSustainedPushPull(Model):
         'visual_field' : ParameterSet,
         'only_afferent' : bool,
         'l23' : bool,
+	'feedback' : bool,
     })
     
     def __init__(self, sim, num_threads, parameters):
@@ -70,11 +71,11 @@ class SelfSustainedPushPull(Model):
                 ModularSamplingProbabilisticConnector(self,'V1L23ExcL23ExcConnection',cortex_exc_l23,cortex_exc_l23,self.parameters.l23_cortex_exc.L23ExcL23ExcConnection).connect()
 	        ModularSamplingProbabilisticConnector(self,'V1L23ExcL23InhConnection',cortex_exc_l23,cortex_inh_l23,self.parameters.l23_cortex_exc.L23ExcL23InhConnection).connect()
     	        ModularSamplingProbabilisticConnector(self,'V1L23InhL23ExcConnection',cortex_inh_l23,cortex_exc_l23,self.parameters.l23_cortex_inh.L23InhL23ExcConnection).connect()
-        	ModularSamplingProbabilisticConnector(self,'V1L23InhL23InhConnection',cortex_inh_l23,cortex_inh_l23,self.parameters.l23_cortex_inh.L23InhL23InhConnection).connect()
-
-                # initialize feedback layer 2/3 projections
-	        #ModularSamplingProbabilisticConnector(self,'V1L23ExcL4ExcConnection',cortex_exc_l23,cortex_exc_l4,self.parameters.l23_cortex_exc.L23ExcL4ExcConnection).connect()
-    	        #ModularSamplingProbabilisticConnector(self,'V1L23ExcL4InhConnection',cortex_exc_l23,cortex_inh_l4,self.parameters.l23_cortex_exc.L23ExcL4InhConnection).connect()
+	    	ModularSamplingProbabilisticConnector(self,'V1L23InhL23InhConnection',cortex_inh_l23,cortex_inh_l23,self.parameters.l23_cortex_inh.L23InhL23InhConnection).connect()
+		if self.parameters.feedback:
+			# initialize feedback layer 2/3 projections
+			ModularSamplingProbabilisticConnector(self,'V1L23ExcL4ExcConnection',cortex_exc_l23,cortex_exc_l4,self.parameters.l23_cortex_exc.L23ExcL4ExcConnection).connect()
+			ModularSamplingProbabilisticConnector(self,'V1L23ExcL4InhConnection',cortex_exc_l23,cortex_inh_l4,self.parameters.l23_cortex_exc.L23ExcL4InhConnection).connect()
         
         
 

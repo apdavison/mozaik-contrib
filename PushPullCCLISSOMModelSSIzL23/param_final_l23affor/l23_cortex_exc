@@ -96,5 +96,5 @@
         'num_samples' : ref('l23_cortex_exc.l23_aff_ratio')*ref('l4_cortex_exc.K'),
     },
 
-    'l23_aff_ratio' : 0.25,
+    'l23_aff_ratio' : 0.3,
 }

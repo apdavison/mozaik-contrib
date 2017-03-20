@@ -14,7 +14,7 @@
     'l23_cortex_inh': url("param_final_l23affor/l23_cortex_inh"),
     'retina_lgn': url("param_final_l23affor/SpatioTemporalFilterRetinaLGN_defaults"),
     'only_afferent' : False,
-    'l23' : False,
+    'l23' : True,
     'results_dir': '',
     'name' : 'SelfSustainedPushPullV1',
     'reset' : False,

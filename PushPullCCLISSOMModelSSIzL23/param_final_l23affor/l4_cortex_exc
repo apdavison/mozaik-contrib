@@ -19,7 +19,7 @@
                             'cm': 0.05,
             	            'e_rev_E': 0.0,
                             'e_rev_I': -80.0,
-                    	    'tau_syn_E': 3.0,
+                    	    'tau_syn_E': 2.5,
                             'tau_syn_I': 10.0,
                             'a' : PyNNDistribution(name='uniform',params=(-3,-1)),
                             'b' : PyNNDistribution(name='uniform',params=(0.0,0.08)),
