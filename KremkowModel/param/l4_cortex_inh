@@ -42,7 +42,7 @@
                                                                                  }
                                                                    }
                                             },
-                'recording_interval'  :  ref('l4_cortex_exc.params.recording_interval'),                                            
+                'recording_interval'  :  ref('sheets.l4_cortex_exc.params.recording_interval'),                                            
                 'recorders' : url("param/l4_inh_rec"),    
     },
     

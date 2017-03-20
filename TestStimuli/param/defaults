@@ -4,7 +4,9 @@
         'update_interval': 7.0, # ms
         'background_luminance': 50.0, # cd/m²
     },
-    'retina_lgn': url("param/SpatioTemporalFilterRetinaLGN_defaults"),
+    'sheets' : {
+        'retina_lgn': url("param/SpatioTemporalFilterRetinaLGN_defaults"),
+    },
     'visual_field': {
         'centre': (0.0, 0.0), # degrees (x,y)
         'size': (7.0, 7.0), # degrees (width, height)
