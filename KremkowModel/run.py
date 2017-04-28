@@ -43,7 +43,7 @@ if True:
     
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_test_____', 'store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_test_np1_____', 'store_stimuli' : False}),replace=True)
     logger.info('Loaded data store')
     data_store.save()
 
