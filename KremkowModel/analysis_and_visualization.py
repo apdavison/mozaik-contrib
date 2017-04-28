@@ -10,7 +10,7 @@ from mozaik.storage.datastore import PickledDataStore
 from mozaik.tools.circ_stat import circular_dist
 import sys
 sys.path.append('/home/do/mozaik/mozaik-contrib')
-from Kremkow_plots import *
+#from Kremkow_plots import *
 
 def perform_analysis_and_visualization(data_store):
     if True:
@@ -38,7 +38,7 @@ def perform_analysis_and_visualization(data_store):
         print "Prefered phase of plotted inh neurons:"
         print l4_exc_phase[0].get_value_by_id(l4_exc)
     
-    if False:
+    if True:
             #data_store.remove_ads_from_datastore()
             
             dsv = param_filter_query(data_store,sheet_name='V1_Exc_L4')

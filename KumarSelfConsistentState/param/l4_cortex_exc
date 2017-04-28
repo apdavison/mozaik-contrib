@@ -41,5 +41,6 @@
                                 },
 
                 'recorders' : url("param/l4_exc_rec"),
+                'recording_interval'  :  1.0,
     },
 }
