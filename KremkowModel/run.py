@@ -13,7 +13,6 @@ import mozaik
 from model import PushPullCCModel
 from experiments import create_experiments
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
-from analysis_and_visualization_tiny import perform_analysis_and_visualization
 from parameters import ParameterSet
 
 
@@ -30,7 +29,7 @@ MPI_ROOT = 0
 
 logger = mozaik.getMozaikLogger()
 
-if False:
+if True:
     data_store,model = run_workflow('FFI',PushPullCCModel,create_experiments)
     #model.connectors['V1L4ExcL4ExcConnection'].store_connections(data_store)    
     #model.connectors['V1L4ExcL4InhConnection'].store_connections(data_store)    
@@ -49,4 +48,5 @@ else:
     data_store.save()
 
 if mpi_comm.rank == MPI_ROOT:
+    from analysis_and_visualization import perform_analysis_and_visualization
     perform_analysis_and_visualization(data_store)
