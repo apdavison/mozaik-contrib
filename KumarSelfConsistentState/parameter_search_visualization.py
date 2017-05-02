@@ -15,4 +15,6 @@ directory = sys.argv[1]
 
 multi_curve_visualzition("KumarEtAl2007",directory,'l4_cortex_exc.params.artificial_stimulators.background_act.params.exc_firing_rate',
                          ParamFilterQuery(ParameterSet({'ads_unique' : False, 'rec_unique' : False, 'params' : ParameterSet({'sheet_name' : 'V1_Exc_L4'})})),
-                         value_name=None,filename='Exc.png',treat_nan_as_zero=True)   
+                         value_name='Mean(Firing rate)',filename='Exc.png',treat_nan_as_zero=True)   
+
+

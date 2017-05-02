@@ -35,11 +35,14 @@
             'temporal_resolution': 7.0, # ms
             'duration': 100.0,
         },
-	   'gain_control' : {
-            'gain': 10,
-            'non_linear_gain' : None,
-       },
-#       'gain' : 10,
+        'gain_control' : {
+            'gain': 50,
+            'non_linear_gain' : {
+                        'luminance_gain' : 10.0,
+                        'luminance_scaler' : 0.1,
+                        'contrast_scaler' : 0.1,
+                    }
+        },
         'cell': {
             'model': 'IF_cond_exp',
             'params': {

@@ -30,7 +30,7 @@
             },
             'width': 6.0, # degrees
             'height': 6.0, # degrees
-            'spatial_resolution': 0.2, # degrees
+            'spatial_resolution': 0.1666666666666, # degrees
             'temporal_resolution': 7.0, # ms
             'duration': 100.0,
         },

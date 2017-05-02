@@ -16,6 +16,8 @@ class SelfSustainedPushPull(Model):
         'retina_lgn' : ParameterSet ,
         'visual_field' : ParameterSet,
         'only_afferent' : bool,
+        'l23' : bool,
+	'feedback' : bool,
     })
     
     def __init__(self, sim, num_threads, parameters):
@@ -24,7 +26,7 @@ class SelfSustainedPushPull(Model):
         CortexExcL4 = load_component(self.parameters.l4_cortex_exc.component)
         CortexInhL4 = load_component(self.parameters.l4_cortex_inh.component)
 	
-	if not self.parameters.only_afferent:
+	if not self.parameters.only_afferent and self.parameters.l23:
             CortexExcL23 = load_component(self.parameters.l23_cortex_exc.component)
             CortexInhL23 = load_component(self.parameters.l23_cortex_inh.component)
 
@@ -37,7 +39,7 @@ class SelfSustainedPushPull(Model):
         cortex_exc_l4 = CortexExcL4(self, self.parameters.l4_cortex_exc.params)
         cortex_inh_l4 = CortexInhL4(self, self.parameters.l4_cortex_inh.params)
 
-	if not self.parameters.only_afferent:
+	if not self.parameters.only_afferent and self.parameters.l23:
             cortex_exc_l23 = CortexExcL23(self, self.parameters.l23_cortex_exc.params)
 	    cortex_inh_l23 = CortexInhL23(self, self.parameters.l23_cortex_inh.params)
 
@@ -58,20 +60,22 @@ class SelfSustainedPushPull(Model):
             ModularSamplingProbabilisticConnector(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.l4_cortex_exc.L4ExcL4InhConnection).connect()
             ModularSamplingProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.l4_cortex_inh.L4InhL4ExcConnection).connect()
             ModularSamplingProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.l4_cortex_inh.L4InhL4InhConnection).connect()
-	    if False:
-                # initialize afferent layer 4 to layer 2/3 projection
-                ModularSamplingProbabilisticConnector(self,'V1L4ExcL23ExcConnection',cortex_exc_l4,cortex_exc_l23,self.parameters.l23_cortex_exc.L4ExcL23ExcConnection).connect()
-                ModularSamplingProbabilisticConnector(self,'V1L4ExcL23InhConnection',cortex_exc_l4,cortex_inh_l23,self.parameters.l23_cortex_inh.L4ExcL23InhConnection).connect()
-            
-                # initialize lateral layer 2/3 projections
-                ModularSamplingProbabilisticConnector(self,'V1L23ExcL23ExcConnection',cortex_exc_l23,cortex_exc_l23,self.parameters.l23_cortex_exc.L23ExcL23ExcConnection).connect()
-                ModularSamplingProbabilisticConnector(self,'V1L23ExcL23InhConnection',cortex_exc_l23,cortex_inh_l23,self.parameters.l23_cortex_exc.L23ExcL23InhConnection).connect()
-                ModularSamplingProbabilisticConnector(self,'V1L23InhL23ExcConnection',cortex_inh_l23,cortex_exc_l23,self.parameters.l23_cortex_inh.L23InhL23ExcConnection).connect()
-                ModularSamplingProbabilisticConnector(self,'V1L23InhL23InhConnection',cortex_inh_l23,cortex_inh_l23,self.parameters.l23_cortex_inh.L23InhL23InhConnection).connect()
 
-            # initialize feedback layer 2/3 projections
-            #ModularSamplingProbabilisticConnector(self,'V1L23ExcL4ExcConnection',cortex_exc_l23,cortex_exc_l4,self.parameters.l23_cortex_exc.L23ExcL4ExcConnection).connect()
-            #ModularSamplingProbabilisticConnector(self,'V1L23ExcL4InhConnection',cortex_exc_l23,cortex_inh_l4,self.parameters.l23_cortex_exc.L23ExcL4InhConnection).connect()
+	    if self.parameters.l23:
+
+                # initialize afferent layer 4 to layer 2/3 projection
+	        ModularSamplingProbabilisticConnector(self,'V1L4ExcL23ExcConnection',cortex_exc_l4,cortex_exc_l23,self.parameters.l23_cortex_exc.L4ExcL23ExcConnection).connect()
+    	        ModularSamplingProbabilisticConnector(self,'V1L4ExcL23InhConnection',cortex_exc_l4,cortex_inh_l23,self.parameters.l23_cortex_inh.L4ExcL23InhConnection).connect()
+            
+        	# initialize lateral layer 2/3 projections
+                ModularSamplingProbabilisticConnector(self,'V1L23ExcL23ExcConnection',cortex_exc_l23,cortex_exc_l23,self.parameters.l23_cortex_exc.L23ExcL23ExcConnection).connect()
+	        ModularSamplingProbabilisticConnector(self,'V1L23ExcL23InhConnection',cortex_exc_l23,cortex_inh_l23,self.parameters.l23_cortex_exc.L23ExcL23InhConnection).connect()
+    	        ModularSamplingProbabilisticConnector(self,'V1L23InhL23ExcConnection',cortex_inh_l23,cortex_exc_l23,self.parameters.l23_cortex_inh.L23InhL23ExcConnection).connect()
+	    	ModularSamplingProbabilisticConnector(self,'V1L23InhL23InhConnection',cortex_inh_l23,cortex_inh_l23,self.parameters.l23_cortex_inh.L23InhL23InhConnection).connect()
+		if self.parameters.feedback:
+			# initialize feedback layer 2/3 projections
+			ModularSamplingProbabilisticConnector(self,'V1L23ExcL4ExcConnection',cortex_exc_l23,cortex_exc_l4,self.parameters.l23_cortex_exc.L23ExcL4ExcConnection).connect()
+			ModularSamplingProbabilisticConnector(self,'V1L23ExcL4InhConnection',cortex_exc_l23,cortex_inh_l4,self.parameters.l23_cortex_exc.L23ExcL4InhConnection).connect()
         
         
 

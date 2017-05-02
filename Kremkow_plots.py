@@ -76,30 +76,7 @@ class KremkowOverviewFigure(Plotting):
 
         return plots
 
-class StimulusResponseComparison(Plotting):
-    required_parameters = ParameterSet({
-        'sheet_name': str,  # the name of the sheet for which to plot
-        'neuron': int,  # which neuron to show
-    })
 
-    def subplot(self, subplotspec):
-        plots = {}
-        gs = gridspec.GridSpecFromSubplotSpec(4, 18, subplot_spec=subplotspec,
-                                              hspace=1.0, wspace=1.0)
-        
-        orr = list(set([MozaikParametrized.idd(s).orientation for s in queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_contrast=100).get_stimuli()]))                
-        #ors = self.datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = self.parameters.sheet_name)
-        
-        #dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_orientation=orr[numpy.argmin([circular_dist(o,ors[0].get_value_by_id(self.parameters.neuron),numpy.pi)  for o in orr])],st_contrast=100)             
-        dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_orientation=0,st_contrast=100)             
-        plots['Gratings'] = (OverviewPlot(dsv, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron,'spontaneous' : True, 'sheet_activity' : {}})),gs[0:2,:],{'x_label': None})
-        #dsv = queries.param_filter_query(self.datastore,st_name='DriftingGratingWithEyeMovement')            
-        #plots['GratingsWithEM'] = (OverviewPlot(dsv, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron, 'spontaneous' : True,'sheet_activity' : {}})),gs[2:4,:],{'x_label': None})
-        dsv = queries.param_filter_query(self.datastore,st_name='NaturalImageWithEyeMovement')            
-        plots['NIwEM'] = (OverviewPlot(dsv, ParameterSet({'sheet_name': self.parameters.sheet_name,'neuron': self.parameters.neuron,'spontaneous' : True, 'sheet_activity' : {}})),gs[2:4,:],{})
-        
-        
-        return plots
         
 
 class OrientationTuningSummary(Plotting):
@@ -117,8 +94,18 @@ class OrientationTuningSummary(Plotting):
                                               hspace=1.0, wspace=1.0)
         
         
-        analog_ids = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name).get_segments()[0].get_stored_esyn_ids()))
-        analog_ids_inh = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name).get_segments()[0].get_stored_esyn_ids()))
+        #analog_ids = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name).get_segments()[0].get_stored_esyn_ids()))
+        #analog_ids_inh = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name).get_segments()[0].get_stored_isyn_ids()))
+
+        analog_ids = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name).get_segments()[0].get_stored_spike_train_ids()))
+        analog_ids_inh = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name).get_segments()[0].get_stored_spike_train_ids()))
+                
+        #pnv = queries.param_filter_query(self.datastore,value_name=['orientation max of Firing rate'],sheet_name=self.parameters.exc_sheet_name,st_contrast=100).get_analysis_result()[0]
+        #analog_ids = numpy.array(pnv.ids)[pnv.values>5.0]
+        #pnv = queries.param_filter_query(self.datastore,value_name=['orientation max of Firing rate'],sheet_name=self.parameters.inh_sheet_name,st_contrast=100).get_analysis_result()[0]
+        #analog_ids_inh = numpy.array(pnv.ids)[pnv.values>5.0]
+
+        
         
         dsv1 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['LGNAfferentOrientation'],sheet_name=self.parameters.exc_sheet_name)
         dsv2 = queries.param_filter_query(self.datastore,identifier='PerNeuronValue',value_name=['orientation preference of Firing rate'],sheet_name=self.parameters.exc_sheet_name,st_contrast=100,analysis_algorithm='GaussianTuningCurveFit')
@@ -134,12 +121,12 @@ class OrientationTuningSummary(Plotting):
 
         dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate'])
         plots['ExcORTCMean'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids), 'sheet_name' : self.parameters.exc_sheet_name,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[6:10,:3],{'title' : None,'x_label' : None , 'y_label' : 'EXC\nfiring rate (sp/s)','colors' : ['#FFAB00','#000000']})
-        plots['ExcORTC1'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[0:7]), 'sheet_name' : self.parameters.exc_sheet_name,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[6:8,3:],{'title' : None,'x_label' : None,'y_axis' : False,'x_axis' : False, 'x_ticks' : False,'colors' : ['#FFAB00','#000000']})
-        plots['ExcORTC2'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[7:14]), 'sheet_name' : self.parameters.exc_sheet_name,'centered'  : True,'mean' : False,'pool' : False,'polar': False})),gs[8:10,3:],{'title' : None,'x_label' : None,'y_axis' : False,'x_axis' : False,'colors' : ['#FFAB00','#000000']})
+        plots['ExcORTC1'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[0:7]), 'sheet_name' : self.parameters.exc_sheet_name,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[6:8,3:],{'title' : None,'x_label' : None,'x_axis' : False, 'x_ticks' : False,'colors' : ['#FFAB00','#000000']})
+        plots['ExcORTC2'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[7:14]), 'sheet_name' : self.parameters.exc_sheet_name,'centered'  : True,'mean' : False,'pool' : False,'polar': False})),gs[8:10,3:],{'title' : None,'x_label' : None,'x_axis' : False,'colors' : ['#FFAB00','#000000']})
 
         plots['InhORTCMean'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh), 'sheet_name' : self.parameters.inh_sheet_name,'centered'  : True,'mean' : True,'pool' : False,'polar' : False})),gs[11:15,:3],{'title' : None, 'y_label' : 'INH\nfiring rate (sp/s)','colors' : ['#FFAB00','#000000']})
-        plots['InhORTC1'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[0:7]), 'sheet_name' : self.parameters.inh_sheet_name,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[11:13,3:],{'title' : None,'x_label' : None,'y_axis' : False,'x_axis' : False,'colors' : ['#FFAB00','#000000']})
-        plots['InhORTC2'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[7:14]), 'sheet_name' : self.parameters.inh_sheet_name,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[13:15,3:],{'title' : None,'y_axis' : None,'colors' : ['#FFAB00','#000000']})
+        plots['InhORTC1'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[0:3]), 'sheet_name' : self.parameters.inh_sheet_name,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[11:13,3:],{'title' : None,'x_label' : None,'y_axis' : False,'x_axis' : False,'colors' : ['#FFAB00','#000000']})
+        plots['InhORTC2'] = (PlotTuningCurve(dsv, ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[3:6]), 'sheet_name' : self.parameters.inh_sheet_name,'centered'  : True,'mean' : False,'pool' : False,'polar' : False})),gs[13:15,3:],{'title' : None,'y_axis' : None,'colors' : ['#FFAB00','#000000']})
 
         
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.exc_sheet_name])    
