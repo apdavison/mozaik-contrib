@@ -1,5 +1,6 @@
 import sys
 import numpy
+import mozaik
 from parameters import ParameterSet
 from mozaik.models import Model
 from mozaik.connectors.meta_connectors import GaborConnector
@@ -7,9 +8,12 @@ from mozaik.connectors.modular import ModularSamplingProbabilisticConnector
 from mozaik import load_component
 from mozaik.space import VisualRegion
 
+logger = mozaik.getMozaikLogger()
+
 class PushPullCCModel(Model):
     
     required_parameters = ParameterSet({
+<<<<<<< HEAD
         'sheets' : ParameterSet({
             'l4_cortex_exc' : ParameterSet, 
             'l4_cortex_inh' : ParameterSet, 
@@ -17,6 +21,13 @@ class PushPullCCModel(Model):
             
         }),
         
+=======
+	'sheets' : ParameterSet({
+		        'l4_cortex_exc' : ParameterSet, 
+        		'l4_cortex_inh' : ParameterSet, 
+	        	'retina_lgn' : ParameterSet ,
+		}),
+>>>>>>> f1c1a6509ab4cee4497e8a495161c3cccb521fd6
         'visual_field' : ParameterSet 
     })
     
@@ -36,8 +47,15 @@ class PushPullCCModel(Model):
 
         # initialize projections
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_exc_l4,self.parameters.sheets.l4_cortex_exc.AfferentConnection,'V1AffConnection')
+<<<<<<< HEAD
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_inh_l4,self.parameters.sheets.l4_cortex_inh.AfferentConnection,'V1AffInhConnection')
 
+=======
+
+	logger.info("DASDDADAS")
+
+        GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_inh_l4,self.parameters.sheets.l4_cortex_inh.AfferentConnection,'V1AffInhConnection')
+>>>>>>> f1c1a6509ab4cee4497e8a495161c3cccb521fd6
         ModularSamplingProbabilisticConnector(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4ExcConnection).connect()
         ModularSamplingProbabilisticConnector(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4InhConnection).connect()
         ModularSamplingProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_inh.L4InhL4ExcConnection).connect()

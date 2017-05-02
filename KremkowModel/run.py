@@ -14,7 +14,6 @@ import mozaik
 from model import PushPullCCModel
 from experiments import create_experiments
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
-from analysis_and_visualization_tiny import perform_analysis_and_visualization
 from parameters import ParameterSet
 
 
@@ -31,7 +30,7 @@ MPI_ROOT = 0
 
 logger = mozaik.getMozaikLogger()
 
-if False:
+if True:
     data_store,model = run_workflow('FFI',PushPullCCModel,create_experiments)
     #model.connectors['V1L4ExcL4ExcConnection'].store_connections(data_store)    
     #model.connectors['V1L4ExcL4InhConnection'].store_connections(data_store)    
@@ -45,9 +44,14 @@ if False:
     
 else: 
     setup_logging()
+<<<<<<< HEAD
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_Test2_____', 'store_stimuli' : False}),replace=True)
+=======
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_test_np1_____', 'store_stimuli' : False}),replace=True)
+>>>>>>> f1c1a6509ab4cee4497e8a495161c3cccb521fd6
     logger.info('Loaded data store')
     data_store.save()
 
 if mpi_comm.rank == MPI_ROOT:
+    from analysis_and_visualization import perform_analysis_and_visualization
     perform_analysis_and_visualization(data_store)
