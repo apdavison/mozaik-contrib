@@ -4,8 +4,17 @@ This is implementation of model of push-pull connectvity:
 Jens Kremkow: Correlating Excitation and Inhibition in Visual Cortical Circuits: Functional Consequences and Biological Feasibility. PhD Thesis, 2009.
 """
 import sys
-
 sys.path.insert(0,"/home/jan/cluster/mozaik/mozaik/")
+
+
+try:
+    from mpi4py import MPI
+except ImportError:
+    MPI = None
+if MPI:
+    mpi_comm = MPI.COMM_WORLD
+MPI_ROOT = 0
+
 
 from pyNN import nest
 from mozaik.controller import run_workflow, setup_logging
@@ -19,13 +28,6 @@ from parameters import ParameterSet
 print mozaik.__file__
 print sys.path
 
-try:
-    from mpi4py import MPI
-except ImportError:
-    MPI = None
-if MPI:
-    mpi_comm = MPI.COMM_WORLD
-MPI_ROOT = 0
 
 logger = mozaik.getMozaikLogger()
 
