@@ -6,7 +6,6 @@ Jens Kremkow: Correlating Excitation and Inhibition in Visual Cortical Circuits:
 import sys
 sys.path.insert(0,"/home/jan/cluster/mozaik/mozaik/")
 
-
 try:
     from mpi4py import MPI
 except ImportError:
@@ -45,7 +44,7 @@ if True:
     
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_test_np1_____', 'store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_Test2_____', 'store_stimuli' : False}),replace=True)
     logger.info('Loaded data store')
     data_store.save()
 
