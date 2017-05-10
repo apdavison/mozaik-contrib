@@ -17,7 +17,6 @@ from parameters import ParameterSet
 
 mpi_comm = MPI.COMM_WORLD
 
-
 if True:
     data_store,model = run_workflow('MorganTaylorModel',SelfSustainedPushPull,create_experiments_bar)
     data_store.save() 
