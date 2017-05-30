@@ -3,29 +3,36 @@
 This is implementation of model of push-pull connectvity: 
 Jens Kremkow: Correlating Excitation and Inhibition in Visual Cortical Circuits: Functional Consequences and Biological Feasibility. PhD Thesis, 2009.
 """
+from pyNN import nest
 import sys
 sys.path.insert(0,"/home/jan/cluster/mozaik/mozaik/")
 
-try:
-    from mpi4py import MPI
-except ImportError:
-    MPI = None
-if MPI:
-    mpi_comm = MPI.COMM_WORLD
-MPI_ROOT = 0
+
+if True:
+    try:
+        from mpi4py import MPI
+    except ImportError:
+        MPI = None
+    if MPI:
+	mpi_comm = MPI.COMM_WORLD
+    MPI_ROOT = 0
+
+    
 
 
-from pyNN import nest
-from mozaik.controller import run_workflow, setup_logging
-import mozaik
-from model import PushPullCCModel
-from experiments import create_experiments
-from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
+    from model import PushPullCCModel
+    from experiments import create_experiments
+
+
 from parameters import ParameterSet
-
-
+import mozaik
+from mozaik.controller import run_workflow, setup_logging
+from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 print mozaik.__file__
 print sys.path
+
+
+
 
 
 logger = mozaik.getMozaikLogger()
@@ -41,13 +48,16 @@ if True:
     #model.connectors['V1AffInhConnectionOn'].store_connections(data_store)    
     #model.connectors['V1AffInhConnectionOff'].store_connections(data_store)    
     data_store.save()
+    if mpi_comm.rank == MPI_ROOT:
+	from analysis_and_visualization import perform_analysis_and_visualization
+        perform_analysis_and_visualization(data_store)
     
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_Test2_____', 'store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_test_____', 'store_stimuli' : False}),replace=True)
     logger.info('Loaded data store')
     data_store.save()
-
-if mpi_comm.rank == MPI_ROOT:
     from analysis_and_visualization import perform_analysis_and_visualization
     perform_analysis_and_visualization(data_store)
+
+

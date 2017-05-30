@@ -1,32 +1,32 @@
 import sys
-import numpy
-import mozaik
 from parameters import ParameterSet
 from mozaik.models import Model
 from mozaik.connectors.meta_connectors import GaborConnector
-from mozaik.connectors.modular import ModularSamplingProbabilisticConnector
+from mozaik.connectors.modular import ModularSamplingProbabilisticConnector,ModularSamplingProbabilisticConnectorAnnotationSamplesCount
 from mozaik import load_component
 from mozaik.space import VisualRegion
 
-logger = mozaik.getMozaikLogger()
-
-class PushPullCCModel(Model):
+class SelfSustainedPushPull(Model):
     
     required_parameters = ParameterSet({
-	'sheets' : ParameterSet({
-		        'l4_cortex_exc' : ParameterSet, 
-        		'l4_cortex_inh' : ParameterSet, 
-	        	'retina_lgn' : ParameterSet ,
-		}),
-        'visual_field' : ParameterSet 
+        'sheets' : {
+            'l4_cortex_exc' : ParameterSet, 
+            'l4_cortex_inh' : ParameterSet, 
+            'retina_lgn' : ParameterSet ,
+        },
+        'visual_field' : ParameterSet,
+        'only_afferent' : bool,
+        'feedback' : bool,
     })
     
     def __init__(self, sim, num_threads, parameters):
-        Model.__init__(self, sim, num_threads, parameters)        
+        Model.__init__(self, sim, num_threads, parameters)
         # Load components
         CortexExcL4 = load_component(self.parameters.sheets.l4_cortex_exc.component)
         CortexInhL4 = load_component(self.parameters.sheets.l4_cortex_inh.component)
-        
+	
+
+
         RetinaLGN = load_component(self.parameters.sheets.retina_lgn.component)
       
         # Build and instrument the network
@@ -35,11 +35,14 @@ class PushPullCCModel(Model):
         cortex_exc_l4 = CortexExcL4(self, self.parameters.sheets.l4_cortex_exc.params)
         cortex_inh_l4 = CortexInhL4(self, self.parameters.sheets.l4_cortex_inh.params)
 
-        # initialize projections
+        # initialize afferent layer 4 projections
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_exc_l4,self.parameters.sheets.l4_cortex_exc.AfferentConnection,'V1AffConnection')
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_inh_l4,self.parameters.sheets.l4_cortex_inh.AfferentConnection,'V1AffInhConnection')
-        ModularSamplingProbabilisticConnector(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4ExcConnection).connect()
-        ModularSamplingProbabilisticConnector(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4InhConnection).connect()
-        ModularSamplingProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_inh.L4InhL4ExcConnection).connect()
-        ModularSamplingProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.sheets.l4_cortex_inh.L4InhL4InhConnection).connect()
+
+        # initialize lateral layer 4 projections
+	if not self.parameters.only_afferent:
+            ModularSamplingProbabilisticConnectorAnnotationSamplesCount(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4ExcConnection).connect()
+            ModularSamplingProbabilisticConnectorAnnotationSamplesCount(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4InhConnection).connect()
+            ModularSamplingProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_inh.L4InhL4ExcConnection).connect()
+            ModularSamplingProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.sheets.l4_cortex_inh.L4InhL4InhConnection).connect()
 

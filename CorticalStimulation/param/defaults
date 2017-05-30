@@ -4,20 +4,20 @@
         'update_interval': 7.0, # ms
         'background_luminance': 50.0, # cd/m²
     },
-    'sheets' : {
-        'l4_cortex_exc': url("param/l4_cortex_exc"),
-	'l4_cortex_inh': url("param/l4_cortex_inh"),
-        'retina_lgn': url("param/SpatioTemporalFilterRetinaLGN_defaults"),
-    },
     'visual_field': {
         'centre': (0.0, 0.0), # degrees (x,y)
-        'size': (12.0, 12.0), # degrees (width, height)
+        'size': (8.0, 8.0), # degrees (width, height)
+    },
+    'sheets' : {
+        'l4_cortex_exc': url("param/l4_cortex_exc"),
+        'l4_cortex_inh': url("param/l4_cortex_inh"),
+        'retina_lgn': url("param/SpatioTemporalFilterRetinaLGN_defaults"),
     },
     'results_dir': '',
-    'name' : 'Jens Model',
+    'name' : 'SelfSustainedPushPullV1',
     'reset' : False,
-    'null_stimulus_period' : 140.0,
-    'store_stimuli' : True,
+    'null_stimulus_period' : 150.0,
+    'store_stimuli' : False,    
     'min_delay' : 0.1,
     'max_delay' : 100,
     'time_step' : 0.1
