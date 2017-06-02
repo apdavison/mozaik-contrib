@@ -11,7 +11,7 @@
       'component' :  'mozaik.sheets.population_selector.RCRandomN',
       'variables' : ("spikes"),
       'params' :  {
-                    'num_of_cells' : 250,
+                    'num_of_cells' : 50,
                   }
     },
 }

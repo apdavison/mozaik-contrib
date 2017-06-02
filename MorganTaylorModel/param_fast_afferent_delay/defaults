@@ -1,7 +1,7 @@
 {
     'input_space_type' : 'mozaik.space.VisualSpace',
     'input_space': {
-        'update_interval': 1.0, # ms
+        'update_interval': 7.0, # ms
         'background_luminance': 50.0, # cd/m²
     },
     'visual_field': {
@@ -9,9 +9,9 @@
         'size': (9.0, 9.0), # degrees (width, height)
     },
     'sheets' : {
-        'l4_cortex_exc': url("param-high-res-retina/l4_cortex_exc"),
-        'l4_cortex_inh': url("param-high-res-retina/l4_cortex_inh"),
-        'retina_lgn': url("param-high-res-retina/SpatioTemporalFilterRetinaLGN_defaults"),
+        'l4_cortex_exc': url("param_fast_afferent_delay/l4_cortex_exc"),
+        'l4_cortex_inh': url("param_fast_afferent_delay/l4_cortex_inh"),
+        'retina_lgn': url("param_fast_afferent_delay/SpatioTemporalFilterRetinaLGN_defaults"),
     },
     'only_afferent' : False,
     'results_dir': '',

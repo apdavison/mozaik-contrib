@@ -118,7 +118,7 @@
 
         'weight_expression' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.weight_expression'),
         'delay_expression' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),
-        'base_weight': 0.0,#0.0022,
+        'base_weight': 0.0022,
         'annotation_reference_name' : 'aff_samples',
         'num_samples' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.num_samples') * ref('sheets.l4_cortex_exc.inhibitory_connection_ratio'),
     },
@@ -129,7 +129,7 @@
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
             'phase':                   UniformDist(min=0.0, max=6.283185307179586),
             'frequency':               UniformDist(min=0.8, max=0.8),
-            'delay': 1.0,    
+            'delay': 1.4,
             'topological' : True,
 	    
             'or_map' : True,

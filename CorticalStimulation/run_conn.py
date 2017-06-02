@@ -13,7 +13,6 @@ import mozaik
 from experiments import create_experiments_conn
 from model import SelfSustainedPushPull
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
-from analysis_and_visualization import perform_analysis_and_visualization_conn
 from parameters import ParameterSet
 
 from mpi4py import MPI 

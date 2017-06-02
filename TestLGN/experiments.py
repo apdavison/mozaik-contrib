@@ -38,3 +38,38 @@ def create_experiments(model):
 
 
 
+def create_experiments_bar(model):
+
+    return  [
+
+                #Spontaneous Activity 
+                NoStimulation(model,ParameterSet({'duration' : 2*5*3*8*7})),
+
+                MapPhaseResponseWithBarStimulus(model,ParameterSet({
+                                                                    'x' : 0,
+                                                                    'y' : 0,
+                                                                    'length' : 1/0.8/2.0 * 6.0,
+                                                                    'width' :  1/0.8/4.0,
+                                                                    'orientation' : 0,
+                                                                    'max_offset' : 1/0.8/2.0 * 1.0,
+                                                                    'steps' : 3,
+                                                                    'duration' : 1000,
+                                                                    'flash_duration' : 500, 
+                                                                    'relative_luminance' : 1.0,
+                                                                    'num_trials' : 1
+                                                                    })),
+                MapPhaseResponseWithBarStimulus(model,ParameterSet({
+                                                                    'x' : 0,
+                                                                    'y' : 0,
+                                                                    'length' : 1/0.8/2.0 * 6.0,
+                                                                    'width' :  1/0.8/4.0,
+                                                                    'orientation' : 0,
+                                                                    'max_offset' : 1/0.8/2.0 * 1.0,
+                                                                    'steps' : 3,
+                                                                    'duration' : 1000,
+                                                                    'flash_duration' : 500, 
+                                                                    'relative_luminance' : 0.0,
+                                                                    'num_trials' : 1
+                                                                    })),
+
+            ]
