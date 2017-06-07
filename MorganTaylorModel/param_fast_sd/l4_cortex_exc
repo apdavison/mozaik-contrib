@@ -29,7 +29,7 @@
                         },
 
                        'initial_values': {
-                                    'v': PyNNDistribution(name='uniform',low=-70,high=-61),
+                                    'v': PyNNDistribution(name='uniform',low=-70,high=-51),
                                 },
 
                     },
@@ -45,7 +45,7 @@
         'target_synapses' : 'excitatory',             
         'short_term_plasticity': {
 				            'U': 0.75, 
-				            'tau_rec': 70.0, 
+				            'tau_rec': 150.0, 
  	 		                    'tau_psc': 3.0,
 				            'tau_fac': 0.0,
                         },
@@ -129,10 +129,8 @@
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
             'phase':                   UniformDist(min=0.0, max=6.283185307179586),
             'frequency':               UniformDist(min=0.8, max=0.8),
-
-	    'delay_functions' : {},
             'delay_expression': "1.0",    
-
+            'delay_functions' : {},
             'topological' : True,
 	    
             'or_map' : True,

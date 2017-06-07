@@ -17,12 +17,12 @@ from parameters import ParameterSet
 
 mpi_comm = MPI.COMM_WORLD
 
-if False:
-    data_store,model = run_workflow('CorticalStimulationModel',SelfSustainedPushPull,create_experiments_cortical_stimulation)
+if True:
+    data_store,model = run_workflow('CorticalStimulationModel',SelfSustainedPushPull,create_experiments_short)
     data_store.save() 
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'MorganTaylorModel_with_retina_____','store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'CorticalStimulationModel_cortical_stimulation_____','store_stimuli' : False}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 

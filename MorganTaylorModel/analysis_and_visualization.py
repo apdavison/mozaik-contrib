@@ -103,17 +103,32 @@ def perform_analysis_and_visualization(data_store):
     RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neurons' : spike_ids,'trial_averaged_histogram': False, 'spontaneous' : False}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name='SSExcRasterL4.png').plot({'SpikeRasterPlot.group_trials':True})
     RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neurons' : spike_ids_inh,'trial_averaged_histogram': False, 'spontaneous' : False}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name='SSInhRasterL4.png').plot({'SpikeRasterPlot.group_trials':True})
 
+    dsv = queries.param_filter_query(data_store,st_name='FlashedBar',y_axis_name=['Vm (no AP) trial-to-trial mean','exc. conductance trial-to-trial mean','inh. conductance trial-to-trial mean'],sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=1)
+    PlotTemporalTuningCurve(dsv, ParameterSet({'parameter_name' : 'y', 'neurons': list(analog_ids[:4]), 'sheet_name' : 'V1_Exc_L4','mean' : False}),fig_param={'dpi' : 100,'figsize': (20,10)},plot_file_name='AnalogSignalEvolutionOnBar1').plot({'*.x_lim'  :(0,200),'*.y_label'  : 'offset'})
+    dsv = queries.param_filter_query(data_store,st_name='FlashedBar',y_axis_name=['Vm (no AP) trial-to-trial mean','exc. conductance trial-to-trial mean','inh. conductance trial-to-trial mean'],sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=0)
+    PlotTemporalTuningCurve(dsv, ParameterSet({'parameter_name' : 'y', 'neurons': list(analog_ids[:4]), 'sheet_name' : 'V1_Exc_L4','mean' : False}),fig_param={'dpi' : 100,'figsize': (20,10)},plot_file_name='AnalogSignalEvolutionOffBar1').plot({'*.x_lim'  :(0,200),'*.y_label'  : 'offset'})
+
+
+    dsv = queries.param_filter_query(data_store,st_name='FlashedBar',y_axis_name=['Vm (no AP) trial-to-trial mean','exc. conductance trial-to-trial mean','inh. conductance trial-to-trial mean'],sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=1)
+    PlotTemporalTuningCurve(dsv, ParameterSet({'parameter_name' : 'y', 'neurons': list(analog_ids[4:8]), 'sheet_name' : 'V1_Exc_L4','mean' : False}),fig_param={'dpi' : 100,'figsize': (20,10)},plot_file_name='AnalogSignalEvolutionOnBar2').plot({'*.x_lim'  :(0,200),'*.y_label'  : 'offset'})
+    dsv = queries.param_filter_query(data_store,st_name='FlashedBar',y_axis_name=['Vm (no AP) trial-to-trial mean','exc. conductance trial-to-trial mean','inh. conductance trial-to-trial mean'],sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=0)
+    PlotTemporalTuningCurve(dsv, ParameterSet({'parameter_name' : 'y', 'neurons': list(analog_ids[4:8]), 'sheet_name' : 'V1_Exc_L4','mean' : False}),fig_param={'dpi' : 100,'figsize': (20,10)},plot_file_name='AnalogSignalEvolutionOffBar2').plot({'*.x_lim'  :(0,200),'*.y_label'  : 'offset'})
+
+    dsv = queries.param_filter_query(data_store,st_name='FlashedBar',y_axis_name=['Vm (no AP) trial-to-trial mean','exc. conductance trial-to-trial mean','inh. conductance trial-to-trial mean'],sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=1)
+    PlotTemporalTuningCurve(dsv, ParameterSet({'parameter_name' : 'y', 'neurons': list(analog_ids[8:12]), 'sheet_name' : 'V1_Exc_L4','mean' : False}),fig_param={'dpi' : 100,'figsize': (20,10)},plot_file_name='AnalogSignalEvolutionOnBar3').plot({'*.x_lim'  :(0,200),'*.y_label'  : 'offset'})
+    dsv = queries.param_filter_query(data_store,st_name='FlashedBar',y_axis_name=['Vm (no AP) trial-to-trial mean','exc. conductance trial-to-trial mean','inh. conductance trial-to-trial mean'],sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=0)
+    PlotTemporalTuningCurve(dsv, ParameterSet({'parameter_name' : 'y', 'neurons': list(analog_ids[8:12]), 'sheet_name' : 'V1_Exc_L4','mean' : False}),fig_param={'dpi' : 100,'figsize': (20,10)},plot_file_name='AnalogSignalEvolutionOffBar3').plot({'*.x_lim'  :(0,200),'*.y_label'  : 'offset'})
+    
+    SpontActOverview(data_store,ParameterSet({'l4_exc_neuron' : analog_ids[0], 'l4_inh_neuron' : analog_ids_inh[0],'l23_exc_neuron' : -1,'l23_inh_neuron' : -1}),plot_file_name='SpontActOverview.png', fig_param={'dpi' : 200,'figsize': (18,14.5)}).plot()
+
+    SpontStatisticsOverview(data_store,ParameterSet({}), fig_param={'dpi' : 200,'figsize': (18,12)},plot_file_name='SpontStatisticsOverview.png').plot()
+    
     Kremkow_plots.OrientationTuningSummary(data_store,ParameterSet({'exc_sheet_name': 'V1_Exc_L4','inh_sheet_name': 'V1_Inh_L4'}),fig_param={'dpi' : 100,'figsize': (15,9)},plot_file_name='OrientationTuningSummaryL4.png').plot()            
 
     OrientationTuningSummaryAnalogSignals(data_store,ParameterSet({'exc_sheet_name1': 'V1_Exc_L4','inh_sheet_name1': 'V1_Inh_L4','exc_sheet_name2': 'None','inh_sheet_name2': 'None'}),fig_param={'dpi' : 200,'figsize': (18,12)},plot_file_name='OrientationTuningSummaryAnalogSignals.png').plot({'*.fontsize' : 19,'*.y_lim' : (0,None)})            
     
-    SpontActOverview(data_store,ParameterSet({'l4_exc_neuron' : analog_ids[0], 'l4_inh_neuron' : analog_ids_inh[0],'l23_exc_neuron' : -1,'l23_inh_neuron' : -1}),plot_file_name='SpontActOverview.png', fig_param={'dpi' : 200,'figsize': (18,14.5)}).plot()
-
     TrialToTrialVariabilityComparison(data_store,ParameterSet({'sheet_name1' : 'V1_Exc_L4','sheet_name2' : 'V1_Exc_L4','data_dg' : 0.93 , 'data_ni' : 1.19}),fig_param={'dpi' : 200,'figsize': (15,7.5)},plot_file_name='TrialToTrialVariabilityComparison.png').plot()
 
-    SpontStatisticsOverview(data_store,ParameterSet({}), fig_param={'dpi' : 200,'figsize': (18,12)},plot_file_name='SpontStatisticsOverview.png').plot()
-
-    
     dsv = param_filter_query(data_store,st_name='NaturalImageWithEyeMovement')    
     OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : l4_exc, 'sheet_activity' : {}, 'spontaneous' : True}),plot_file_name='NMExc.png',fig_param={'dpi' : 100,'figsize': (28,12)}).plot({'Vm_plot.y_lim' : (-70,-50),'Conductance_plot.y_lim' : (0,50.0)})
     OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : l4_inh, 'sheet_activity' : {}, 'spontaneous' : True}),plot_file_name='NMInh.png',fig_param={'dpi' : 100,'figsize': (28,12)}).plot({'Vm_plot.y_lim' : (-70,-50),'Conductance_plot.y_lim' : (0,50.0)})
