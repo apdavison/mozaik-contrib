@@ -14,15 +14,15 @@ def create_experiments_cortical_stimulation(model):
                 # Measure orientation tuning with full-filed sinusoidal gratins
                 CorticalStimulationWithStimulatorArrayAndHomogeneousOrientedStimulus(model,
                                                                         ParameterSet({   
-                                                                                        'sheet_list' : ['V1_Exc_L4'],
-                                                                                        'num_trials' : 2,
+                                                                                        'sheet_list' : ['V1_Exc_L2/3'],
+                                                                                        'num_trials' : 10,
                                                                                         'localstimulationarray_parameters' : ParameterSet({   
                                                                                                                             'size': 1200,
                                                                                                                             'spacing' : 50,
-                                                                                                                            'itensity_fallof' : 2,
+                                                                                                                            'itensity_fallof' : 30,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : ParameterSet({
-                                                                                                                                                                                'scale' : 10,
+                                                                                                                                                                                'scale' : 0.02,
                                                                                                                                                                                 'sigma' : 30,
                                                                                                                                                                                 'orientation' : 0,
                                                                                                                                                                                 'sharpness' : 1.0,
@@ -30,7 +30,7 @@ def create_experiments_cortical_stimulation(model):
 
 
                                                                                                                                 }),
-                                                                                                                            'current_update_interval' : 1,
+                                                                                                                            'current_update_interval' : 143*7,
                                                                                                                            })
                                                                                         }))
             ]
