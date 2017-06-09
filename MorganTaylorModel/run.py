@@ -2,6 +2,8 @@
 """
 
 """
+import matplotlib
+matplotlib.use('Agg')
 from mpi4py import MPI 
 from pyNN import nest
 import sys
@@ -18,7 +20,7 @@ from parameters import ParameterSet
 mpi_comm = MPI.COMM_WORLD
 
 if True:
-    data_store,model = run_workflow('MorganTaylorModel',SelfSustainedPushPull,create_experiments_old)
+    data_store,model = run_workflow('MorganTaylorModel',SelfSustainedPushPull,create_experiments_bar)
     data_store.save() 
 else: 
     setup_logging()
