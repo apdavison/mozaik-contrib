@@ -14,8 +14,10 @@
                   }
     },
     "1" : {
-      'component' :  'mozaik.sheets.population_selector.RCAll',
+      'component' :  'mozaik.sheets.population_selector.RCRandomN',
       'variables' : ("spikes"),
-      'params' : {}
+      'params' : {
+                  'num_of_cells' : 1000,
+      }
     }
 }

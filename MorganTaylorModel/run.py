@@ -24,7 +24,7 @@ if True:
     data_store.save() 
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'MorganTaylorModel_test_____','store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'MorganTaylorModel_visual_space_update=1ms_RF_resolution=1ms','store_stimuli' : False}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 
