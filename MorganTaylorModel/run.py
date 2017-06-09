@@ -17,12 +17,12 @@ from parameters import ParameterSet
 
 mpi_comm = MPI.COMM_WORLD
 
-if True:
+if False:
     data_store,model = run_workflow('MorganTaylorModel',SelfSustainedPushPull,create_experiments_old)
     data_store.save() 
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'MorganTaylorModel_test_____','store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'MorganTaylorModel_visual_space_update=1ms_RF_resolution=1ms','store_stimuli' : False}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 
