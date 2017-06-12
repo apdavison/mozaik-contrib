@@ -27,6 +27,9 @@ def analysis(data_store,analog_ids,analog_ids_inh,gratings,bars):
         if bars:
             TrialAveragedFiringRate(param_filter_query(data_store,st_name="FlashedBar"),ParameterSet({})).analyse()
 
+	if gratings:
+            TrialAveragedFiringRate(param_filter_query(data_store,st_name="FullfieldDriftingSinusoidalGrating"),ParameterSet({})).analyse()
+
         Irregularity(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
 
         PSTH(param_filter_query(data_store),ParameterSet({'bin_length' : 10.0 })).analyse()
