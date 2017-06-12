@@ -23,7 +23,7 @@ import os
 
 def analysis(data_store,analog_ids,analog_ids_inh,gratings):
         sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4','V1_Inh_L4','V1_Exc_L2/3','V1_Inh_L2/3']))
-        exc_sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4']))
+        exc_sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4','V1_Exc_L2/3']))
         
         TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
         TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="LocalStimulatorArray",st_name='InternalStimulus'),ParameterSet({})).analyse()
@@ -49,6 +49,7 @@ def analysis(data_store,analog_ids,analog_ids_inh,gratings):
             TrialAveragedFiringRate(param_filter_query(data_store,sheet_name=sheets,st_name='FullfieldDriftingSinusoidalGrating'),ParameterSet({})).analyse()
             dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)    
             GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
+
             dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',sheet_name=sheets)   
             Analog_F0andF1(dsv,ParameterSet({})).analyse()
 
@@ -56,8 +57,13 @@ def analysis(data_store,analog_ids,analog_ids_inh,gratings):
             dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)  
             PeriodicTuningCurvePreferenceAndSelectivity_VectorAverage(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
 
-            dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)  
-            ModulationRatio(param_filter_query(dsv,sheet_name=exc_sheets,st_contrast=[100]),ParameterSet({})).analyse()
+            ModulationRatio(param_filter_query(data_store,sheet_name=exc_sheets,st_contrast=[100]),ParameterSet({})).analyse()
+            
+            dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='ModulationRatio',sheet_name=exc_sheets)  
+            logger.info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+            dsv.print_content(full_ADS=True)
+            logger.info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+
 
             dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate')    
             CircularVarianceOfTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
@@ -101,7 +107,7 @@ def perform_analysis_and_visualization(data_store,gratings,cort_stim,nat_stim):
     lgn_on_ids = param_filter_query(data_store,sheet_name="X_ON").get_segments()[0].get_stored_spike_train_ids()
     lgn_off_ids = param_filter_query(data_store,sheet_name="X_OFF").get_segments()[0].get_stored_spike_train_ids()
 
-    #analysis(data_store,analog_ids,analog_ids_inh,gratings)
+    analysis(data_store,analog_ids,analog_ids_inh,gratings)
     
 
     def overviews(dsv,name_prefix):
