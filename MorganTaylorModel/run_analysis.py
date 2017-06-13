@@ -13,5 +13,5 @@ Global.root_directory = sys.argv[1]+'/'
 
 setup_logging()
 data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':sys.argv[1],'store_stimuli' : False}),replace=True)
-perform_analysis_and_visualization(data_store,gratings=True,bars=False)
+perform_analysis_and_visualization(data_store,gratings=False,bars=True)
 data_store.save() 
