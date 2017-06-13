@@ -95,6 +95,9 @@ def perform_analysis_and_visualization(data_store,gratings,bars):
     l4_exc_or_many_analog = numpy.array(analog_ids)[numpy.nonzero(numpy.array([circular_dist(l4_exc_or[0].get_value_by_id(i),0,numpy.pi)  for i in analog_ids]) < 0.1)[0]]
     l4_inh_or_many_analog = numpy.array(analog_ids_inh)[numpy.nonzero(numpy.array([circular_dist(l4_inh_or[0].get_value_by_id(i),0,numpy.pi)  for i in analog_ids_inh]) < 0.15)[0]]
     
+
+    analysis(data_store,analog_ids,analog_ids_inh,gratings,bars)
+
     if bars:
         dsv = queries.param_filter_query(data_store,st_name='FlashedBar')
         for ads in dsv.get_analysis_result():
@@ -106,7 +109,6 @@ def perform_analysis_and_visualization(data_store,gratings,bars):
             sid.x=0
             seg.annotations['stimulus'] = str(sid)
 
-    analysis(data_store,analog_ids,analog_ids_inh,gratings,bars)
 
     # self sustained plotting
     dsv = param_filter_query(data_store,st_name='InternalStimulus')   
