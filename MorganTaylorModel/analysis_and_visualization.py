@@ -121,9 +121,9 @@ def perform_analysis_and_visualization(data_store,gratings,bars):
     RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neurons' : spike_ids_inh,'trial_averaged_histogram': False, 'spontaneous' : False}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name='SSInhRasterL4.png').plot({'SpikeRasterPlot.group_trials':True})
 
     if bars:
-        queries.param_filter_query(data_store,st_name='FlashedBar',sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=1).print_conent(full_ADS=True)
+        queries.param_filter_query(data_store,st_name='FlashedBar',sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=1).print_content(full_ADS=True)
         dsv = queries.param_filter_query(data_store,st_name='FlashedBar',y_axis_name=['Vm (no AP) trial-to-trial mean','exc. conductance trial-to-trial mean','inh. conductance trial-to-trial mean'],sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=1)
-        dsv.print_conent(full_ADS=True)
+        dsv.print_content(full_ADS=True)
         PlotTemporalTuningCurve(dsv, ParameterSet({'parameter_name' : 'y', 'neurons': list(analog_ids[:4]), 'sheet_name' : 'V1_Exc_L4','mean' : False}),fig_param={'dpi' : 100,'figsize': (20,10)},plot_file_name='AnalogSignalEvolutionOnBar1').plot({'*.x_lim'  :(0,200),'*.y_label'  : 'offset'})
         dsv = queries.param_filter_query(data_store,st_name='FlashedBar',y_axis_name=['Vm (no AP) trial-to-trial mean','exc. conductance trial-to-trial mean','inh. conductance trial-to-trial mean'],sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=0)
         PlotTemporalTuningCurve(dsv, ParameterSet({'parameter_name' : 'y', 'neurons': list(analog_ids[:4]), 'sheet_name' : 'V1_Exc_L4','mean' : False}),fig_param={'dpi' : 100,'figsize': (20,10)},plot_file_name='AnalogSignalEvolutionOffBar1').plot({'*.x_lim'  :(0,200),'*.y_label'  : 'offset'})
