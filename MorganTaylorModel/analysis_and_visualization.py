@@ -19,52 +19,52 @@ logger = mozaik.getMozaikLogger()
 import os
 
 def analysis(data_store,analog_ids,analog_ids_inh,gratings,bars):
-        sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4','V1_Inh_L4']))
-        exc_sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4']))
+    sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4','V1_Inh_L4']))
+    exc_sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4']))
 
-        TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
+    TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
 
-        if bars:
-            TrialAveragedFiringRate(param_filter_query(data_store,st_name="FlashedBar"),ParameterSet({})).analyse()
+    if bars:
+        TrialAveragedFiringRate(param_filter_query(data_store,st_name="FlashedBar"),ParameterSet({})).analyse()
 
-	if gratings:
-            TrialAveragedFiringRate(param_filter_query(data_store,st_name="FullfieldDriftingSinusoidalGrating"),ParameterSet({})).analyse()
+    if gratings:
+        TrialAveragedFiringRate(param_filter_query(data_store,st_name="FullfieldDriftingSinusoidalGrating"),ParameterSet({})).analyse()
 
-        Irregularity(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
+    Irregularity(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
 
-        PSTH(param_filter_query(data_store),ParameterSet({'bin_length' : 10.0 })).analyse()
+    PSTH(param_filter_query(data_store),ParameterSet({'bin_length' : 10.0 })).analyse()
 
-        NeuronToNeuronAnalogSignalCorrelations(param_filter_query(data_store,analysis_algorithm='PSTH'),ParameterSet({'convert_nan_to_zero' : True})).analyse()
-        PopulationMeanAndVar(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
+    NeuronToNeuronAnalogSignalCorrelations(param_filter_query(data_store,analysis_algorithm='PSTH',st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({'convert_nan_to_zero' : True})).analyse()
+    PopulationMeanAndVar(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
 
-        dsv = param_filter_query(data_store,sheet_name=exc_sheets)
-        ActionPotentialRemoval(dsv,ParameterSet({'window_length': 5.0})).analyse()
+    dsv = param_filter_query(data_store,sheet_name=exc_sheets)
+    ActionPotentialRemoval(dsv,ParameterSet({'window_length': 5.0})).analyse()
 
-        dsv = param_filter_query(data_store,analysis_algorithm='ActionPotentialRemoval')
-        TrialVariability(data_store,ParameterSet({'vm': True,  'cond_exc': True, 'cond_inh': True})).analyse()
-        TrialMean(data_store,ParameterSet({'vm': True,  'cond_exc': True, 'cond_inh': True})).analyse()
+    dsv = param_filter_query(data_store,analysis_algorithm='ActionPotentialRemoval')
+    TrialVariability(data_store,ParameterSet({'vm': True,  'cond_exc': True, 'cond_inh': True})).analyse()
+    TrialMean(data_store,ParameterSet({'vm': True,  'cond_exc': True, 'cond_inh': True})).analyse()
 
-        dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name="None")
-        Analog_MeanSTDAndFanoFactor(dsv,ParameterSet({})).analyse()
+    dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name="None")
+    Analog_MeanSTDAndFanoFactor(dsv,ParameterSet({})).analyse()
 
-        if gratings:
+    if gratings:
 
-            dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)    
-            GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
-            dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',sheet_name=sheets)   
-            Analog_F0andF1(dsv,ParameterSet({})).analyse()
+        dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)    
+        GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
+        dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',sheet_name=sheets)   
+        Analog_F0andF1(dsv,ParameterSet({})).analyse()
 
-            dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)  
-            PeriodicTuningCurvePreferenceAndSelectivity_VectorAverage(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
+        dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)  
+        PeriodicTuningCurvePreferenceAndSelectivity_VectorAverage(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
 
-            TrialAveragedFiringRate(param_filter_query(data_store,sheet_name=sheets,st_name='FullfieldDriftingSinusoidalGrating'),ParameterSet({})).analyse()
+        TrialAveragedFiringRate(param_filter_query(data_store,sheet_name=sheets,st_name='FullfieldDriftingSinusoidalGrating'),ParameterSet({})).analyse()
 
-            ModulationRatio(param_filter_query(data_store,sheet_name=exc_sheets,st_contrast=[100]),ParameterSet({})).analyse()
+        ModulationRatio(param_filter_query(data_store,sheet_name=exc_sheets,st_contrast=[100]),ParameterSet({})).analyse()
 
-            dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate')    
-            CircularVarianceOfTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
+        dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate')    
+        CircularVarianceOfTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
 
-        data_store.save()
+    data_store.save()
 
 
 
@@ -121,7 +121,9 @@ def perform_analysis_and_visualization(data_store,gratings,bars):
     RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neurons' : spike_ids_inh,'trial_averaged_histogram': False, 'spontaneous' : False}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name='SSInhRasterL4.png').plot({'SpikeRasterPlot.group_trials':True})
 
     if bars:
+        queries.param_filter_query(data_store,st_name='FlashedBar',sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=1).print_conent(full_ADS=True)
         dsv = queries.param_filter_query(data_store,st_name='FlashedBar',y_axis_name=['Vm (no AP) trial-to-trial mean','exc. conductance trial-to-trial mean','inh. conductance trial-to-trial mean'],sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=1)
+        dsv.print_conent(full_ADS=True)
         PlotTemporalTuningCurve(dsv, ParameterSet({'parameter_name' : 'y', 'neurons': list(analog_ids[:4]), 'sheet_name' : 'V1_Exc_L4','mean' : False}),fig_param={'dpi' : 100,'figsize': (20,10)},plot_file_name='AnalogSignalEvolutionOnBar1').plot({'*.x_lim'  :(0,200),'*.y_label'  : 'offset'})
         dsv = queries.param_filter_query(data_store,st_name='FlashedBar',y_axis_name=['Vm (no AP) trial-to-trial mean','exc. conductance trial-to-trial mean','inh. conductance trial-to-trial mean'],sheet_name = 'V1_Exc_L4',analysis_algorithm='TrialMean',st_relative_luminance=0)
         PlotTemporalTuningCurve(dsv, ParameterSet({'parameter_name' : 'y', 'neurons': list(analog_ids[:4]), 'sheet_name' : 'V1_Exc_L4','mean' : False}),fig_param={'dpi' : 100,'figsize': (20,10)},plot_file_name='AnalogSignalEvolutionOffBar1').plot({'*.x_lim'  :(0,200),'*.y_label'  : 'offset'})
@@ -156,8 +158,6 @@ def perform_analysis_and_visualization(data_store,gratings,bars):
         dsv = param_filter_query(data_store,sheet_name = 'V1_Exc_L4')    
         MeanVsVarainceOfVM(dsv,ParameterSet({'neurons' : list(analog_ids[:5])}),fig_param={'dpi' : 100,'figsize': (15,7.5)},plot_file_name='TrialToTrialMeanVsVarianceOfVM.png').plot()
         
-        dsv = queries.param_filter_query(data_store,value_name=['orientation HWHH of Firing rate','orientation CV(Firing rate)'],sheet_name=["V1_Exc_L2/3"],st_contrast=100)
-        PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : False,'ignore_nan' : True}),plot_file_name='CVvsHWHH.png').plot({'*.x_lim' : (0,90),'*.y_lim' : (0,1.0)})
 
         # tuninc curves
         dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate','Analog_F0andF1'])    
@@ -169,6 +169,9 @@ def perform_analysis_and_visualization(data_store,gratings,bars):
         
         MRfig(param_filter_query(data_store,sheet_name=['V1_Exc_L4'],st_contrast=[100],st_name='FullfieldDriftingSinusoidalGrating'),ParameterSet({'SimpleSheetName' : 'V1_Exc_L4','ComplexSheetName' : 'None'}),plot_file_name='MR.png',fig_param={'dpi' : 100,'figsize': (19,12)}).plot()
         MRfigReal(param_filter_query(data_store,sheet_name=['V1_Exc_L4'],st_contrast=[100],st_name='FullfieldDriftingSinusoidalGrating'),ParameterSet({'SimpleSheetName' : 'V1_Exc_L4','ComplexSheetName' : 'None'}),plot_file_name='MR.png',fig_param={'dpi' : 100,'figsize': (19,12)}).plot()
+
+        dsv = queries.param_filter_query(data_store,value_name=['orientation HWHH of Firing rate','orientation CV(Firing rate)'],sheet_name=["V1_Exc_L2/3"],st_contrast=100)
+        PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : False,'ignore_nan' : True}),plot_file_name='CVvsHWHH.png').plot({'*.x_lim' : (0,90),'*.y_lim' : (0,1.0)})
         
         TrialCrossCorrelationAnalysis(data_store,ParameterSet({'neurons1' : list(analog_ids),'sheet_name1' : 'V1_Exc_L4','neurons2' : [],'sheet_name2' : 'V1_Exc_L2/3', 'window_length' : 250}),fig_param={"dpi" : 100,"figsize": (15,6.5)},plot_file_name="trial-to-trial-cross-correlation.png").plot({'*.Vm.title' : None, '*.fontsize' : 19})
 
