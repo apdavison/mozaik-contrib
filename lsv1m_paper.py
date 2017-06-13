@@ -312,7 +312,7 @@ class SpontActOverview(Plotting):
         plots['ExcL4Cond'] = (GSynPlot(dsv, ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : self.parameters.l4_exc_neuron, 'spontaneous' : False})),gs[4,1:],{'x_label': None,'fontsize' : fontsize, 'x_ticks' : [],'title' : None,'x_lim' : (0,tstop*1000),'y_lim' : (0,25),'y_axis' : None})
         plots['ExcL4Vm'] = (VmPlot(dsv, ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : self.parameters.l4_exc_neuron, 'spontaneous' : False})),gs[5,1:],{'x_label': None,'fontsize' : fontsize, 'x_ticks' : [],'title' : None,'x_lim' : (0,tstop*1000),'y_axis' : None})
         plots['InhL4Cond'] = (GSynPlot(dsv, ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : self.parameters.l4_inh_neuron, 'spontaneous' : False})),gs[6,1:],{'x_label': None,'fontsize' : fontsize, 'x_ticks' : [],'title' : None,'x_lim' : (0,tstop*1000),'y_lim' : (0,25)})
-        plots['InhL4Vm'] = (VmPlot(dsv, ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : self.parameters.l4_inh_neuron, 'spontaneous' : False})),gs[7,1:],{'fontsize' : fontsize,'title' : None,'x_ticks' : [0,tstop*1000],'x_tick_labels', : [0,tstop], 'x_lim' : (0,tstop*1000),'x_label' : 'time (s)'})
+        plots['InhL4Vm'] = (VmPlot(dsv, ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neuron' : self.parameters.l4_inh_neuron, 'spontaneous' : False})),gs[7,1:],{'fontsize' : fontsize,'title' : None,'x_ticks' : [0,tstop*1000],'x_tick_labels' : [0,tstop], 'x_lim' : (0,tstop*1000),'x_label' : 'time (s)'})
                 
         return plots
 
