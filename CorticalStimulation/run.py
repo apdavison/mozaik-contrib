@@ -17,7 +17,7 @@ from parameters import ParameterSet
 
 mpi_comm = MPI.COMM_WORLD
 
-if False:
+if True:
     data_store,model = run_workflow('CorticalStimulationModel',SelfSustainedPushPull,create_experiments_old)
     data_store.save() 
 else: 
@@ -26,4 +26,4 @@ else:
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 
-   perform_analysis_and_visualization(data_store,gratings=True,cort_stim=False,nat_stim=True)
+   perform_analysis_and_visualization(data_store,gratings=False,cort_stim=True,nat_stim=False)
