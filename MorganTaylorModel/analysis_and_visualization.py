@@ -109,10 +109,6 @@ def perform_analysis_and_visualization(data_store,gratings,bars):
             sid.x=0
             seg.annotations['stimulus'] = str(sid)
 
-<<<<<<< HEAD
-    #analysis(data_store,analog_ids,analog_ids_inh,gratings,bars)
-=======
->>>>>>> be66c2d3f43e7a06949bfadedcebbd4f8e52a7a0
 
     # self sustained plotting
     dsv = param_filter_query(data_store,st_name='InternalStimulus')   
