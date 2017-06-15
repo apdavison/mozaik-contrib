@@ -20,7 +20,7 @@
             	            'e_rev_E': 0.0,
                             'e_rev_I': -80.0,
                     	    'tau_syn_E': 1.1,
-                            'tau_syn_I': 2.1,
+                            'tau_syn_I': 2.5,
                             'a' : 0,
                             'b' : 0,
                             'delta_T' : 2.0,
@@ -29,7 +29,7 @@
                         },
 
                        'initial_values': {
-                                    'v': PyNNDistribution(name='uniform',low=-70,high=-61),
+                                    'v': PyNNDistribution(name='uniform',low=-70,high=-51),
                                 },
 
                     },
@@ -37,15 +37,15 @@
                 'recording_interval'  :  1.0,                                                            
                 'recorders' : url("param/l4_exc_rec"),
     },
-    'layer23_aff_ratio' : 0.45,
+    'layer23_aff_ratio' : 0.35,
     'K' : 1000.0, # Number of synapses per neuron
-    'inhibitory_connection_ratio' : 0.8, # The fraction of connections that are onto inhibitory neurons compared to excitatory
+    'inhibitory_connection_ratio' : 0.75, # The fraction of connections that are onto inhibitory neurons compared to excitatory
 
     'L4ExcL4ExcConnection': {
         'target_synapses' : 'excitatory',             
         'short_term_plasticity': {
 				            'U': 0.75, 
-				            'tau_rec': 70.0, 
+				            'tau_rec': 150.0, 
  	 		                    'tau_psc': 3.0,
 				            'tau_fac': 0.0,
                         },
@@ -54,7 +54,7 @@
                                 'f1' : {
                                          'component' : 'mozaik.connectors.vision.V1CorrelationBasedConnectivity',
                                          'params' : {
-                                             	        'sigma' : 1.0,
+                                             	        'sigma' : 1.4,
                                                         'target_synapses' : 'excitatory',  
 	                                            }
                                        }, 
@@ -118,7 +118,7 @@
 
         'weight_expression' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.weight_expression'),
         'delay_expression' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),
-        'base_weight': 0.0022,
+        'base_weight': 0.0024,
         'annotation_reference_name' : 'aff_samples',
         'num_samples' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.num_samples') * ref('sheets.l4_cortex_exc.inhibitory_connection_ratio'),
     },
@@ -129,10 +129,8 @@
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
             'phase':                   UniformDist(min=0.0, max=6.283185307179586),
             'frequency':               UniformDist(min=0.8, max=0.8),
-
-	    'delay_functions' : {},
             'delay_expression': "1.0",    
-
+            'delay_functions' : {},
             'topological' : True,
 	    
             'or_map' : True,

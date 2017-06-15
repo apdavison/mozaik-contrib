@@ -42,7 +42,9 @@ def analysis(data_store,analog_ids,analog_ids_inh,gratings):
         TrialVariability(data_store,ParameterSet({'vm': True,  'cond_exc': True, 'cond_inh': True})).analyse()
         TrialMean(data_store,ParameterSet({'vm': True,  'cond_exc': True, 'cond_inh': True})).analyse()
 
-	
+        dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name="None")
+        Analog_MeanSTDAndFanoFactor(dsv,ParameterSet({})).analyse()
+        	
         if gratings:
             dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating')    
             NeuronToNeuronAnalogSignalCorrelations(param_filter_query(dsv,analysis_algorithm='PSTH'),ParameterSet({'convert_nan_to_zero' : True})).analyse()
