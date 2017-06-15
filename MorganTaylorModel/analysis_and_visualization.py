@@ -121,11 +121,11 @@ def perform_analysis_and_visualization(data_store,gratings,bars):
     RasterPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L4', 'neurons' : spike_ids_inh,'trial_averaged_histogram': False, 'spontaneous' : False}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name='SSInhRasterL4.png').plot({'SpikeRasterPlot.group_trials':True})
 
     if bars:
-        dsv = queries.param_filter_query(data_store,st_name='FlashedBar',sheet_name = 'V1_Exc_L4'st_relative_luminance=1)
+        dsv = queries.param_filter_query(data_store,st_name='FlashedBar',sheet_name = 'V1_Exc_L4',st_relative_luminance=1)
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[0], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name='BarExcAnalog1.png').plot()
-        dsv = queries.param_filter_query(data_store,st_name='FlashedBar',sheet_name = 'V1_Exc_L4'st_relative_luminance=1)
+        dsv = queries.param_filter_query(data_store,st_name='FlashedBar',sheet_name = 'V1_Exc_L4',st_relative_luminance=1)
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[1], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name='BarExcAnalog2.png').plot()
-        dsv = queries.param_filter_query(data_store,st_name='FlashedBar',sheet_name = 'V1_Exc_L4'st_relative_luminance=1)
+        dsv = queries.param_filter_query(data_store,st_name='FlashedBar',sheet_name = 'V1_Exc_L4',st_relative_luminance=1)
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[2], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name='BarExcAnalog3.png').plot()
 
 
