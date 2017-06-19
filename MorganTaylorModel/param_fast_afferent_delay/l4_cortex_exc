@@ -45,7 +45,7 @@
         'target_synapses' : 'excitatory',             
         'short_term_plasticity': {
 				            'U': 0.75, 
-				            'tau_rec': 70.0, 
+				            'tau_rec': 150.0, 
  	 		                    'tau_psc': 3.0,
 				            'tau_fac': 0.0,
                         },

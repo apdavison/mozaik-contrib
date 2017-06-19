@@ -20,7 +20,7 @@ from parameters import ParameterSet
 mpi_comm = MPI.COMM_WORLD
 
 if True:
-    data_store,model = run_workflow('MorganTaylorModel',SelfSustainedPushPull,create_experiments_old)
+    data_store,model = run_workflow('MorganTaylorModel',SelfSustainedPushPull,create_experiments_bar)
     data_store.save() 
 else: 
     setup_logging()
@@ -28,5 +28,5 @@ else:
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 
-   perform_analysis_and_visualization(data_store,gratings=True,bars=False)
+   perform_analysis_and_visualization(data_store,gratings=False,bars=True)
 #   data_store.save() 

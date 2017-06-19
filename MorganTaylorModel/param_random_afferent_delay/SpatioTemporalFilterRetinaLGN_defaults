@@ -64,7 +64,7 @@
         
         'noise': {
             'mean': 0.0,
-            'stdev': 2.1, #nA
+            'stdev': 2.5, #nA
         }
     }
 }
