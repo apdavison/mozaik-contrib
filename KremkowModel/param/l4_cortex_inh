@@ -96,7 +96,11 @@
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
             'phase':                   UniformDist(min=0.0, max=6.283185307179586),
             'frequency':               UniformDist(min=0.8, max=0.8),
-            'delay': 2.0,    
+
+            'delay_expression': "1.0",    
+            'delay_functions' : {},
+
+
             'topological' : False,
 
             'or_map' : False,
