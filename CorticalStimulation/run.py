@@ -2,6 +2,8 @@
 """
 
 """
+import matplotlib
+matplotlib.use('Agg')
 from mpi4py import MPI 
 #from pyNN import nest
 import sys
