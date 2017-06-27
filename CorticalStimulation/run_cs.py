@@ -18,12 +18,12 @@ from parameters import ParameterSet
 mpi_comm = MPI.COMM_WORLD
 
 if True:
-    data_store,model = run_workflow('CorticalStimulationModel',SelfSustainedPushPull,create_experiments_old)
+    data_store,model = run_workflow('CorticalStimulationModel',SelfSustainedPushPull,create_experiments_cortical_stimulation)
     data_store.save() 
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'CorticalStimulationModel_visual_stimulation_____base_weight:0.0022_inhibitory_connection_ratio:0.5_layer23_aff_ratio:0.4_stdev:2.7','store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'CorticalStimulationModel_visual_stimulation_full_protocol_____','store_stimuli' : False}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 
-   perform_analysis_and_visualization(data_store,gratings=True,cort_stim=False,nat_stim=True)
+   perform_analysis_and_visualization(data_store,gratings=False,cort_stim=True,nat_stim=False)

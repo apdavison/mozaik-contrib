@@ -24,4 +24,6 @@
     'max_delay' : 100,
     'time_step' : 0.1,
     'feedback' : True,
+    'mpi_seed' : 1023,
+    'pynn_seed' : 511
 }
