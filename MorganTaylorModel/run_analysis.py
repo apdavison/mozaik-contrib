@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 """
+import matplotlib
+matplotlib.use('Agg')
 import sys
 from mozaik.controller import setup_logging
 import mozaik
@@ -13,5 +15,4 @@ Global.root_directory = sys.argv[1]+'/'
 
 setup_logging()
 data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':sys.argv[1],'store_stimuli' : False}),replace=True)
-perform_analysis_and_visualization(data_store,gratings=True,bars=False)
-data_store.save() 
+perform_analysis_and_visualization(data_store,gratings=True,bars=True)
