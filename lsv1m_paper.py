@@ -63,14 +63,6 @@ class MRfig(Plotting):
               l23_exc_or = self.datastore.full_datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L2/3')[0]
               c_ids = numpy.array(c_ids)[numpy.nonzero(numpy.array([circular_dist(l23_exc_or.get_value_by_id(i),0,numpy.pi)  for i in c_ids]) < 0.4)[0]]
               
-            
-
-          #logger.info(str(dsv_simple_v_F0[0].get_value_by_id(s_ids)))
-          #logger.info(str(dsv_simple_v_F1[0].get_value_by_id(s_ids)))
-          #logger.info(str(dsv_complex_v_F0[0].get_value_by_id(c_ids)))
-          #logger.info(str(dsv_complex_v_F1[0].get_value_by_id(c_ids)))
-
-
           simple_v_mr = numpy.array(dsv_simple_v_F1[0].get_value_by_id(s_ids))/abs(numpy.array(dsv_simple_v_F0[0].get_value_by_id(s_ids)))
           dsv_simple = dsv_simple[0]
           if self.parameters.ComplexSheetName != 'None':

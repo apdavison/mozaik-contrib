@@ -9,11 +9,11 @@
         'size': (8.0, 8.0), # degrees (width, height)
     },
     'sheets' : {
-        'l4_cortex_exc': url("param/l4_cortex_exc"),
-        'l4_cortex_inh': url("param/l4_cortex_inh"),
-        'l23_cortex_exc': url("param/l23_cortex_exc"),
-        'l23_cortex_inh': url("param/l23_cortex_inh"),
-        'retina_lgn': url("param/SpatioTemporalFilterRetinaLGN_defaults"),
+        'l4_cortex_exc': url("param_new/l4_cortex_exc"),
+        'l4_cortex_inh': url("param_new/l4_cortex_inh"),
+        'l23_cortex_exc': url("param_new/l23_cortex_exc"),
+        'l23_cortex_inh': url("param_new/l23_cortex_inh"),
+        'retina_lgn': url("param_new/SpatioTemporalFilterRetinaLGN_defaults"),
     },
     'results_dir': '',
     'name' : 'SelfSustainedPushPullV1',
