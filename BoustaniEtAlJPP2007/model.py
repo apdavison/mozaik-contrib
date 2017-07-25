@@ -5,6 +5,18 @@ from mozaik import load_component
 
 class Boustani2007(Model):
     
+    """
+    This model is a re-implementation of a model by Jens Kremkow presented in following paper:
+    
+    S. El Boustani, M. Pospischil, M. Rudolph-Lilith, & A. Destexhe
+
+    [Activated cortical states: experiments, analyses and models.](http://www.sciencedirect.com/science/article/pii/S0928425707000319)
+
+    Journal of Physiology, 2007, Paris, 101(1–3), 99–109. 
+
+    DOI: https://doi.org/10.1016/j.jphysparis.2007.10.001
+    """
+
     required_parameters = ParameterSet({
         'l4_cortex_exc' : ParameterSet, 
         'l4_cortex_inh' : ParameterSet, 
