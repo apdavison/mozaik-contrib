@@ -11,23 +11,28 @@ from mozaik.space import VisualRegion
 logger = mozaik.getMozaikLogger()
 
 class PushPullCCModel(Model):
+    """
+    This model is a re-implementation of a model by Jens Kremkow presented in following paper:
+    
+    Jens Kremkow, Laurent U. Perrinet, Cyril Monier, Jose-Manuel Alonso, Ad Aertsen, Yves Frégnac and Guillaume S. Masson
+
+    [Push-Pull Receptive Field Organization and Synaptic Depression: 
+    Mechanisms for Reliably Encoding Naturalistic Stimuli in V1AffInhConnection](http://journal.frontiersin.org/article/10.3389/fncir.2016.00037/full)
+    
+    Front. Neural Circuits, 11 May 2016
+
+    DOI: https://doi.org/10.3389/fncir.2016.00037
+
+    The architecture of the model can be found in figure 3C of the above paper:
+    ![fig3C](http://www.frontiersin.org/files/Articles/190318/fncir-10-00037-HTML/image_m/fncir-10-00037-g003.jpg)
+    """
     
     required_parameters = ParameterSet({
-<<<<<<< HEAD
-        'sheets' : ParameterSet({
-            'l4_cortex_exc' : ParameterSet, 
-            'l4_cortex_inh' : ParameterSet, 
-            'retina_lgn' : ParameterSet ,
-            
-        }),
-        
-=======
 	'sheets' : ParameterSet({
 		        'l4_cortex_exc' : ParameterSet, 
         		'l4_cortex_inh' : ParameterSet, 
 	        	'retina_lgn' : ParameterSet ,
 		}),
->>>>>>> f1c1a6509ab4cee4497e8a495161c3cccb521fd6
         'visual_field' : ParameterSet 
     })
     
@@ -47,15 +52,7 @@ class PushPullCCModel(Model):
 
         # initialize projections
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_exc_l4,self.parameters.sheets.l4_cortex_exc.AfferentConnection,'V1AffConnection')
-<<<<<<< HEAD
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_inh_l4,self.parameters.sheets.l4_cortex_inh.AfferentConnection,'V1AffInhConnection')
-
-=======
-
-	logger.info("DASDDADAS")
-
-        GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_inh_l4,self.parameters.sheets.l4_cortex_inh.AfferentConnection,'V1AffInhConnection')
->>>>>>> f1c1a6509ab4cee4497e8a495161c3cccb521fd6
         ModularSamplingProbabilisticConnector(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4ExcConnection).connect()
         ModularSamplingProbabilisticConnector(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4InhConnection).connect()
         ModularSamplingProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_inh.L4InhL4ExcConnection).connect()

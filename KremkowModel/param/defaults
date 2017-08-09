@@ -5,15 +5,9 @@
         'background_luminance': 50.0, # cd/m²
     },
     'sheets' : {
-<<<<<<< HEAD
         'l4_cortex_exc': url("param/l4_cortex_exc"),
 	'l4_cortex_inh': url("param/l4_cortex_inh"),
         'retina_lgn': url("param/SpatioTemporalFilterRetinaLGN_defaults"),
-=======
-		    'retina_lgn': url("param/SpatioTemporalFilterRetinaLGN_defaults"),
-		    'l4_cortex_exc': url("param/l4_cortex_exc"),
-		    'l4_cortex_inh': url("param/l4_cortex_inh"),
->>>>>>> f1c1a6509ab4cee4497e8a495161c3cccb521fd6
     },
     'visual_field': {
         'centre': (0.0, 0.0), # degrees (x,y)

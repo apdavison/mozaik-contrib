@@ -2,13 +2,15 @@
 """
 
 """
+import matplotlib
+matplotlib.use('Agg')
 from mpi4py import MPI 
 from pyNN import nest
 import sys
 import mozaik.controller
 from mozaik.controller import run_workflow, setup_logging
 import mozaik
-from experiments import create_experiments,create_experiments_bar,create_experiments_short
+from experiments import create_experiments,create_experiments_bar,create_experiments_short,create_experiments_old
 from model import SelfSustainedPushPull
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from analysis_and_visualization import perform_analysis_and_visualization
@@ -22,9 +24,9 @@ if True:
     data_store.save() 
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'MorganTaylorModel_bar_____','store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'MorganTaylorModel_visual_space_update=1ms_RF_resolution=1ms','store_stimuli' : False}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 
-   perform_analysis_and_visualization(data_store)
+   perform_analysis_and_visualization(data_store,gratings=False,bars=True)
 #   data_store.save() 

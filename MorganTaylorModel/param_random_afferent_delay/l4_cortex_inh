@@ -112,8 +112,15 @@
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
             'phase':                   UniformDist(min=0.0, max=6.283185307179586),
             'frequency':               UniformDist(min=0.8, max=0.8),
-            'delay_expression': "1.0",    
-            'delay_functions' : {},
+            'delay_expression': "f1",    
+            'delay_functions' : {
+                                    "f1" : {
+                                         'component' : 'mozaik.connectors.modular_connector_functions.PyNNDistributionConnectorFunction',
+                                         'params' : {
+                                                                'pynn_distribution': PyNNDistribution(name='uniform',low=0.5,high=1.5)
+                                                    }
+                                    }
+                                },
             'topological' : True,
 	    
             'or_map' : True,

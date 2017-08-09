@@ -20,7 +20,7 @@
             	            'e_rev_E': 0.0,
                             'e_rev_I': -80.0,
                     	    'tau_syn_E': 1.1,
-                            'tau_syn_I': 2.1,
+                            'tau_syn_I': 2.5,
                             'a' : 0,
                             'b' : 0,
                             'delta_T' : 2.0,
@@ -37,7 +37,7 @@
                 'recording_interval'  :  1.0,                                                            
                 'recorders' : url("param/l4_exc_rec"),
     },
-    'layer23_aff_ratio' : 0.3,
+    'layer23_aff_ratio' : 0.35,
     'K' : 1000.0, # Number of synapses per neuron
     'inhibitory_connection_ratio' : 0.75, # The fraction of connections that are onto inhibitory neurons compared to excitatory
 
@@ -118,7 +118,7 @@
 
         'weight_expression' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.weight_expression'),
         'delay_expression' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),
-        'base_weight': 0.0022,
+        'base_weight': 0.0024,
         'annotation_reference_name' : 'aff_samples',
         'num_samples' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.num_samples') * ref('sheets.l4_cortex_exc.inhibitory_connection_ratio'),
     },
