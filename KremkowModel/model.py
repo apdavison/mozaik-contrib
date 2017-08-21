@@ -11,6 +11,21 @@ from mozaik.space import VisualRegion
 logger = mozaik.getMozaikLogger()
 
 class PushPullCCModel(Model):
+    """
+    This model is a re-implementation of a model by Jens Kremkow presented in following paper:
+    
+    Jens Kremkow, Laurent U. Perrinet, Cyril Monier, Jose-Manuel Alonso, Ad Aertsen, Yves Frégnac and Guillaume S. Masson
+
+    [Push-Pull Receptive Field Organization and Synaptic Depression: 
+    Mechanisms for Reliably Encoding Naturalistic Stimuli in V1AffInhConnection](http://journal.frontiersin.org/article/10.3389/fncir.2016.00037/full)
+    
+    Front. Neural Circuits, 11 May 2016
+
+    DOI: https://doi.org/10.3389/fncir.2016.00037
+
+    The architecture of the model can be found in figure 3C of the above paper:
+    ![fig3C](http://www.frontiersin.org/files/Articles/190318/fncir-10-00037-HTML/image_m/fncir-10-00037-g003.jpg)
+    """
     
     required_parameters = ParameterSet({
 	'sheets' : ParameterSet({
