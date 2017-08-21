@@ -139,3 +139,19 @@ def create_experiments_old(model):
 
 
             ]
+
+
+def create_experiments_old_short(model):
+
+    return  [
+                #Lets kick the network up into activation
+
+                #Spontaneous Activity 
+                NoStimulation(model,ParameterSet({'duration':8*2*5*3*8*7})),
+
+                # Measure response to natural image with simulated eye movement
+                MeasureNaturalImagesWithEyeMovement(model,ParameterSet({'stimulus_duration':2*143*7,'num_trials':10})),
+
+                # Measure orientation tuning with full-filed sinusoidal gratins
+                MeasureOrientationTuningFullfield(model,ParameterSet({'num_orientations' : 2,'spatial_frequency' : 0.8,'temporal_frequency':2,'grating_duration':2*143*7,'contrasts':[5,100],'num_trials':10})),
+            ]
