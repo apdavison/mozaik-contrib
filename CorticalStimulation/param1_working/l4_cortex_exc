@@ -1,4 +1,4 @@
-OD{
+{
     #CorticalUniformSheet parameters
     'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
     'params':{
@@ -20,7 +20,7 @@ OD{
             	            'e_rev_E': 0.0,
                             'e_rev_I': -80.0,
                     	    'tau_syn_E': 1.1,
-                            'tau_syn_I': 2.5,
+                            'tau_syn_I': 2.1,
                             'a' : 0,
                             'b' : 0,
                             'delta_T' : 2.0,
@@ -35,17 +35,17 @@ OD{
                     },
                 'artificial_stimulators' : {},
                 'recording_interval'  :  1.0,                                                            
-                'recorders' : url("param_new/l4_exc_rec"),
+                'recorders' : url("param/l4_exc_rec"),
     },
-    'layer23_aff_ratio' : 0.35,
-    'K' : 1000.0, # Number of synapses per neuron
-    'inhibitory_connection_ratio' : 0.75, # The fraction of connections that are onto inhibitory neurons compared to excitatory
+    'layer23_aff_ratio' : 0.3,
+    'K' : 1480.0, # Number of synapses per neuron
+    'inhibitory_connection_ratio' : 0.7, # The fraction of connections that are onto inhibitory neurons compared to excitatory
 
     'L4ExcL4ExcConnection': {
         'target_synapses' : 'excitatory',             
         'short_term_plasticity': {
 				            'U': 0.75, 
-				            'tau_rec': 150.0, 
+				            'tau_rec': 100.0, 
  	 		                    'tau_psc': 3.0,
 				            'tau_fac': 0.0,
                         },
@@ -118,7 +118,7 @@ OD{
 
         'weight_expression' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.weight_expression'),
         'delay_expression' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),
-        'base_weight': 0.0024,
+        'base_weight': 0.0021,
         'annotation_reference_name' : 'aff_samples',
         'num_samples' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.num_samples') * ref('sheets.l4_cortex_exc.inhibitory_connection_ratio'),
     },
@@ -132,9 +132,8 @@ OD{
             'delay_expression': "1.0",    
             'delay_functions' : {},
             'topological' : True,
-            'rf_jitter' : 0,
+	    'rf_jitter' : 0,
 	    'off_bias' : 1.0,
-
 	    
             'or_map' : True,
             'or_map_location' : './or_map_new_2x2',
