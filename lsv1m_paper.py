@@ -642,6 +642,8 @@ class SpontStatisticsOverview(Plotting):
             m = numpy.mean(numpy.log10(valuesnz))
             nm = numpy.mean(valuesnz)
             s = numpy.std(numpy.log10(valuesnz))
+	    if s == 0: 
+		    s=1.0
 
             pylab.subplot(gs1)
             pylab.plot(numpy.logspace(-2,2,100),numpy.exp(-((numpy.log10(numpy.logspace(-2,2,100))-m)**2)/(2*s*s))/(s*numpy.sqrt(2*numpy.pi)),linewidth=4,color="#666666")

@@ -16,7 +16,7 @@
                 'recorders' : url("param_t_large/l23_exc_rec"),    
     },
     
-    'feedback_conn_ratio' : 0.1,
+    'feedback_conn_ratio' : 0.13,
     
     'L23ExcL23ExcConnection': {
         'target_synapses' : 'excitatory',             
