@@ -22,15 +22,15 @@ def create_experiments_cortical_stimulation(model):
                                                                                                                             'itensity_fallof' : 30,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : ParameterSet({
-                                                                                                                                                                                'scale' : 0.02,
+                                                                                                                                                                                'scale' : 1,
                                                                                                                                                                                 'sigma' : 30,
                                                                                                                                                                                 'orientation' : 0,
                                                                                                                                                                                 'sharpness' : 1.0,
-                                                                                                                                                                                'duration' : 2*143*7,
-
-
+                                                                                                                                                                                'duration' : 400,
+																						'onset_time' : 100,
+																						'offset_time' : 300,
                                                                                                                                 }),
-                                                                                                                            'current_update_interval' : 143*7,
+                                                                                                                            'current_update_interval' : 1,
                                                                                                                            })
                                                                                         }))
             ]

@@ -2,20 +2,20 @@
 """
 
 """
-from mpi4py import MPI 
+#from mpi4py import MPI 
 from pyNN import nest
 import sys
 import mozaik.controller
 from mozaik.controller import run_workflow, setup_logging
 import mozaik
-from experiments import create_experiments_bar
+from experiments import create_experiments_cs,create_experiments_bar
 from model import SelfSustainedPushPull
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
-from analysis_and_visualization import perform_analysis_and_visualization_bar
+from analysis_and_visualization import perform_analysis_and_visualization_bar,perform_analysis_and_visualization_contrast_sensitivity,perform_analysis_and_visualization_small
 from parameters import ParameterSet
 
 
-mpi_comm = MPI.COMM_WORLD
+#mpi_comm = MPI.COMM_WORLD
 
 if True:
     data_store,model = run_workflow('TestLGN',SelfSustainedPushPull,create_experiments_bar)
@@ -23,7 +23,7 @@ if True:
 else: 
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'TestLGN_rup=28;rfr=7_____','store_stimuli' : False}),replace=True)
 
-if mpi_comm.rank == 0:
-   print "Starting visualization" 
-   perform_analysis_and_visualization_bar(data_store)
+#if mpi_comm.rank == 0:
+#   print "Starting visualization" 
+perform_analysis_and_visualization_small(data_store)
 

@@ -1,15 +1,18 @@
 {
-    'l4_cortex_exc': url("param/l4_cortex_exc"),
-    'l4_cortex_inh': url("param/l4_cortex_inh"),
-    'results_dir': '/home/antolikjan/dev/pkg/mozaik-pynn0.8/mozaik/contrib/BoustaniEtAlJPP2007/',
+    'sheets' :  {
+	'l4_cortex_exc': url("param/l4_cortex_exc"),
+        'l4_cortex_inh': url("param/l4_cortex_inh")
+    },
+    'results_dir': '',
     'name' : 'BoustaniEtAlJPP2007',
     'reset' : False,
     'null_stimulus_period' : 0.0,
     'input_space' : None,
     'input_space_type' : 'None',
-    'store_stimuli' : False,
+    'store_stimuli' : True,
     'min_delay' : 0.2,
     'max_delay' : 100,
-    'time_step' : 0.1
-
+    'time_step' : 0.1,
+    'mpi_seed' : 1023,
+    'pynn_seed' : 513
 }

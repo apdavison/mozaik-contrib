@@ -1,6 +1,6 @@
 {
     #CorticalUniformSheet parameters
-    'component': 'mozaik.framework.sheets.VisualCorticalUniformSheet',
+    'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
     'params':{
                 'name':'V1_Exc_L4',
                 'sx':1000.0,
@@ -24,17 +24,25 @@
                             'tau_syn_I': 10.0, 
                         },
                        'initial_values': {
-                                                'v': PyNNDistribution(name='uniform',params=(-60,-50)),
+                                                'v': -55,#PyNNDistribution(name='uniform',params=(-60,-50)),
                                 },
 
                     },
-                'artificial_stimulation' : True,                    
-                'background_noise' : {
-                                        'exc_firing_rate' : 0.0, 
-                                        'exc_weight' : 0.1,
-                                        'inh_firing_rate' : 0.0,
-                                        'inh_weight' : 0.0,
-                                    },
+	       'artificial_stimulators' : {
+                                                'background_act' : {
+                                                                      'component' :  'mozaik.sheets.direct_stimulator.BackgroundActivityBombardment',   
+                                                                      'params' : {
+                                                                                    'exc_firing_rate' : 0.0, 
+                                                                                    'exc_weight' : 0.0015,
+                                                                                    'inh_firing_rate' : 0.0,
+                                                                                    'inh_weight' : 0.00085,
+
+                                                                                 }
+                                                                   }
+                                            },
+                'recording_interval'  :  1.0,               
+
+                                    
                 'recorders' : url("param/l4_exc_rec"),
     },
 
@@ -46,5 +54,5 @@
                 'delay': 0.2,    # ms delay of the connections    
     },
 
-    'L4ExcL4InhConnection': ref('l4_cortex_exc.L4ExcL4ExcConnection'),
+    'L4ExcL4InhConnection': ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection'),
 }
