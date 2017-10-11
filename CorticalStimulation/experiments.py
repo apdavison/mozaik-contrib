@@ -2,7 +2,7 @@ from mozaik.experiments import *
 from mozaik.experiments.vision import *
 from mozaik.sheets.population_selector import RCRandomPercentage
 from parameters import ParameterSet
-
+from mozaik.tools.distribution_parametrization import MozaikExtendedParameterSet
 
 def create_experiments_cortical_stimulation(model):
 
@@ -12,16 +12,17 @@ def create_experiments_cortical_stimulation(model):
                 NoStimulation(model,ParameterSet({'duration' : 2*5*3*8*7})),
 
                 # Measure orientation tuning with full-filed sinusoidal gratins
-                CorticalStimulationWithStimulatorArrayAndHomogeneousOrientedStimulus(model,
-                                                                        ParameterSet({   
+                CorticalStimulationWithStimulatorArrayAndOrientationTuningProtocol(model,
+                                                                        MozaikExtendedParameterSet({   
                                                                                         'sheet_list' : ['V1_Exc_L2/3'],
-                                                                                        'num_trials' : 10,
-                                                                                        'localstimulationarray_parameters' : ParameterSet({   
+                                                                                        'num_trials' : 2,
+											'num_orientations' : 3,
+                                                                                        'localstimulationarray_parameters' : MozaikExtendedParameterSet({   
                                                                                                                             'size': 1200,
                                                                                                                             'spacing' : 50,
                                                                                                                             'itensity_fallof' : 30,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
-                                                                                                                            'stimulating_signal_parameters' : ParameterSet({
+                                                                                                                            'stimulating_signal_parameters' : MozaikExtendedParameterSet({
                                                                                                                                                                                 'scale' : 1,
                                                                                                                                                                                 'sigma' : 30,
                                                                                                                                                                                 'orientation' : 0,
@@ -33,6 +34,8 @@ def create_experiments_cortical_stimulation(model):
                                                                                                                             'current_update_interval' : 1,
                                                                                                                            })
                                                                                         }))
+
+
             ]
 
 def create_experiments_short(model):

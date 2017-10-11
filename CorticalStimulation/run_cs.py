@@ -22,7 +22,7 @@ if True:
     data_store.save() 
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'CorticalStimulationModel_visual_stimulation_full_protocol_____','store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'CorticalStimulationModel_test_____','store_stimuli' : False}),replace=True)
 
 if mpi_comm.rank == 0:
    print "Starting visualization" 

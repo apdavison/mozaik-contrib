@@ -138,6 +138,11 @@ class MRfig(Plotting):
           disable_xticks(ax)
           remove_x_tick_labels()
           remove_y_tick_labels()
+          print dsv_simple_v_F0[0].get_value_by_id(s_ids)
+          print dsv_simple_v_F1[0].get_value_by_id(s_ids)
+          print simple_v_mr
+          print s_ids
+
           pylab.title(numpy.mean(dsv_simple_v_F0[0].get_value_by_id(s_ids)))
           if self.parameters.ComplexSheetName != 'None':
               ax = pylab.subplot(gs[1,2])
@@ -192,7 +197,7 @@ class MRfig(Plotting):
               ax.plot(complex_v_mr,dsv_complex.get_value_by_id(c_ids),'ok',label='layer 2/3')
               pylab.xlabel('F1/F0 Vm',fontsize=19)
               pylab.ylabel('F1/F0 Spikes',fontsize=19)
-              pylab.xlim(0,8.0)  
+              pylab.xlim(0,3.0)  
               pylab.ylim(0,2.0)  
               for label in ax.get_xticklabels() + ax.get_yticklabels(): 
                   label.set_fontsize(19) 

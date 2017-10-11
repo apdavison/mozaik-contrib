@@ -137,7 +137,7 @@ def perform_analysis_and_visualization(data_store,gratings,cort_stim,nat_stim):
     overviews(dsv,"SPONT_")
 
     if cort_stim:
-        dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name="LocalStimulatorArray")   
+        dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name="LocalStimulatorArray")
         overviews(dsv,"CS_")
 
     if gratings:

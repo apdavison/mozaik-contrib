@@ -100,6 +100,8 @@
             'delay_expression': "1.0",    
             'delay_functions' : {},
 
+            'rf_jitter' : 0.1,
+	    'off_bias' : 1.0,
 
             'topological' : False,
 
