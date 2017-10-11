@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import sys
-from mozaik.meta_workflow.parameter_search import CombinationParameterSearch,SlurmSequentialBackend
+from mozaik.meta_workflow.parameter_search import CombinationParameterSearch,SlurmSequentialBackendIoV
 import numpy
 import time
 
 
 
 if False:
-    CombinationParameterSearch(SlurmSequentialBackend(num_threads=1,num_mpi=16),{
+    CombinationParameterSearch(SlurmSequentialBackendIoV(num_threads=1,num_mpi=16),{
 									     'l4_cortex_exc.L4ExcL4InhConnection.base_weight' : [0.0017],
 #									     'l4_cortex_exc.inhibitory_connection_ratio' : [0.7],
 #									     'l4_cortex_inh.params.cell.params.tau_m' : [10.0],

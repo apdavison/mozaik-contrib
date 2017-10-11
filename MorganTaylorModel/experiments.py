@@ -49,28 +49,28 @@ def create_experiments_bar(model):
                                                                     'x' : 0,
                                                                     'y' : 0,
                                                                     'length' : 1/0.8/2.0 * 6.0,
-                                                                    'width' :  1/0.8/6.0,
+                                                                    'width' :  1/0.8/12.0,
                                                                     'orientation' : 0,
-                                                                    'max_offset' : 1/0.8/2.0 * 3.0,
+                                                                    'max_offset' : 1/0.8/2.0 * 1.5,
                                                                     'steps' : 18,
                                                                     'duration' : 300,
                                                                     'flash_duration' : 200, 
                                                                     'relative_luminance' : 0,
-                                                                    'num_trials' : 10
+                                                                    'num_trials' : 5
                                                                     })),
                                                                     
                 MapPhaseResponseWithBarStimulus(model,ParameterSet({
                                                                     'x' : 0,
                                                                     'y' : 0,
                                                                     'length' : 1/0.8/2.0 * 6.0,
-                                                                    'width' :  1/0.8/6.0,
+                                                                    'width' :  1/0.8/12.0,
                                                                     'orientation' : 0,
-                                                                    'max_offset' : 1/0.8/2.0 * 3.0,
+                                                                    'max_offset' : 1/0.8/2.0 * 1.5,
                                                                     'steps' : 18,
                                                                     'duration' : 300,
                                                                     'flash_duration' : 200, 
                                                                     'relative_luminance' : 1.0,
-                                                                    'num_trials' : 10
+                                                                    'num_trials' : 5
                                                                     })),
             ]
 
@@ -95,9 +95,9 @@ def create_experiments(model):
                                                                     'x' : 0,
                                                                     'y' : 0,
                                                                     'length' : 1/0.8/2.0 * 6.0,
-                                                                    'width' :  1/0.8/6.0,
+                                                                    'width' :  1/0.8/12.0,
                                                                     'orientation' : 0,
-                                                                    'max_offset' : 1/0.8/2.0 * 3.0,
+                                                                    'max_offset' : 1/0.8/2.0 * 1.5,
                                                                     'steps' : 18,
                                                                     'duration' : 300,
                                                                     'flash_duration' : 200, 
@@ -109,9 +109,9 @@ def create_experiments(model):
                                                                     'x' : 0,
                                                                     'y' : 0,
                                                                     'length' : 1/0.8/2.0 * 6.0,
-                                                                    'width' :  1/0.8/6.0,
+                                                                    'width' :  1/0.8/12.0,
                                                                     'orientation' : 0,
-                                                                    'max_offset' : 1/0.8/2.0 * 3.0,
+                                                                    'max_offset' : 1/0.8/2.0 * 1.5,
                                                                     'steps' : 18,
                                                                     'duration' : 300,
                                                                     'flash_duration' : 200, 

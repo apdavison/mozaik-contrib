@@ -4,12 +4,59 @@ from mozaik.sheets.population_selector import RCRandomPercentage
 from parameters import ParameterSet
 
 
-def create_experiments_cortical_stimulation(model):
+def create_experiments_cortical_stimulation_exc(model):
 
     return  [
 
                 #Spontaneous Activity 
                 NoStimulation(model,ParameterSet({'duration' : 2*5*3*8*7})),
+
+                # Measure orientation tuning with full-filed sinusoidal gratins
+                CorticalStimulationWithStimulatorArrayAndHomogeneousOrientedStimulus(model,
+                                                                        ParameterSet({   
+                                                                                        'sheet_list' : ['V1_Exc_L2/3'],
+                                                                                        'num_trials' : 10,
+                                                                                        'localstimulationarray_parameters' : ParameterSet({   
+                                                                                                                            'size': 1200,
+                                                                                                                            'spacing' : 50,
+                                                                                                                            'itensity_fallof' : 30,
+                                                                                                                            'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
+                                                                                                                            'stimulating_signal_parameters' : ParameterSet({
+                                                                                                                                                                                'scale' : 0.3,
+                                                                                                                                                                                'sigma' : 30,
+                                                                                                                                                                                'orientation' : 0,
+                                                                                                                                                                                'sharpness' : 1.0,
+                                                                                                                                                                                'duration' : 400,
+																						'onset_time' : 100,
+																						'offset_time' : 300,
+                                                                                                                                }),
+                                                                                                                            'current_update_interval' : 1,
+                                                                                                                           })
+                                                                                        })),
+
+
+                # Measure orientation tuning with full-filed sinusoidal gratins
+                CorticalStimulationWithStimulatorArrayAndHomogeneousOrientedStimulus(model,
+                                                                        ParameterSet({   
+                                                                                        'sheet_list' : ['V1_Exc_L2/3'],
+                                                                                        'num_trials' : 10,
+                                                                                        'localstimulationarray_parameters' : ParameterSet({   
+                                                                                                                            'size': 1200,
+                                                                                                                            'spacing' : 50,
+                                                                                                                            'itensity_fallof' : 30,
+                                                                                                                            'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
+                                                                                                                            'stimulating_signal_parameters' : ParameterSet({
+                                                                                                                                                                                'scale' : 0.6,
+                                                                                                                                                                                'sigma' : 30,
+                                                                                                                                                                                'orientation' : 0,
+                                                                                                                                                                                'sharpness' : 1.0,
+                                                                                                                                                                                'duration' : 400,
+																						'onset_time' : 100,
+																						'offset_time' : 300,
+                                                                                                                                }),
+                                                                                                                            'current_update_interval' : 1,
+                                                                                                                           })
+                                                                                        })),
 
                 # Measure orientation tuning with full-filed sinusoidal gratins
                 CorticalStimulationWithStimulatorArrayAndHomogeneousOrientedStimulus(model,
@@ -33,7 +80,89 @@ def create_experiments_cortical_stimulation(model):
                                                                                                                             'current_update_interval' : 1,
                                                                                                                            })
                                                                                         }))
+
             ]
+
+
+def create_experiments_cortical_stimulation_excinh(model):
+
+    return  [
+
+                #Spontaneous Activity 
+                NoStimulation(model,ParameterSet({'duration' : 2*5*3*8*7})),
+
+                # Measure orientation tuning with full-filed sinusoidal gratins
+                CorticalStimulationWithStimulatorArrayAndHomogeneousOrientedStimulus(model,
+                                                                        ParameterSet({   
+                                                                                        'sheet_list' : ['V1_Exc_L2/3','V1_Inh_L2/3'],
+                                                                                        'num_trials' : 10,
+                                                                                        'localstimulationarray_parameters' : ParameterSet({   
+                                                                                                                            'size': 1200,
+                                                                                                                            'spacing' : 50,
+                                                                                                                            'itensity_fallof' : 30,
+                                                                                                                            'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
+                                                                                                                            'stimulating_signal_parameters' : ParameterSet({
+                                                                                                                                                                                'scale' : 0.3,
+                                                                                                                                                                                'sigma' : 30,
+                                                                                                                                                                                'orientation' : 0,
+                                                                                                                                                                                'sharpness' : 1.0,
+                                                                                                                                                                                'duration' : 400,
+																						'onset_time' : 100,
+																						'offset_time' : 300,
+                                                                                                                                }),
+                                                                                                                            'current_update_interval' : 1,
+                                                                                                                           })
+                                                                                        })),
+
+
+                # Measure orientation tuning with full-filed sinusoidal gratins
+                CorticalStimulationWithStimulatorArrayAndHomogeneousOrientedStimulus(model,
+                                                                        ParameterSet({   
+                                                                                        'sheet_list' : ['V1_Exc_L2/3','V1_Inh_L2/3'],
+                                                                                        'num_trials' : 10,
+                                                                                        'localstimulationarray_parameters' : ParameterSet({   
+                                                                                                                            'size': 1200,
+                                                                                                                            'spacing' : 50,
+                                                                                                                            'itensity_fallof' : 30,
+                                                                                                                            'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
+                                                                                                                            'stimulating_signal_parameters' : ParameterSet({
+                                                                                                                                                                                'scale' : 0.6,
+                                                                                                                                                                                'sigma' : 30,
+                                                                                                                                                                                'orientation' : 0,
+                                                                                                                                                                                'sharpness' : 1.0,
+                                                                                                                                                                                'duration' : 400,
+																						'onset_time' : 100,
+																						'offset_time' : 300,
+                                                                                                                                }),
+                                                                                                                            'current_update_interval' : 1,
+                                                                                                                           })
+                                                                                        })),
+
+                # Measure orientation tuning with full-filed sinusoidal gratins
+                CorticalStimulationWithStimulatorArrayAndHomogeneousOrientedStimulus(model,
+                                                                        ParameterSet({   
+                                                                                        'sheet_list' : ['V1_Exc_L2/3','V1_Inh_L2/3'],
+                                                                                        'num_trials' : 10,
+                                                                                        'localstimulationarray_parameters' : ParameterSet({   
+                                                                                                                            'size': 1200,
+                                                                                                                            'spacing' : 50,
+                                                                                                                            'itensity_fallof' : 30,
+                                                                                                                            'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
+                                                                                                                            'stimulating_signal_parameters' : ParameterSet({
+                                                                                                                                                                                'scale' : 1,
+                                                                                                                                                                                'sigma' : 30,
+                                                                                                                                                                                'orientation' : 0,
+                                                                                                                                                                                'sharpness' : 1.0,
+                                                                                                                                                                                'duration' : 400,
+																						'onset_time' : 100,
+																						'offset_time' : 300,
+                                                                                                                                }),
+                                                                                                                            'current_update_interval' : 1,
+                                                                                                                           })
+                                                                                        }))
+
+            ]
+
 
 def create_experiments_short(model):
 
