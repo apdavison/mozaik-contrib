@@ -112,7 +112,7 @@ def perform_analysis_and_visualization(data_store,gratings,cort_stim,nat_stim):
     lgn_on_ids = param_filter_query(data_store,sheet_name="X_ON").get_segments()[0].get_stored_spike_train_ids()
     lgn_off_ids = param_filter_query(data_store,sheet_name="X_OFF").get_segments()[0].get_stored_spike_train_ids()
 
-    #analysis(data_store,analog_ids,analog_ids_inh,gratings)
+    analysis(data_store,analog_ids,analog_ids_inh,gratings)
     
 
     def overviews(dsv,name_prefix):
