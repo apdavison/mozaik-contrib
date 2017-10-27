@@ -37,7 +37,7 @@ print sys.path
 
 logger = mozaik.getMozaikLogger()
 
-if False:
+if True:
     data_store,model = run_workflow('FeedForwardInhibition',PushPullCCModel,create_experiments)
     #model.connectors['V1L4ExcL4ExcConnection'].store_connections(data_store)    
     #model.connectors['V1L4ExcL4InhConnection'].store_connections(data_store)    

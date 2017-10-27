@@ -15,8 +15,8 @@ def create_experiments_cortical_stimulation(model):
                 CorticalStimulationWithStimulatorArrayAndOrientationTuningProtocol(model,
                                                                         MozaikExtendedParameterSet({   
                                                                                         'sheet_list' : ['V1_Exc_L2/3'],
-                                                                                        'num_trials' : 2,
-											'num_orientations' : 3,
+                                                                                        'num_trials' : 10,
+											'num_orientations' : 8,
                                                                                         'localstimulationarray_parameters' : MozaikExtendedParameterSet({   
                                                                                                                             'size': 1200,
                                                                                                                             'spacing' : 50,
@@ -24,6 +24,31 @@ def create_experiments_cortical_stimulation(model):
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
                                                                                                                                                                                 'scale' : 1,
+                                                                                                                                                                                'sigma' : 30,
+                                                                                                                                                                                'orientation' : 0,
+                                                                                                                                                                                'sharpness' : 1.0,
+                                                                                                                                                                                'duration' : 400,
+																						'onset_time' : 100,
+																						'offset_time' : 300,
+                                                                                                                                }),
+                                                                                                                            'current_update_interval' : 1,
+                                                                                                                           })
+                                                                                        })),
+
+
+                # Measure orientation tuning with full-filed sinusoidal gratins
+                CorticalStimulationWithStimulatorArrayAndOrientationTuningProtocol(model,
+                                                                        MozaikExtendedParameterSet({   
+                                                                                        'sheet_list' : ['V1_Exc_L2/3'],
+                                                                                        'num_trials' : 10,
+											'num_orientations' : 8,
+                                                                                        'localstimulationarray_parameters' : MozaikExtendedParameterSet({   
+                                                                                                                            'size': 1200,
+                                                                                                                            'spacing' : 50,
+                                                                                                                            'itensity_fallof' : 30,
+                                                                                                                            'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
+                                                                                                                            'stimulating_signal_parameters' : MozaikExtendedParameterSet({
+                                                                                                                                                                                'scale' : 0.5,
                                                                                                                                                                                 'sigma' : 30,
                                                                                                                                                                                 'orientation' : 0,
                                                                                                                                                                                 'sharpness' : 1.0,
