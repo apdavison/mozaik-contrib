@@ -660,7 +660,7 @@ def perform_analysis_and_visualization(data_store):
     #Kremkow_plots.OrientationTuningSummary(data_store,ParameterSet({'exc_sheet_name': 'V1_Exc_L4','inh_sheet_name': 'V1_Inh_L4'}),fig_param={'dpi' : 100,'figsize': (15,9)},plot_file_name='OrientationTuningSummaryL4.png').plot()            
     #0/0
     
-    if True:
+    if False:
        if l23_flag:
         analysis(data_store,analog_ids,analog_ids_inh,analog_ids23,analog_ids_inh23)
        else:

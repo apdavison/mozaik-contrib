@@ -10,7 +10,7 @@ import sys
 import mozaik.controller
 from mozaik.controller import run_workflow, setup_logging
 import mozaik
-from experiments import create_experiments_cortical_stimulation,create_experiments_short,create_experiments_old,create_experiments
+from experiments import create_experiments_short,create_experiments_old,create_experiments
 from model import SelfSustainedPushPull
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from analysis_and_visualization import perform_analysis_and_visualization

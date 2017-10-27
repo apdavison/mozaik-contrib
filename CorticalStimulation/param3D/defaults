@@ -26,5 +26,5 @@
     'feedback' : True,
     'mpi_seed' : 1023,
     'pynn_seed' : 511,
-    'with_lat' : True
+    'with_cortical_conn' : True
 }

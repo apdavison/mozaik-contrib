@@ -65,33 +65,41 @@ class AAA1(Analysis):
       """
       """
       def perform_analysis(self):
+	    TrialMean(data_store,ParameterSet({'vm': True,  'cond_exc': True, 'cond_inh': True})).analyse()
+	    dsv = param_filter_query(self.datastore,analysis_algorithm='TrialMean',st_name='FullfieldDriftingSinusoidalGrating',sheet_name='V1_Exc_L4',y_axis_name=['inh. conductance trial-to-trial mean','exc. conductance trial-to-trial mean'],st_orientation=0,st_contrast=100)
+	    mozaik.analysis.analysis.AnalogSignal_PerNeuronBetweenSignalCorrelation(dsv,ParameterSet({'value_name1':'inh. conductance trial-to-trial mean','value_name2' : 'exc. conductance trial-to-trial mean'})).analyse()
+
+	    dsv = param_filter_query(self.datastore,analysis_algorithm='AnalogSignal_PerNeuronBetweenSignalCorrelation')	    
+	    PopulationMeanAndVar(dsv,ParameterSet({})).analyse()
 
 	    spike_ids = param_filter_query(self.datastore,sheet_name="V1_Exc_L4").get_segments()[0].get_stored_spike_train_ids()
 	    spike_ids_inh = param_filter_query(self.datastore,sheet_name="V1_Inh_L4").get_segments()[0].get_stored_spike_train_ids()
 
-	    wellfit5 = param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=5,value_name=['orientation fitting error of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids)
-	    wellfit100 = param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation fitting error of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids)
+	    wellfit5 = param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name=None,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=5,value_name=['orientation fitting error of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids)
+	    wellfit100 = param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name=None,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation fitting error of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids)
             wellfit_spike_ids_l4E = numpy.array(spike_ids)[numpy.logical_and(numpy.array(wellfit5) < 0.2,numpy.array(wellfit100) < 0.2)]
 
-	    wellfit5 = param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=5,value_name=['orientation fitting error of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh)
-	    wellfit100 = param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation fitting error of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh)
+	    wellfit5 = param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name=None,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=5,value_name=['orientation fitting error of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh)
+	    wellfit100 = param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name=None,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation fitting error of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh)
             wellfit_spike_ids_l4I = numpy.array(spike_ids_inh)[numpy.logical_and(numpy.array(wellfit5) < 0.2,numpy.array(wellfit100) < 0.2)]
 
 
-            hwhh_hc = numpy.array(param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation HWHH of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(wellfit_spike_ids_l4E))
-            hwhh_lc = numpy.array(param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=5,value_name=['orientation HWHH of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(wellfit_spike_ids_l4E))
+            hwhh_hc = numpy.array(param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name=None,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation HWHH of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(wellfit_spike_ids_l4E))
+            hwhh_lc = numpy.array(param_filter_query(self.datastore,sheet_name='V1_Exc_L4',st_direct_stimulation_name=None,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=5,value_name=['orientation HWHH of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(wellfit_spike_ids_l4E))
 
             self.datastore.full_datastore.add_analysis_result(SingleValue(value=numpy.mean(hwhh_hc),period=None,value_name = 'Mean HWHH of responsive neurons',sheet_name='V1_Exc_L4',tags=self.tags,analysis_algorithm=self.__class__.__name__,stimulus_id=None))        
             self.datastore.full_datastore.add_analysis_result(SingleValue(value=numpy.mean(abs(hwhh_hc-hwhh_lc)),period=None,value_name = 'Mean HWHH difference',sheet_name='V1_Exc_L4',tags=self.tags,analysis_algorithm=self.__class__.__name__,stimulus_id=None))        
-	    self.datastore.full_datastore.add_analysis_result(SingleValue(value=len(spike_ids) - len(wellfit_spike_ids_l4E),period=None,value_name = 'Faild fits HC',sheet_name='V1_Exc_L4',tags=self.tags,analysis_algorithm=self.__class__.__name__,stimulus_id=None))        
+	    self.datastore.full_datastore.add_analysis_result(SingleValue(value=(len(spike_ids) - len(wellfit_spike_ids_l4E))/len(spike_ids),period=None,value_name = 'Faild fits percantage',sheet_name='V1_Exc_L4',tags=self.tags,analysis_algorithm=self.__class__.__name__,stimulus_id=None))        
 	    
-            hwhh_hc = numpy.array(param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation HWHH of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(wellfit_spike_ids_l4I))
-            hwhh_lc = numpy.array(param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=5,value_name=['orientation HWHH of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(wellfit_spike_ids_l4I))
+            hwhh_hc = numpy.array(param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name=None,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation HWHH of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(wellfit_spike_ids_l4I))
+            hwhh_lc = numpy.array(param_filter_query(self.datastore,sheet_name='V1_Inh_L4',st_direct_stimulation_name=None,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=5,value_name=['orientation HWHH of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(wellfit_spike_ids_l4I))
 
             self.datastore.full_datastore.add_analysis_result(SingleValue(value=numpy.mean(hwhh_hc),period=None,value_name = 'Mean HWHH of responsive neurons',sheet_name='V1_Inh_L4',tags=self.tags,analysis_algorithm=self.__class__.__name__,stimulus_id=None))        
             self.datastore.full_datastore.add_analysis_result(SingleValue(value=numpy.mean(abs(hwhh_hc-hwhh_lc)),period=None,value_name = 'Mean HWHH difference',sheet_name='V1_Inh_L4',tags=self.tags,analysis_algorithm=self.__class__.__name__,stimulus_id=None))        
-	    self.datastore.full_datastore.add_analysis_result(SingleValue(value=len(spike_ids_inh) - len(wellfit_spike_ids_l4E),period=None,value_name = 'Faild fits HC',sheet_name='V1_Inh_L4',tags=self.tags,analysis_algorithm=self.__class__.__name__,stimulus_id=None))        
+	    self.datastore.full_datastore.add_analysis_result(SingleValue(value=(len(spike_ids_inh) - len(wellfit_spike_ids_l4E))/len(spike_ids_inh),period=None,value_name = 'Faild fits percentage',sheet_name='V1_Inh_L4',tags=self.tags,analysis_algorithm=self.__class__.__name__,stimulus_id=None))        
 	    
+	    param_filter_query(self.datastore,sheet_name=["V1_Exc_L4","V1_Exc_L4"],identifier=['SingleValue','PerNeuronValue']).remove_ads_outside_of_dsv()
+
 
 
 
@@ -187,7 +195,7 @@ def perform_analysis_and_visualization(data_store,gratings,bars,nat_movies=False
     lgn_on_ids = param_filter_query(data_store,sheet_name="X_ON").get_segments()[0].get_stored_spike_train_ids()
     lgn_off_ids = param_filter_query(data_store,sheet_name="X_OFF").get_segments()[0].get_stored_spike_train_ids()    
 
-    analysis(data_store,analog_ids,analog_ids_inh,gratings,bars)
+    #analysis(data_store,analog_ids,analog_ids_inh,gratings,bars)
 
     if bars:
         dsv = queries.param_filter_query(data_store,st_name='FlashedBar')
@@ -305,9 +313,9 @@ def perform_analysis_and_visualization(data_store,gratings,bars,nat_movies=False
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L4', 'neuron' : analog_ids[2], 'sheet_activity' : {}, 'spontaneous' : False}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name='GratingBarExcAnalog3.png').plot()
 
         # tuninc curves
-        dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate','Analog_F0andF1'])    
-        PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[:6]), 'sheet_name' : 'V1_Exc_L4','centered'  : True,'mean' : False, 'polar' : False, 'pool'  : False}),plot_file_name='TCsExcL4.png',fig_param={'dpi' : 100,'figsize': (15,7.5)}).plot({'TuningCurve F0_Inh_Cond.y_lim' : (0,180) , 'TuningCurve F0_Exc_Cond.y_lim' : (0,80)})
-        PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[:6]), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : False, 'polar' : False, 'pool'  : False}),plot_file_name='TCsInhL4.png',fig_param={'dpi' : 100,'figsize': (15,7.5)}).plot({'TuningCurve F0_Inh_Cond.y_lim' : (0,180) , 'TuningCurve F0_Exc_Cond.y_lim' : (0,80)})
+        #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm=['TrialAveragedFiringRate','Analog_F0andF1'])    
+        #PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids[:6]), 'sheet_name' : 'V1_Exc_L4','centered'  : True,'mean' : False, 'polar' : False, 'pool'  : False}),plot_file_name='TCsExcL4.png',fig_param={'dpi' : 100,'figsize': (15,7.5)}).plot({'TuningCurve F0_Inh_Cond.y_lim' : (0,180) , 'TuningCurve F0_Exc_Cond.y_lim' : (0,80)})
+        #PlotTuningCurve(dsv,ParameterSet({'parameter_name' : 'orientation', 'neurons': list(analog_ids_inh[:6]), 'sheet_name' : 'V1_Inh_L4','centered'  : True,'mean' : False, 'polar' : False, 'pool'  : False}),plot_file_name='TCsInhL4.png',fig_param={'dpi' : 100,'figsize': (15,7.5)}).plot({'TuningCurve F0_Inh_Cond.y_lim' : (0,180) , 'TuningCurve F0_Exc_Cond.y_lim' : (0,80)})
 
 
         Kremkow_plots.OrientationTuningSummary(data_store,ParameterSet({'exc_sheet_name': 'V1_Exc_L4','inh_sheet_name': 'V1_Inh_L4'}),fig_param={'dpi' : 100,'figsize': (15,9)},plot_file_name='OrientationTuningSummaryL4.png').plot()            
