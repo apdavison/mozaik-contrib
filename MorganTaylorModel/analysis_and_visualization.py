@@ -65,7 +65,7 @@ class AAA1(Analysis):
       """
       """
       def perform_analysis(self):
-	    TrialMean(data_store,ParameterSet({'vm': True,  'cond_exc': True, 'cond_inh': True})).analyse()
+	    TrialMean(self.datastore,ParameterSet({'vm': False,  'cond_exc': True, 'cond_inh': True})).analyse()
 	    dsv = param_filter_query(self.datastore,analysis_algorithm='TrialMean',st_name='FullfieldDriftingSinusoidalGrating',sheet_name='V1_Exc_L4',y_axis_name=['inh. conductance trial-to-trial mean','exc. conductance trial-to-trial mean'],st_orientation=0,st_contrast=100)
 	    mozaik.analysis.analysis.AnalogSignal_PerNeuronBetweenSignalCorrelation(dsv,ParameterSet({'value_name1':'inh. conductance trial-to-trial mean','value_name2' : 'exc. conductance trial-to-trial mean'})).analyse()
 
@@ -108,10 +108,10 @@ def ana1(data_store):
     print "DSADSA"
     sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4','V1_Inh_L4']))
     exc_sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4']))
-    #TrialAveragedFiringRate(param_filter_query(data_store,st_name="FullfieldDriftingSinusoidalGrating"),ParameterSet({})).analyse()
+    TrialAveragedFiringRate(param_filter_query(data_store,st_name="FullfieldDriftingSinusoidalGrating"),ParameterSet({})).analyse()
 
-    #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)    
-    #GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
+    dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)    
+    GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
 
     AAA1(data_store,ParameterSet({})).analyse()
     data_store.save()

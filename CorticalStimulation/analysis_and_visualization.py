@@ -25,15 +25,15 @@ def analysis(data_store,analog_ids,analog_ids_inh,gratings):
         sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4','V1_Inh_L4','V1_Exc_L2/3','V1_Inh_L2/3']))
         exc_sheets = list(set(data_store.sheets()) & set(['V1_Exc_L4','V1_Exc_L2/3']))
         
-        TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
+        TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name=None,st_name='InternalStimulus'),ParameterSet({})).analyse()
         TrialAveragedFiringRate(param_filter_query(data_store,st_direct_stimulation_name="LocalStimulatorArray",st_name='InternalStimulus'),ParameterSet({})).analyse()
 
-        Irregularity(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
+        Irregularity(param_filter_query(data_store,st_direct_stimulation_name=None,st_name='InternalStimulus'),ParameterSet({})).analyse()
         
         PSTH(param_filter_query(data_store),ParameterSet({'bin_length' : 10.0 })).analyse()
         
-        NeuronToNeuronAnalogSignalCorrelations(param_filter_query(data_store,analysis_algorithm='PSTH',st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({'convert_nan_to_zero' : True})).analyse()
-        PopulationMeanAndVar(param_filter_query(data_store,st_direct_stimulation_name="None",st_name='InternalStimulus'),ParameterSet({})).analyse()
+        NeuronToNeuronAnalogSignalCorrelations(param_filter_query(data_store,analysis_algorithm='PSTH',st_direct_stimulation_name=None,st_name='InternalStimulus'),ParameterSet({'convert_nan_to_zero' : True})).analyse()
+        PopulationMeanAndVar(param_filter_query(data_store,st_direct_stimulation_name=None,st_name='InternalStimulus'),ParameterSet({})).analyse()
 
         dsv = param_filter_query(data_store,sheet_name=exc_sheets)
         ActionPotentialRemoval(dsv,ParameterSet({'window_length': 5.0})).analyse()
@@ -42,7 +42,7 @@ def analysis(data_store,analog_ids,analog_ids_inh,gratings):
         TrialVariability(data_store,ParameterSet({'vm': True,  'cond_exc': True, 'cond_inh': True})).analyse()
         TrialMean(data_store,ParameterSet({'vm': True,  'cond_exc': True, 'cond_inh': True})).analyse()
 
-        dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name="None")
+        dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name=None)
         Analog_MeanSTDAndFanoFactor(dsv,ParameterSet({})).analyse()
 
         data_store.save()
