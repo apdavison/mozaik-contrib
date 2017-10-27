@@ -2,6 +2,10 @@
 """
 
 """
+import matplotlib
+matplotlib.verbose.set_level("helpful")
+import matplotlib.animation
+print matplotlib.animation.writers.list()
 from mpi4py import MPI 
 #from pyNN import nest
 import sys
@@ -15,9 +19,11 @@ from analysis_and_visualization import perform_analysis_and_visualization
 from parameters import ParameterSet
 
 
+
+
 mpi_comm = MPI.COMM_WORLD
 
-if True:
+if False:
     data_store,model = run_workflow('CorticalStimulationModel',SelfSustainedPushPull,create_experiments_cortical_stimulation)
     data_store.save() 
 else: 

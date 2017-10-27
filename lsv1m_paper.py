@@ -829,7 +829,7 @@ class OrientationTuningSummaryFiringRates(Plotting):
 
     def subplot(self, subplotspec):
         plots = {}
-        gs = gridspec.GridSpecFromSubplotSpec(27, 38, subplot_spec=subplotspec,
+        gs = gridspec.GridSpecFromSubplotSpec(27, 39, subplot_spec=subplotspec,
                                               hspace=1.0, wspace=5.0)
         
         spike_ids1 = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name1).get_segments()[0].get_stored_spike_train_ids()))
@@ -841,16 +841,16 @@ class OrientationTuningSummaryFiringRates(Plotting):
         mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name1,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids1)
         responsive_spike_ids1 = numpy.array(spike_ids1)[numpy.array(base)+numpy.array(mmax) > 1.0]
 
-        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name1,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh1)
-        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name1,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh1)
+        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name1,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh1)
+        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name1,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh1)
         responsive_spike_ids_inh1 = numpy.array(spike_ids_inh1)[numpy.array(base)+numpy.array(mmax) > 1.0]
 
-        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name2,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids2)
-        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name2,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids2)
+        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name2,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids2)
+        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name2,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids2)
         responsive_spike_ids2 = numpy.array(spike_ids2)[numpy.array(base)+numpy.array(mmax) > 1.0]
 
-        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh2)
-        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh2)
+        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh2)
+        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh2)
         responsive_spike_ids_inh2 = numpy.array(spike_ids_inh2)[numpy.array(base)+numpy.array(mmax) > 1.0]
         
         spont_l4exc_pnv = param_filter_query(self.datastore,st_name='InternalStimulus',analysis_algorithm=['TrialAveragedFiringRate'],sheet_name="V1_Exc_L4").get_analysis_result()[0]
@@ -886,22 +886,22 @@ class OrientationTuningSummaryFiringRates(Plotting):
         plots['HWHHInhL23'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[21:27,17:23],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : 'HWHH Cont. 100%','y_label' : 'HWHH cont. 5%', 'cmp' : None,'title' : None})
 
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.exc_sheet_name1],st_contrast=[100])    
-        plots['HWHHHistogramExcL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:6,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
+        plots['HWHHHistogramExcL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:6,26:32],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.inh_sheet_name1],st_contrast=[100])    
-        plots['HWHHHistogramInhL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[7:13,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
+        plots['HWHHHistogramInhL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[7:13,26:32],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.exc_sheet_name2],st_contrast=[100])    
-        plots['HWHHHistogramExcL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[14:20,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
+        plots['HWHHHistogramExcL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[14:20,26:32],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.inh_sheet_name2],st_contrast=[100])    
-        plots['HWHHHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : 'HWHH (100% cont.)','title' : None,'y_label' : '# neurons'})
+        plots['HWHHHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,26:32],{ 'x_lim' : (0.0,50.0), 'x_label' : 'HWHH (100% cont.)','title' : None,'y_label' : '# neurons'})
 
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.exc_sheet_name1],st_contrast=[100])    
-        plots['CVHistogramExcL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:6,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
+        plots['CVHistogramExcL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:6,33:39],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.inh_sheet_name1],st_contrast=[100])    
-        plots['CVHistogramInhL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[7:13,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
+        plots['CVHistogramInhL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[7:13,33:39],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.exc_sheet_name2],st_contrast=[100])    
-        plots['CVHistogramExcL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[14:20,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
+        plots['CVHistogramExcL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[14:20,33:39],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.inh_sheet_name2],st_contrast=[100])    
-        plots['CVHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : 'CV (100% cont.)','title' : None,'y_label' : None})
+        plots['CVHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,33:39],{ 'x_lim' : (0.0,1.0), 'x_label' : 'CV (100% cont.)','title' : None,'y_label' : None})
 
         return plots
 
