@@ -18,8 +18,8 @@ def create_experiments_cortical_stimulation_exc(model):
                                                                                         'num_trials' : 10,
 											'num_orientations' : 8,
                                                                                         'localstimulationarray_parameters' : MozaikExtendedParameterSet({   
-                                                                                                                            'size': 1200,
-                                                                                                                            'spacing' : 50,
+                                                                                                                            'size': 3500,
+                                                                                                                            'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
@@ -42,8 +42,8 @@ def create_experiments_cortical_stimulation_exc(model):
                                                                                         'num_trials' : 10,
 											'num_orientations' : 8,
                                                                                         'localstimulationarray_parameters' : MozaikExtendedParameterSet({   
-                                                                                                                            'size': 1200,
-                                                                                                                            'spacing' : 50,
+                                                                                                                            'size': 3500,
+                                                                                                                            'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
@@ -66,8 +66,8 @@ def create_experiments_cortical_stimulation_exc(model):
                                                                                         'num_trials' : 10,
 											'num_orientations' : 8,
                                                                                         'localstimulationarray_parameters' : MozaikExtendedParameterSet({   
-                                                                                                                            'size': 1200,
-                                                                                                                            'spacing' : 50,
+                                                                                                                            'size': 3500,
+                                                                                                                            'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
@@ -101,8 +101,8 @@ def create_experiments_cortical_stimulation_excinh(model):
                                                                                         'num_trials' : 10,
 											'num_orientations' : 8,
                                                                                         'localstimulationarray_parameters' : MozaikExtendedParameterSet({   
-                                                                                                                            'size': 1200,
-                                                                                                                            'spacing' : 50,
+                                                                                                                            'size': 3500,
+                                                                                                                            'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
@@ -124,8 +124,8 @@ def create_experiments_cortical_stimulation_excinh(model):
                                                                                         'num_trials' : 10,
 											'num_orientations' : 8,
                                                                                         'localstimulationarray_parameters' : MozaikExtendedParameterSet({   
-                                                                                                                            'size': 1200,
-                                                                                                                            'spacing' : 50,
+                                                                                                                            'size': 3500,
+                                                                                                                            'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
@@ -139,7 +139,7 @@ def create_experiments_cortical_stimulation_excinh(model):
                                                                                                                                 }),
                                                                                                                             'current_update_interval' : 1,
                                                                                                                            })
-                                                                                        }))
+                                                                                        })),
 
                 # Measure orientation tuning with full-filed sinusoidal gratins
                 CorticalStimulationWithStimulatorArrayAndOrientationTuningProtocol(model,
@@ -148,8 +148,8 @@ def create_experiments_cortical_stimulation_excinh(model):
                                                                                         'num_trials' : 10,
 											'num_orientations' : 8,
                                                                                         'localstimulationarray_parameters' : MozaikExtendedParameterSet({   
-                                                                                                                            'size': 1200,
-                                                                                                                            'spacing' : 50,
+                                                                                                                            'size': 3500,
+                                                                                                                            'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({

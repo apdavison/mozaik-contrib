@@ -168,7 +168,7 @@ def perform_analysis_and_visualization(data_store,gratings,cort_stim,nat_stim):
 
     #analysis(data_store,analog_ids,analog_ids_inh,gratings)
     
-    def ovreviews(name_prefix):
+    def overviews(dsv,name_prefix):
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : analog_ids23[0], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23ExcAnalog1.png').plot()
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : analog_ids_inh23[0], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23InhAnalog1.png').plot()    
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : analog_ids23[1], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23ExcAnalog2.png').plot()
