@@ -12,7 +12,7 @@ import sys
 import mozaik.controller
 from mozaik.controller import run_workflow, setup_logging
 import mozaik
-from experiments import create_experiments_cortical_stimulation,create_experiments_short,create_experiments_old
+from experiments import create_experiments_cortical_stimulation_prof,create_experiments_short,create_experiments_old
 from model import SelfSustainedPushPull
 from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from analysis_and_visualization import perform_analysis_and_visualization
@@ -23,8 +23,8 @@ from parameters import ParameterSet
 
 mpi_comm = MPI.COMM_WORLD
 
-if False:
-    data_store,model = run_workflow('CorticalStimulationModel',SelfSustainedPushPull,create_experiments_cortical_stimulation)
+if True:
+    data_store,model = run_workflow('CorticalStimulationModel',SelfSustainedPushPull,create_experiments_cortical_stimulation_prof)
     data_store.save() 
 else: 
     setup_logging()

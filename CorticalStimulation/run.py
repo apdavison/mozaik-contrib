@@ -16,7 +16,6 @@ from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 from analysis_and_visualization import perform_analysis_and_visualization
 from parameters import ParameterSet
 
-
 mpi_comm = MPI.COMM_WORLD
 
 if True:
