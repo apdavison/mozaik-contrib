@@ -1,10 +1,14 @@
 import sys
+from guppy import hpy
 from parameters import ParameterSet
 from mozaik.models import Model
 from mozaik.connectors.meta_connectors import GaborConnector
 from mozaik.connectors.modular import ModularSamplingProbabilisticConnector,ModularSamplingProbabilisticConnectorAnnotationSamplesCount
 from mozaik import load_component
 from mozaik.space import VisualRegion
+from memory_profiler import profile
+
+h = hpy()
 
 class SelfSustainedPushPull(Model):
     
@@ -19,9 +23,11 @@ class SelfSustainedPushPull(Model):
 	'feedback' : bool,
 	'with_cortical_conn' : bool
     })
-    
+
+
     def __init__(self, sim, num_threads, parameters):
         Model.__init__(self, sim, num_threads, parameters)
+    
         # Load components
         CortexExcL4 = load_component(self.parameters.sheets.l4_cortex_exc.component)
         CortexInhL4 = load_component(self.parameters.sheets.l4_cortex_inh.component)
@@ -35,15 +41,21 @@ class SelfSustainedPushPull(Model):
         # Build and instrument the network
         self.visual_field = VisualRegion(location_x=self.parameters.visual_field.centre[0],location_y=self.parameters.visual_field.centre[1],size_x=self.parameters.visual_field.size[0],size_y=self.parameters.visual_field.size[1])
         self.input_layer = RetinaLGN(self, self.parameters.sheets.retina_lgn.params)
+
+
         cortex_exc_l4 = CortexExcL4(self, self.parameters.sheets.l4_cortex_exc.params)
         cortex_inh_l4 = CortexInhL4(self, self.parameters.sheets.l4_cortex_inh.params)
+
 
         cortex_exc_l23 = CortexExcL23(self, self.parameters.sheets.l23_cortex_exc.params)
         cortex_inh_l23 = CortexInhL23(self, self.parameters.sheets.l23_cortex_inh.params)
 
+
+	
         # initialize afferent layer 4 projections
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_exc_l4,self.parameters.sheets.l4_cortex_exc.AfferentConnection,'V1AffConnection')
         GaborConnector(self,self.input_layer.sheets['X_ON'],self.input_layer.sheets['X_OFF'],cortex_inh_l4,self.parameters.sheets.l4_cortex_inh.AfferentConnection,'V1AffInhConnection')
+
 
         if  self.parameters.with_cortical_conn:
             ModularSamplingProbabilisticConnectorAnnotationSamplesCount(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4ExcConnection).connect()
@@ -67,7 +79,4 @@ class SelfSustainedPushPull(Model):
                         # initialize feedback layer 2/3 projections
                         ModularSamplingProbabilisticConnector(self,'V1L23ExcL4ExcConnection',cortex_exc_l23,cortex_exc_l4,self.parameters.sheets.l23_cortex_exc.L23ExcL4ExcConnection).connect()
                         ModularSamplingProbabilisticConnector(self,'V1L23ExcL4InhConnection',cortex_exc_l23,cortex_inh_l4,self.parameters.sheets.l23_cortex_exc.L23ExcL4InhConnection).connect()
-        
-        
-
 
