@@ -194,8 +194,7 @@ def perform_analysis_and_visualization(data_store,gratings,cort_stim,nat_stim):
         RasterPlot(dsv,ParameterSet({'sheet_name' : 'X_OFF', 'neurons' : lgn_off_ids,'trial_averaged_histogram': False, 'spontaneous' : False}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'XOFFRasterL4.png').plot({'SpikeRasterPlot.group_trials':True})
 
     # spontaneous activity overview
-    dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name="None")   
-
+    dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name=None)   
     overviews(dsv,"SPONT_")
 
     if cort_stim:
