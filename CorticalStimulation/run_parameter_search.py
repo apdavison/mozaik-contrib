@@ -5,7 +5,7 @@ import numpy
 import time
 
 if True:
-    CombinationParameterSearch(SlurmSequentialBackendIoV(num_threads=1,num_mpi=32),{
+    CombinationParameterSearch(SlurmSequentialBackendIoV(num_threads=32,num_mpi=1),{
 #									     'sheets.l23_cortex_exc.L23ExcL4InhConnection.base_weight' : [0.002],
 #									     'sheets.l4_cortex_exc.layer23_aff_ratio' : [0.3,0.35],
 									     'sheets.l4_cortex_exc.L4ExcL4InhConnection.base_weight' : [0.0024],

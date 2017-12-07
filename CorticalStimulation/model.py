@@ -1,14 +1,10 @@
 import sys
-from guppy import hpy
 from parameters import ParameterSet
 from mozaik.models import Model
 from mozaik.connectors.meta_connectors import GaborConnector
 from mozaik.connectors.modular import ModularSamplingProbabilisticConnector,ModularSamplingProbabilisticConnectorAnnotationSamplesCount
 from mozaik import load_component
 from mozaik.space import VisualRegion
-from memory_profiler import profile
-
-h = hpy()
 
 class SelfSustainedPushPull(Model):
     

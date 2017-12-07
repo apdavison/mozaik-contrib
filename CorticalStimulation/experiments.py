@@ -21,6 +21,7 @@ def create_experiments_cortical_stimulation_prof(model):
                                                                                                                             'size': 3500,
                                                                                                                             'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
+															    'depth_sampling_step' : 10,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
                                                                                                                                                                                 'scale' : 1,
@@ -54,6 +55,7 @@ def create_experiments_cortical_stimulation_exc(model):
                                                                                                                             'size': 3500,
                                                                                                                             'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
+															    'depth_sampling_step' : 10,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
                                                                                                                                                                                 'scale' : 1,
@@ -78,6 +80,7 @@ def create_experiments_cortical_stimulation_exc(model):
                                                                                                                             'size': 3500,
                                                                                                                             'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
+															    'depth_sampling_step' : 10,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
                                                                                                                                                                                 'scale' : 0.1,
@@ -102,6 +105,7 @@ def create_experiments_cortical_stimulation_exc(model):
                                                                                                                             'size': 3500,
                                                                                                                             'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
+															    'depth_sampling_step' : 10,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
                                                                                                                                                                                 'scale' : 0.01,
@@ -137,6 +141,7 @@ def create_experiments_cortical_stimulation_excinh(model):
                                                                                                                             'size': 3500,
                                                                                                                             'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
+															    'depth_sampling_step' : 10,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
                                                                                                                                                                                 'scale' : 1,
@@ -160,6 +165,7 @@ def create_experiments_cortical_stimulation_excinh(model):
                                                                                                                             'size': 3500,
                                                                                                                             'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
+															    'depth_sampling_step' : 10,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
                                                                                                                                                                                 'scale' : 0.1,
@@ -184,6 +190,7 @@ def create_experiments_cortical_stimulation_excinh(model):
                                                                                                                             'size': 3500,
                                                                                                                             'spacing' : 10,
                                                                                                                             'itensity_fallof' : 30,
+															    'depth_sampling_step' : 10,
                                                                                                                             'stimulating_signal' : 'mozaik.sheets.direct_stimulator.test_stimulating_function',
                                                                                                                             'stimulating_signal_parameters' : MozaikExtendedParameterSet({
                                                                                                                                                                                 'scale' : 0.01,

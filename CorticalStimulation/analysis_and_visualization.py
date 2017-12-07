@@ -8,7 +8,7 @@ from mozaik.storage.datastore import PickledDataStore
 from mozaik.controller import Global
 
 import sys
-sys.path.append('/home/antolikjan/projects/mozaik/contrib')
+sys.path.append('/home/jantolik/projects/mozaik/contrib')
 import Kremkow_plots
 from Kremkow_plots import *
 from lsv1m_paper import *
@@ -205,7 +205,7 @@ def perform_analysis_and_visualization(data_store,gratings,cort_stim,nat_stim):
         dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',st_orientation=[0,numpy.pi/2],st_contrast=100)   
         overviews(dsv,"GR_")
 
-        if True:
+        if False:
                 pref_fr_100 = param_filter_query(data_store,sheet_name=['V1_Exc_L4'],st_contrast=[100],analysis_algorithm=['TrialAveragedFiringRate'],st_orientation=[0],ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc_or_many)
                 ort_fr_100 = param_filter_query(data_store,sheet_name=['V1_Exc_L4'],st_contrast=[100],analysis_algorithm=['TrialAveragedFiringRate'],st_orientation=[numpy.pi/2],ads_unique=True).get_analysis_result()[0].get_value_by_id(l4_exc_or_many)
                 pref_fr_50 = 0
