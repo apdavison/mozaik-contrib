@@ -20,7 +20,7 @@ class SelfSustainedPushPull(Model):
 	'with_cortical_conn' : bool
     })
 
-
+    
     def __init__(self, sim, num_threads, parameters):
         Model.__init__(self, sim, num_threads, parameters)
     
