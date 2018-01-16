@@ -6,7 +6,7 @@
   },
   "feedback": True,
   "only_afferent": False,
-  "results_dir": "/home/antolikjan/dev/pkg/mozaik/mozaik/contrib/PushPullCCLISSOMModelSSIzL23NoRand/20170822-160421[new_param_t_fast_and_random_afferent_delays_a.defaults]CombinationParamSearch{11}//",
+  "results_dir": "/home/antolikjan/dev/pkg/mozaik/mozaik/contrib/PushPullCCLISSOMModelSSIzL23NoRand/20171115-191741[new_param_t_fast_and_random_afferent_delays_c.defaults]CombinationParamSearch{11}//",
   "input_space_type": "mozaik.space.VisualSpace",
   "visual_field": {
     "centre": (0.0, 0.0),
@@ -30,7 +30,6 @@
           },
         },
         "delay_expression": "d1",
-        "annotation_reference_name": "aff_samples",
         "weight_expression": "f1*f2",
         "weight_functions": {
           "f1": {
@@ -49,12 +48,12 @@
           },
         },
         "num_samples": 580.16,
-        "base_weight": 0.0023,
+        "base_weight": 0.0024,
         "short_term_plasticity": {
           "tau_psc": 0.0,
           "U": 0.75,
           "tau_fac": 0.0,
-          "tau_rec": 180,
+          "tau_rec": 100.0,
         },
         "target_synapses": "excitatory",
       },
@@ -118,8 +117,8 @@
             "delta_T": 2.0,
             "tau_m": 20.0,
             "tau_syn_E": 1.1,
-            "v_rest": -72,
-            "v_thresh": -57,
+            "v_rest": -71,
+            "v_thresh": -57.0,
             "tau_syn_I": 1.9,
             "tau_w": 88.0,
             "v_reset": -54.0,
@@ -145,7 +144,7 @@
           "f1": {
             "component": "mozaik.connectors.vision.V1CorrelationBasedConnectivity",
             "params": {
-              "sigma": 1.4,
+              "sigma": 2.0,
               "target_synapses": "excitatory",
             },
           },
@@ -162,7 +161,7 @@
         "short_term_plasticity": {
           "tau_psc": 0.0,
           "U": 0.75,
-          "tau_rec": 180,
+          "tau_rec": 100.0,
           "tau_fac": 0.0,
         },
         "target_synapses": "excitatory",
@@ -186,15 +185,15 @@
         "or_map": True,
         "num_samples": UniformDist(max=110,min=0),
         "phase": UniformDist(max=6.28318530718,min=0.0),
-        "base_weight": 0.0014,
+        "base_weight": 0.0016,
         "short_term_plasticity": {
           "tau_psc": 0.0,
           "U": 0.75,
+          "tau_rec": 200,
           "tau_fac": 0.0,
-          "tau_rec": 180,
         },
         "phase_map_location": "./phase_map",
-        "size": 0.1501,
+        "size": 0.2,
       },
     },
     "l4_cortex_inh": {
@@ -214,7 +213,7 @@
           "f1": {
             "component": "mozaik.connectors.vision.V1CorrelationBasedConnectivity",
             "params": {
-              "sigma": 1.4,
+              "sigma": 2.0,
               "target_synapses": "inhibitory",
             },
           },
@@ -231,7 +230,7 @@
         "short_term_plasticity": None,
         "target_synapses": "inhibitory",
       },
-      "ExcInhAfferentRatio": 1.0,
+      "ExcInhAfferentRatio": 1.1,
       "component": "mozaik.sheets.vision.VisualCorticalUniformSheet",
       "L4InhL4InhConnection": {
         "delay_functions": {
@@ -341,12 +340,12 @@
         "or_map": True,
         "num_samples": UniformDist(max=88.0,min=0),
         "phase": UniformDist(max=6.28318530718,min=0.0),
-        "base_weight": 0.0014,
+        "base_weight": 0.00176,
         "short_term_plasticity": {
           "tau_psc": 0.0,
           "U": 0.75,
-          "tau_rec": 180,
           "tau_fac": 0.0,
+          "tau_rec": 200,
         },
         "phase_map_location": "./phase_map",
         "size": UniformDist(max=0.1501,min=0.1501),
@@ -357,7 +356,7 @@
       "params": {
         "noise": {
           "mean": 0.0,
-          "stdev": 2.4,
+          "stdev": 2.5,
         },
         "density": 100,
         "cached": False,
@@ -377,7 +376,7 @@
             "luminance_gain": 10.0,
             "contrast_scaler": 0.1,
           },
-          "gain": 40,
+          "gain": 50,
         },
         "cell": {
           "model": "IF_cond_exp",
@@ -446,7 +445,7 @@
             "params": {
               "map_location": "./or_map_new_6x6",
               "periodic": True,
-              "sigma": 1.4,
+              "sigma": 2.0,
             },
           },
           "f2": {
@@ -460,7 +459,7 @@
             "component": "mozaik.connectors.modular_connector_functions.GaussianDecayModularConnectorFunction",
             "params": {
               "arborization_constant": 1000,
-              "arborization_scaler": 3.0,
+              "arborization_scaler": 4.0,
             },
           },
         },
@@ -470,7 +469,7 @@
           "tau_psc": 0.0,
           "U": 0.75,
           "tau_fac": 0.0,
-          "tau_rec": 180,
+          "tau_rec": 100.0,
         },
         "target_synapses": "excitatory",
       },
@@ -494,7 +493,7 @@
             "params": {
               "map_location": "./or_map_new_6x6",
               "periodic": True,
-              "sigma": 1.4,
+              "sigma": 2.0,
             },
           },
         },
@@ -504,7 +503,7 @@
           "tau_psc": 0.0,
           "U": 0.75,
           "tau_fac": 0.0,
-          "tau_rec": 180,
+          "tau_rec": 100.0,
         },
         "target_synapses": "excitatory",
       },
@@ -584,8 +583,8 @@
             "delta_T": 2.0,
             "tau_m": 20.0,
             "tau_syn_E": 1.1,
-            "v_rest": -72,
-            "v_thresh": -57,
+            "v_rest": -71,
+            "v_thresh": -57.0,
             "tau_syn_I": 1.9,
             "tau_w": 88.0,
             "v_reset": -54.0,
@@ -604,13 +603,13 @@
           "f1": {
             "component": "mozaik.connectors.modular_connector_functions.GaussianDecayModularConnectorFunction",
             "params": {
-              "arborization_constant": 70,
+              "arborization_constant": 100.0,
               "arborization_scaler": 1.0,
             },
           },
         },
         "num_samples": 107.744,
-        "base_weight": 0.002,
+        "base_weight": 0.0018,
         "short_term_plasticity": None,
         "target_synapses": "excitatory",
       },
@@ -646,17 +645,17 @@
           "f3": {
             "params": {
               "arborization_constant": 1000,
-              "arborization_scaler": 3.0,
+              "arborization_scaler": 4.0,
             },
             "component": "mozaik.connectors.modular_connector_functions.GaussianDecayModularConnectorFunction",
           },
         },
         "num_samples": 721.056,
-        "base_weight": 0.0023,
+        "base_weight": 0.0024,
         "short_term_plasticity": {
           "tau_psc": 0.0,
           "U": 0.75,
-          "tau_rec": 180,
+          "tau_rec": 100.0,
           "tau_fac": 0.0,
         },
         "target_synapses": "excitatory",
@@ -769,13 +768,13 @@
             },
           },
         },
-        "num_samples": 125,
-        "base_weight": 0.0023,
+        "num_samples": 140,
+        "base_weight": 0.0024,
         "short_term_plasticity": {
           "tau_psc": 0.0,
           "U": 0.75,
           "tau_fac": 0.0,
-          "tau_rec": 180,
+          "tau_rec": 100.0,
         },
         "target_synapses": "excitatory",
       },
