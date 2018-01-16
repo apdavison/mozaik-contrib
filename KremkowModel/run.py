@@ -3,35 +3,42 @@
 This is implementation of model of push-pull connectvity: 
 Jens Kremkow: Correlating Excitation and Inhibition in Visual Cortical Circuits: Functional Consequences and Biological Feasibility. PhD Thesis, 2009.
 """
+#from pyNN import nest
 import sys
-
 sys.path.insert(0,"/home/jan/cluster/mozaik/mozaik/")
 
-from pyNN import nest
-from mozaik.controller import run_workflow, setup_logging
-import mozaik
-from model import PushPullCCModel
-from experiments import create_experiments
-from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
-from analysis_and_visualization_tiny import perform_analysis_and_visualization
+
+if True:
+    try:
+        from mpi4py import MPI
+    except ImportError:
+        MPI = None
+    if MPI:
+	mpi_comm = MPI.COMM_WORLD
+    MPI_ROOT = 0
+
+    
+
+
+    from model import PushPullCCModel
+    from experiments import create_experiments
+
+
 from parameters import ParameterSet
-
-
+import mozaik
+from mozaik.controller import run_workflow, setup_logging
+from mozaik.storage.datastore import Hdf5DataStore,PickledDataStore
 print mozaik.__file__
 print sys.path
 
-try:
-    from mpi4py import MPI
-except ImportError:
-    MPI = None
-if MPI:
-    mpi_comm = MPI.COMM_WORLD
-MPI_ROOT = 0
+
+
+
 
 logger = mozaik.getMozaikLogger()
 
-if False:
-    data_store,model = run_workflow('FFI',PushPullCCModel,create_experiments)
+if True:
+    data_store,model = run_workflow('FeedForwardInhibition',PushPullCCModel,create_experiments)
     #model.connectors['V1L4ExcL4ExcConnection'].store_connections(data_store)    
     #model.connectors['V1L4ExcL4InhConnection'].store_connections(data_store)    
     #model.connectors['V1L4InhL4ExcConnection'].store_connections(data_store)    
@@ -41,12 +48,16 @@ if False:
     #model.connectors['V1AffInhConnectionOn'].store_connections(data_store)    
     #model.connectors['V1AffInhConnectionOff'].store_connections(data_store)    
     data_store.save()
+    if mpi_comm.rank == MPI_ROOT:
+	from analysis_and_visualization import perform_analysis_and_visualization
+        perform_analysis_and_visualization(data_store)
     
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_test_____', 'store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FeedForwardInhibition_test_____', 'store_stimuli' : False}),replace=True)
     logger.info('Loaded data store')
-    data_store.save()
-
-if mpi_comm.rank == MPI_ROOT:
+    #data_store.save()
+    from analysis_and_visualization import perform_analysis_and_visualization
     perform_analysis_and_visualization(data_store)
+
+

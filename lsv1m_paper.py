@@ -146,6 +146,11 @@ class MRfig(Plotting):
           disable_xticks(ax)
           remove_x_tick_labels()
           remove_y_tick_labels()
+          print dsv_simple_v_F0[0].get_value_by_id(s_ids)
+          print dsv_simple_v_F1[0].get_value_by_id(s_ids)
+          print simple_v_mr
+          print s_ids
+
           pylab.title(numpy.mean(dsv_simple_v_F0[0].get_value_by_id(s_ids)))
           if self.parameters.ComplexSheetName != 'None':
               ax = pylab.subplot(gs[1,2])
@@ -198,6 +203,201 @@ class MRfig(Plotting):
               ax = pylab.subplot(ggs[3:18,3:18])
               ax.plot(simple_v_mr,dsv_simple.get_value_by_id(s_ids),'ow',label='layer 4')
               ax.plot(complex_v_mr,dsv_complex.get_value_by_id(c_ids),'ok',label='layer 2/3')
+              pylab.xlabel('F1/F0 Vm',fontsize=19)
+              pylab.ylabel('F1/F0 Spikes',fontsize=19)
+              pylab.xlim(0,3.0)  
+              pylab.ylim(0,2.0)  
+              for label in ax.get_xticklabels() + ax.get_yticklabels(): 
+                  label.set_fontsize(19) 
+            
+          if self.plot_file_name:
+                        pylab.savefig(Global.root_directory+self.plot_file_name)
+
+class MRfigReal(Plotting):
+      required_parameters = ParameterSet({
+            'SimpleSheetName' : str,  #the name of the sheet for which to plot
+            'ComplexSheetName' : str, # which neuron to show
+      })
+
+      def plot(self):
+          self.fig = pylab.figure(facecolor='w', **self.fig_param)
+          gs = gridspec.GridSpec(1, 1)
+          gs.update(left=0.07, right=0.97, top=0.9, bottom=0.1)
+          gs = gs[0,0]
+        
+          dsv_l4 = self.datastore.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.SimpleSheetName,analysis_algorithm='ModulationRatio',value_name='Modulation ratio(time)')
+          dsv_l23 = self.datastore.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.ComplexSheetName,analysis_algorithm='ModulationRatio',value_name='Modulation ratio(time)')
+          
+          dsv = queries.param_filter_query(self.datastore,st_name='FullfieldDriftingSinusoidalGrating',st_orientation=0)
+          dsv_l4_v_F0 = dsv.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.SimpleSheetName,value_name='-(x+y)(F0_Vm,Mean(VM))')
+          dsv_l23_v_F0 = dsv.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.ComplexSheetName,value_name='-(x+y)(F0_Vm,Mean(VM))')
+          dsv_l4_v_F1 = dsv.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.SimpleSheetName,value_name='F1_Vm')
+          dsv_l23_v_F1 = dsv.get_analysis_result(identifier='PerNeuronValue',sheet_name=self.parameters.ComplexSheetName,value_name='F1_Vm')
+          
+          assert len(dsv_l4) == 1,  str(len(dsv_l4))
+          assert len(dsv_l4_v_F0) == 1
+          assert len(dsv_l4_v_F1) == 1
+          if self.parameters.ComplexSheetName != 'None':
+              assert len(dsv_l23) == 1
+              assert len(dsv_l23_v_F0) == 1
+              assert len(dsv_l23_v_F1) == 1
+          
+            
+          l4_ids = dsv_l4_v_F0[0].ids
+          if self.parameters.ComplexSheetName != 'None':
+            l23_ids = dsv_l23_v_F0[0].ids
+            
+          l4_exc_or = self.datastore.full_datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L4')[0]
+          l4_ids = numpy.array(l4_ids)[numpy.nonzero(numpy.array([circular_dist(l4_exc_or.get_value_by_id(i),0,numpy.pi)  for i in l4_ids]) < 0.4)[0]]
+          
+          if self.parameters.ComplexSheetName != 'None':
+              l23_exc_or = self.datastore.full_datastore.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L2/3')[0]
+              l23_ids = numpy.array(l23_ids)[numpy.nonzero(numpy.array([circular_dist(l23_exc_or.get_value_by_id(i),0,numpy.pi)  for i in l23_ids]) < 0.4)[0]]
+
+          l4_v_mr = numpy.array(dsv_l4_v_F1[0].get_value_by_id(l4_ids))/abs(numpy.array(dsv_l4_v_F0[0].get_value_by_id(l4_ids)))
+          dsv_l4 = dsv_l4[0]
+          if self.parameters.ComplexSheetName != 'None':
+            l23_v_mr = numpy.array(dsv_l23_v_F1[0].get_value_by_id(l23_ids))/abs(numpy.array(dsv_l23_v_F0[0].get_value_by_id(l23_ids)))
+            dsv_l23= dsv_l23[0]
+
+          dsv_simple = numpy.append(dsv_l4.values[dsv_l4.values<1.0],dsv_l23.values[dsv_l23.values<1.0])
+          dsv_complex = numpy.append(dsv_l4.values[dsv_l4.values>1.0],dsv_l23.values[dsv_l23.values>1.0])
+
+          simple_mr = numpy.append(numpy.array(dsv_l4.get_value_by_id(l4_ids))[numpy.array(dsv_l4.get_value_by_id(l4_ids))<1.0],numpy.array(dsv_l23.get_value_by_id(l23_ids))[numpy.array(dsv_l23.get_value_by_id(l23_ids))<1.0])  
+          complex_mr = numpy.append(numpy.array(dsv_l4.get_value_by_id(l4_ids))[numpy.array(dsv_l4.get_value_by_id(l4_ids))>1.0],numpy.array(dsv_l23.get_value_by_id(l23_ids))[numpy.array(dsv_l23.get_value_by_id(l23_ids))>1.0])  
+
+          simple_v_mr = numpy.append(l4_v_mr[numpy.array(dsv_l4.get_value_by_id(l4_ids))<1.0],l23_v_mr[numpy.array(dsv_l23.get_value_by_id(l23_ids))<1.0])  
+          complex_v_mr = numpy.append(l4_v_mr[numpy.array(dsv_l4.get_value_by_id(l4_ids))>1.0],l23_v_mr[numpy.array(dsv_l23.get_value_by_id(l23_ids))>1.0])  
+          
+          dsv_simple_v_F0 = numpy.append(numpy.array(dsv_l4_v_F0[0].get_value_by_id(l4_ids))[numpy.array(dsv_l4.get_value_by_id(l4_ids))<1.0],numpy.array(dsv_l23_v_F0[0].get_value_by_id(l23_ids))[numpy.array(dsv_l23.get_value_by_id(l23_ids))<1.0])  
+          dsv_complex_v_F0 = numpy.append(numpy.array(dsv_l4_v_F0[0].get_value_by_id(l4_ids))[numpy.array(dsv_l4.get_value_by_id(l4_ids))>1.0],numpy.array(dsv_l23_v_F0[0].get_value_by_id(l23_ids))[numpy.array(dsv_l23.get_value_by_id(l23_ids))>1.0])  
+
+          dsv_simple_v_F1 = numpy.append(numpy.array(dsv_l4_v_F1[0].get_value_by_id(l4_ids))[numpy.array(dsv_l4.get_value_by_id(l4_ids))<1.0],numpy.array(dsv_l23_v_F1[0].get_value_by_id(l23_ids))[numpy.array(dsv_l23.get_value_by_id(l23_ids))<1.0])  
+          dsv_complex_v_F1 = numpy.append(numpy.array(dsv_l4_v_F1[0].get_value_by_id(l4_ids))[numpy.array(dsv_l4.get_value_by_id(l4_ids))>1.0],numpy.array(dsv_l23_v_F1[0].get_value_by_id(l23_ids))[numpy.array(dsv_l23.get_value_by_id(l23_ids))>1.0])  
+
+          gs = gridspec.GridSpecFromSubplotSpec(3, 7,subplot_spec=gs,wspace=0.3)
+          ax = pylab.subplot(gs[0,0])
+          ax.hist(dsv_l4.values,bins=numpy.arange(0,2.2,0.2),color='gray',rwidth=0.8)
+          disable_top_right_axis(ax)
+          disable_left_axis(ax)
+          pylab.ylim(0,450)
+          disable_xticks(ax)
+          remove_x_tick_labels()
+          remove_y_tick_labels()
+          pylab.ylabel('Layer 4',fontsize=19)
+          ax = pylab.subplot(gs[1,0])
+          if self.parameters.ComplexSheetName != 'None':
+              ax.hist(dsv_l23.values,bins=numpy.arange(0,2.2,0.2),color='gray',rwidth=0.8)
+              disable_top_right_axis(ax)
+              disable_left_axis(ax)
+              pylab.ylim(0,450)
+              disable_xticks(ax)
+              remove_x_tick_labels()
+              remove_y_tick_labels()
+              pylab.ylabel('Layer 2/3',fontsize=19)
+              
+              ax = pylab.subplot(gs[2,0])
+              ax.hist([dsv_complex,dsv_simple],bins=numpy.arange(0,2.2,0.2),histtype='barstacked',color=['w','k'],rwidth=0.8)
+              disable_top_right_axis(ax) 
+              disable_left_axis(ax)  
+              pylab.ylim(0,450)
+              pylab.ylabel('Pooled',fontsize=19)
+              three_tick_axis(ax.xaxis)
+              remove_y_tick_labels()
+              pylab.xlabel('F1/F0 spikes',fontsize=19)
+              for label in ax.get_xticklabels() + ax.get_yticklabels(): 
+                  label.set_fontsize(19) 
+              disable_top_right_axis(ax)
+              disable_left_axis(ax)      
+              
+
+          ax = pylab.subplot(gs[0,1])
+          ax.hist(l4_v_mr,bins=numpy.arange(0,6,0.6),color='gray',rwidth=0.8)
+          disable_top_right_axis(ax)    
+          disable_left_axis(ax)      
+          disable_xticks(ax)
+          remove_x_tick_labels()
+          remove_y_tick_labels()
+          pylab.title(numpy.mean(simple_v_mr))
+          if self.parameters.ComplexSheetName != 'None':
+              ax = pylab.subplot(gs[1,1])
+              ax.hist(l23_v_mr,bins=numpy.arange(0,6,0.6),color='gray',rwidth=0.8)
+              disable_top_right_axis(ax)
+              disable_left_axis(ax)
+              disable_xticks(ax)
+              remove_x_tick_labels()
+              remove_y_tick_labels()
+              ax = pylab.subplot(gs[2,1])
+              ax.hist([complex_v_mr,simple_v_mr],bins=numpy.arange(0,6,0.6),histtype='barstacked',color=['w','k'],rwidth=0.8)
+              three_tick_axis(ax.xaxis)
+              remove_y_tick_labels()
+              pylab.xlabel('F1/F0 Vm',fontsize=19)
+              for label in ax.get_xticklabels() + ax.get_yticklabels(): 
+                  label.set_fontsize(19) 
+              disable_top_right_axis(ax) 
+              disable_left_axis(ax)                    
+
+          ax = pylab.subplot(gs[0,2])
+          ax.hist(numpy.abs(dsv_l4_v_F0[0].get_value_by_id(l4_ids)),bins=numpy.arange(0,5,0.5),color='gray',rwidth=0.8)
+          disable_top_right_axis(ax)
+          disable_left_axis(ax)                
+          disable_left_axis(ax)      
+          disable_xticks(ax)
+          remove_x_tick_labels()
+          remove_y_tick_labels()
+          pylab.title(numpy.mean(dsv_l4_v_F0[0].get_value_by_id(l4_ids)))
+          if self.parameters.ComplexSheetName != 'None':
+              ax = pylab.subplot(gs[1,2])
+              ax.hist(numpy.abs(dsv_l23_v_F0[0].get_value_by_id(l23_ids)),bins=numpy.arange(0,5,0.5),color='gray',rwidth=0.8)
+              disable_top_right_axis(ax) 
+              disable_left_axis(ax)                
+              disable_xticks(ax)
+              remove_x_tick_labels()
+              remove_y_tick_labels()
+              ax = pylab.subplot(gs[2,2])
+              ax.hist([numpy.abs(dsv_complex_v_F0),numpy.abs(dsv_simple_v_F0)],bins=numpy.arange(0,5,0.5),histtype='barstacked',color=['w','k'],rwidth=0.8)
+              three_tick_axis(ax.xaxis)
+              remove_y_tick_labels()
+              pylab.xlabel('F0 Vm (mV)',fontsize=19)
+              for label in ax.get_xticklabels() + ax.get_yticklabels(): 
+                  label.set_fontsize(19) 
+              disable_top_right_axis(ax)
+              disable_left_axis(ax)
+
+                    
+          ax = pylab.subplot(gs[0,3])
+          ax.hist(numpy.abs(dsv_l4_v_F1[0].get_value_by_id(l4_ids)),bins=numpy.arange(0,10,1.0),color='gray',rwidth=0.8)
+          disable_top_right_axis(ax)      
+          disable_left_axis(ax)
+          disable_xticks(ax)
+          remove_x_tick_labels()
+          remove_y_tick_labels()
+          pylab.title(numpy.mean(dsv_l4_v_F1[0].get_value_by_id(l4_ids)))
+          if self.parameters.ComplexSheetName != 'None':
+              ax = pylab.subplot(gs[1,3])
+              ax.hist(numpy.abs(dsv_l23_v_F1[0].get_value_by_id(l23_ids)),bins=numpy.arange(0,10,1.0),color='gray',rwidth=0.8)
+              disable_top_right_axis(ax)
+              disable_left_axis(ax)
+              disable_xticks(ax)
+              remove_x_tick_labels()
+              remove_y_tick_labels()
+              ax = pylab.subplot(gs[2,3])
+              ax.hist([numpy.abs(dsv_complex_v_F1),numpy.abs(dsv_simple_v_F1)],bins=numpy.arange(0,10,1.0),histtype='barstacked',color=['w','k'],rwidth=0.8)
+              three_tick_axis(ax.xaxis)
+              remove_y_tick_labels()
+              pylab.xlabel('F1 Vm (mV)',fontsize=19)
+              for label in ax.get_xticklabels() + ax.get_yticklabels(): 
+                  label.set_fontsize(19) 
+              disable_top_right_axis(ax) 
+              disable_left_axis(ax)
+              
+          logger.info(len(simple_v_mr))
+          logger.info(len(dsv_simple))
+          if self.parameters.ComplexSheetName != 'None':  
+              ggs = gridspec.GridSpecFromSubplotSpec(20, 20, gs[:,4:7])
+              ax = pylab.subplot(ggs[3:18,3:18])
+              ax.plot(simple_v_mr,simple_mr,'ow',label='layer 4')
+              ax.plot(complex_v_mr,complex_mr,'ok',label='layer 2/3')
               pylab.xlabel('F1/F0 Vm',fontsize=19)
               pylab.ylabel('F1/F0 Spikes',fontsize=19)
               pylab.xlim(0,8.0)  
@@ -402,6 +602,7 @@ class MRfigReal(Plotting):
             
           if self.plot_file_name:
                         pylab.savefig(Global.root_directory+self.plot_file_name)
+
 
 
 
@@ -824,7 +1025,7 @@ class OrientationTuningSummaryFiringRates(Plotting):
 
     def subplot(self, subplotspec):
         plots = {}
-        gs = gridspec.GridSpecFromSubplotSpec(27, 38, subplot_spec=subplotspec,
+        gs = gridspec.GridSpecFromSubplotSpec(27, 39, subplot_spec=subplotspec,
                                               hspace=1.0, wspace=5.0)
         
         spike_ids1 = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name1).get_segments()[0].get_stored_spike_train_ids()))
@@ -832,20 +1033,20 @@ class OrientationTuningSummaryFiringRates(Plotting):
         spike_ids2 = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name2).get_segments()[0].get_stored_spike_train_ids()))
         spike_ids_inh2 = sorted(numpy.random.permutation(queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2).get_segments()[0].get_stored_spike_train_ids()))
              
-        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name1,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids1)
-        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name1,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids1)
+        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name1,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids1)
+        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name1,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids1)
         responsive_spike_ids1 = numpy.array(spike_ids1)[numpy.array(base)+numpy.array(mmax) > 1.0]
 
-        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name1,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh1)
-        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name1,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh1)
+        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name1,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh1)
+        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name1,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh1)
         responsive_spike_ids_inh1 = numpy.array(spike_ids_inh1)[numpy.array(base)+numpy.array(mmax) > 1.0]
 
-        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name2,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids2)
-        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name2,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids2)
+        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name2,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids2)
+        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.exc_sheet_name2,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids2)
         responsive_spike_ids2 = numpy.array(spike_ids2)[numpy.array(base)+numpy.array(mmax) > 1.0]
 
-        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh2)
-        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2,st_direct_stimulation_name="None",st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh2)
+        base = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation baseline of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh2)
+        mmax = queries.param_filter_query(self.datastore,sheet_name=self.parameters.inh_sheet_name2,st_name=['FullfieldDriftingSinusoidalGrating'],st_contrast=100,value_name=['orientation max of Firing rate'],ads_unique=True).get_analysis_result()[0].get_value_by_id(spike_ids_inh2)
         responsive_spike_ids_inh2 = numpy.array(spike_ids_inh2)[numpy.array(base)+numpy.array(mmax) > 1.0]
         
         spont_l4exc_pnv = param_filter_query(self.datastore,st_name='InternalStimulus',analysis_algorithm=['TrialAveragedFiringRate'],sheet_name="V1_Exc_L4").get_analysis_result()[0]
@@ -881,23 +1082,23 @@ class OrientationTuningSummaryFiringRates(Plotting):
         plots['HWHHInhL23'] = (PerNeuronValueScatterPlot(dsv, ParameterSet({'only_matching_units' : True, 'ignore_nan' : True})),gs[21:27,17:23],{'x_lim': (0,50),'y_lim' : (0,50),'identity_line' : True, 'x_label' : 'HWHH Cont. 100%','y_label' : 'HWHH cont. 5%', 'cmp' : None,'title' : None})
 
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.exc_sheet_name1],st_contrast=[100])    
-        plots['HWHHHistogramExcL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:6,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
+        plots['HWHHHistogramExcL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:6,26:32],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.inh_sheet_name1],st_contrast=[100])    
-        plots['HWHHHistogramInhL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[7:13,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
+        plots['HWHHHistogramInhL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[7:13,26:32],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.exc_sheet_name2],st_contrast=[100])    
-        plots['HWHHHistogramExcL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[14:20,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
+        plots['HWHHHistogramExcL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[14:20,26:32],{ 'x_lim' : (0.0,50.0), 'x_label' : None,'title' : None,'y_label' : '# neurons'})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation HWHH of Firing rate'],sheet_name=[self.parameters.inh_sheet_name2],st_contrast=[100])    
-        plots['HWHHHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,25:31],{ 'x_lim' : (0.0,50.0), 'x_label' : 'HWHH (100% cont.)','title' : None,'y_label' : '# neurons'})
+        plots['HWHHHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,26:32],{ 'x_lim' : (0.0,50.0), 'x_label' : 'HWHH (100% cont.)','title' : None,'y_label' : '# neurons'})
 
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.exc_sheet_name1],st_contrast=[100])    
-        plots['CVHistogramExcL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:6,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
+        plots['CVHistogramExcL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[0:6,33:39],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.inh_sheet_name1],st_contrast=[100])    
-        plots['CVHistogramInhL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[7:13,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
+        plots['CVHistogramInhL4'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[7:13,33:39],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.exc_sheet_name2],st_contrast=[100])    
-        plots['CVHistogramExcL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[14:20,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
+        plots['CVHistogramExcL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[14:20,33:39],{ 'x_lim' : (0.0,1.0), 'x_label' : None,'title' : None,'y_label' : None})
         dsv = queries.param_filter_query(self.datastore,value_name=['orientation CV(Firing rate)'],sheet_name=[self.parameters.inh_sheet_name2],st_contrast=[100])    
-        plots['CVHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,32:38],{ 'x_lim' : (0.0,1.0), 'x_label' : 'CV (100% cont.)','title' : None,'y_label' : None})
-        
+        plots['CVHistogramInhL23'] = (PerNeuronValuePlot(dsv, ParameterSet({'cortical_view' : False})),gs[21:27,33:39],{ 'x_lim' : (0.0,1.0), 'x_label' : 'CV (100% cont.)','title' : None,'y_label' : None})
+
         return plots
 
 class OrientationTuningSummaryAnalogSignals(Plotting):

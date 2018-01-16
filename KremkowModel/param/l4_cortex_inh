@@ -42,7 +42,7 @@
                                                                                  }
                                                                    }
                                             },
-                'recording_interval'  :  ref('l4_cortex_exc.params.recording_interval'),                                            
+                'recording_interval'  :  ref('sheets.l4_cortex_exc.params.recording_interval'),                                            
                 'recorders' : url("param/l4_inh_rec"),    
     },
     
@@ -96,7 +96,13 @@
             'orientation_preference':  UniformDist(min=0.0, max=3.141592653589793),
             'phase':                   UniformDist(min=0.0, max=6.283185307179586),
             'frequency':               UniformDist(min=0.8, max=0.8),
-            'delay': 2.0,    
+
+            'delay_expression': "1.0",    
+            'delay_functions' : {},
+
+            'rf_jitter' : 0.1,
+	    'off_bias' : 1.0,
+
             'topological' : False,
 
             'or_map' : False,
@@ -110,7 +116,7 @@
 	        'short_term_plasticity': {
                         'U': 1.0, 
                         'tau_rec': 30.0, 
-                        'tau_psc': 0.0,
+                        'tau_psc': 3.0,
                         'tau_fac': 21.0,
                     },
     }        
