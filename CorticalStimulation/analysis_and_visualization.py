@@ -105,19 +105,23 @@ def perform_analysis_and_visualization1(data_store,gratings,cort_stim,nat_stim):
     lgn_on_ids = param_filter_query(data_store,sheet_name="X_ON").get_segments()[0].get_stored_spike_train_ids()
     lgn_off_ids = param_filter_query(data_store,sheet_name="X_OFF").get_segments()[0].get_stored_spike_train_ids()
 
-    dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',st_orientation=[0,numpy.pi/2],st_contrast=100)   
-    name_prefix='GR_'
-    OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : analog_ids23[0], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23ExcAnalog1.png').plot()
-    OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : analog_ids_inh23[0], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23InhAnalog1.png').plot()    
-    OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : analog_ids23[1], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23ExcAnalog2.png').plot()
-    OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : analog_ids_inh23[1], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23InhAnalog2.png').plot()    
-    OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : analog_ids23[2], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23ExcAnalog3.png').plot()
-    OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : analog_ids_inh23[2], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23InhAnalog3.png').plot()    
+    #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',st_orientation=[0,numpy.pi/2],st_contrast=100)   
+    #name_prefix='GR_'
+    #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : analog_ids23[0], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23ExcAnalog1.png').plot()
+    #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : analog_ids_inh23[0], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23InhAnalog1.png').plot()    
+    #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : analog_ids23[1], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23ExcAnalog2.png').plot()
+    #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : analog_ids_inh23[1], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23InhAnalog2.png').plot()    
+    #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : analog_ids23[2], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23ExcAnalog3.png').plot()
+    #OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Inh_L2/3', 'neuron' : analog_ids_inh23[2], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23InhAnalog3.png').plot()    
 
+    dsv = param_filter_query(data_store,sheet_name='V1_Exc_L2/3',st_name='InternalStimulus',st_direct_stimulation_name='LocalStimulatorArray',st_stimulating_signal_parameters_orientation=0,st_stimulating_signal_parameters_scale=0.1)
+    colors = data_store.get_analysis_result(identifier='PerNeuronValue',value_name = 'LGNAfferentOrientation', sheet_name = 'V1_Exc_L2/3')[0].values/numpy.pi
+    ids = data_store.get_sheet_indexes('V1_Exc_L2/3',dsv.get_segments()[0].get_stored_spike_train_ids())
+    colors = colors[ids]
+    mozaik.visualization.plotting.ActivityMovie(dsv,ParameterSet({'bin_width': 1.0,'scatter':  True,'resolution': 10,'sheet_name': 'V1_Exc_L2/3', 'exp_time_constant': 40}),fig_param={'dpi' : 100,'figsize': (6,6)},plot_file_name='cs_or_0_l23').plot({'*.dot_size' : 10,'*.title' : None,'*.colors' : colors})
+    dsv = param_filter_query(data_store,sheet_name='V1_Exc_L2/3',st_name='InternalStimulus',st_direct_stimulation_name='LocalStimulatorArray',st_stimulating_signal_parameters_orientation=1.57079632679,st_stimulating_signal_parameters_scale=0.1)
+    mozaik.visualization.plotting.ActivityMovie(dsv,ParameterSet({'bin_width': 1.0,'scatter':  True,'resolution': 10,'sheet_name': 'V1_Exc_L2/3', 'exp_time_constant': 40}),fig_param={'dpi' : 100,'figsize': (6,6)},plot_file_name='cs_or_90_l23').plot({'*.dot_size' : 10,'*.title' : None,'*.colors' : colors})
 
-
-    dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name='LocalStimulatorArray',st_stimulating_signal_parameters_orientation=0,st_stimulating_signal_parameters_scale=1.0)   
-    ActivityMovie(dsv,ParameterSet({'bin_width': 100.0,'scatter':  True,'resolution': 10,'sheet_name': 'V1_Exc_L2/3', 'exp_time_constant': 200}),fig_param={'dpi' : 100,'figsize': (13,6)},plot_file_name='cs_or_0_l2/3').plot({'*.title' : None})
 
 
 def perform_analysis_and_visualization(data_store,gratings,cort_stim,nat_stim):
@@ -163,10 +167,10 @@ def perform_analysis_and_visualization(data_store,gratings,cort_stim,nat_stim):
     lgn_on_ids = param_filter_query(data_store,sheet_name="X_ON").get_segments()[0].get_stored_spike_train_ids()
     lgn_off_ids = param_filter_query(data_store,sheet_name="X_OFF").get_segments()[0].get_stored_spike_train_ids()
 
-    dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)    
-    GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
+    #dsv = param_filter_query(data_store,st_name='FullfieldDriftingSinusoidalGrating',analysis_algorithm='TrialAveragedFiringRate',sheet_name=sheets)    
+    #GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
 
-    #analysis(data_store,analog_ids,analog_ids_inh,gratings)
+    analysis(data_store,analog_ids,analog_ids_inh,gratings)
     
     def overviews(dsv,name_prefix):
         OverviewPlot(dsv,ParameterSet({'sheet_name' : 'V1_Exc_L2/3', 'neuron' : analog_ids23[0], 'sheet_activity' : {}, 'spontaneous' : True}),fig_param={'dpi' : 100,'figsize': (28,12)},plot_file_name=name_prefix+'L23ExcAnalog1.png').plot()
@@ -256,6 +260,9 @@ def perform_analysis_and_visualization(data_store,gratings,cort_stim,nat_stim):
     
         MRfig(param_filter_query(data_store,sheet_name=['V1_Exc_L2/3','V1_Exc_L4'],st_contrast=[100],st_name='FullfieldDriftingSinusoidalGrating'),ParameterSet({'SimpleSheetName' : 'V1_Exc_L4','ComplexSheetName' : 'V1_Exc_L2/3'}),plot_file_name='MR.png',fig_param={'dpi' : 100,'figsize': (19,12)}).plot()
         MRfigReal(param_filter_query(data_store,sheet_name=['V1_Exc_L2/3','V1_Exc_L4'],st_contrast=[100],st_name='FullfieldDriftingSinusoidalGrating'),ParameterSet({'SimpleSheetName' : 'V1_Exc_L4','ComplexSheetName' : 'V1_Exc_L2/3'}),plot_file_name='MRReal.png',fig_param={'dpi' : 100,'figsize': (19,12)}).plot()
+	
+	dsv = param_filter_query(data_store,st_name='InternalStimulus',st_direct_stimulation_name='LocalStimulatorArray',st_stimulating_signal_parameters_orientation=0,st_stimulating_signal_parameters_scale=1.0)   
+	ActivityMovie(dsv,ParameterSet({'bin_width': 20.0,'scatter':  True,'resolution': 10,'sheet_name': 'V1_Exc_L2/3', 'exp_time_constant': 200}),fig_param={'dpi' : 100,'figsize': (12,6)},plot_file_name='cs_or_0_l23').plot({'*.title' : None})
 
 
     if nat_stim:        
