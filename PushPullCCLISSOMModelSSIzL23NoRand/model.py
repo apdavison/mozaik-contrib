@@ -55,6 +55,7 @@ class SelfSustainedPushPull(Model):
 
             ModularSamplingProbabilisticConnectorAnnotationSamplesCount(self,'V1L4ExcL4ExcConnection',cortex_exc_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4ExcConnection).connect()
             ModularSamplingProbabilisticConnectorAnnotationSamplesCount(self,'V1L4ExcL4InhConnection',cortex_exc_l4,cortex_inh_l4,self.parameters.sheets.l4_cortex_exc.L4ExcL4InhConnection).connect()
+
             ModularSamplingProbabilisticConnector(self,'V1L4InhL4ExcConnection',cortex_inh_l4,cortex_exc_l4,self.parameters.sheets.l4_cortex_inh.L4InhL4ExcConnection).connect()
             ModularSamplingProbabilisticConnector(self,'V1L4InhL4InhConnection',cortex_inh_l4,cortex_inh_l4,self.parameters.sheets.l4_cortex_inh.L4InhL4InhConnection).connect()
 
