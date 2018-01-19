@@ -5,7 +5,7 @@ import numpy
 import time
 
 if True:
-    CombinationParameterSearch(SlurmSequentialBackendIoV(num_threads=32,num_mpi=1),{
+    CombinationParameterSearch(SlurmSequentialBackendIoV(num_threads=30,num_mpi=1),{
 #									     'sheets.l23_cortex_exc.L23ExcL4InhConnection.base_weight' : [0.002],
 #									     'sheets.l4_cortex_exc.layer23_aff_ratio' : [0.3,0.35],
 									     'sheets.l4_cortex_exc.L4ExcL4InhConnection.base_weight' : [0.0024],
@@ -13,7 +13,7 @@ if True:
 #									     'sheets.l4_cortex_exc.L4ExcL4ExcConnection.short_term_plasticity.tau_rec' : [100,200],
 #									     'feedback' : [False],
 									     'sheets.l4_cortex_exc.params.cell.params.tau_syn_I' : [1.9],
-									     'with_cortical_conn' : [False],
+									     'with_cortical_conn' : [True],
 #									     'sheets.l4_cortex_exc.K' : [1000,1480],
 #									     'sheets.retina_lgn.params.noise.stdev' : [],
 									     }).run_parameter_search()

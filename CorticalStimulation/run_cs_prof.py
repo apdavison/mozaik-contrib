@@ -5,7 +5,7 @@
 import matplotlib
 matplotlib.use('Agg')
 
-from mpi4py import MPI 
+#from mpi4py import MPI 
 #from pyNN import nest
 import sys
 import mozaik.controller
@@ -18,7 +18,7 @@ from analysis_and_visualization import perform_analysis_and_visualization
 from parameters import ParameterSet
 
 
-mpi_comm = MPI.COMM_WORLD
+#mpi_comm = MPI.COMM_WORLD
 
 if True:
     data_store,model = run_workflow('CorticalStimulationModel',SelfSustainedPushPull,create_experiments_cortical_stimulation_prof)
@@ -27,6 +27,6 @@ else:
     setup_logging()
     data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'CorticalStimulationModel_visual_stimulation_full_protocol_____','store_stimuli' : False}),replace=True)
 
-if mpi_comm.rank == 0:
-   print "Starting visualization" 
-   perform_analysis_and_visualization(data_store,gratings=False,cort_stim=True,nat_stim=False)
+#if mpi_comm.rank == 0:
+print "Starting visualization" 
+perform_analysis_and_visualization(data_store,gratings=False,cort_stim=True,nat_stim=False)
