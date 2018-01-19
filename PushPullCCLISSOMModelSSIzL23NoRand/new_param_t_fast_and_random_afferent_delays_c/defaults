@@ -9,11 +9,11 @@
         'size': (11.0, 11.0), # degrees (width, height)
     },
     'sheets' : {
-        'l4_cortex_exc': url("new_param_t_fast_and_random_afferent_delays_b/l4_cortex_exc"),
-        'l4_cortex_inh': url("new_param_t_fast_and_random_afferent_delays_b/l4_cortex_inh"),
-        'l23_cortex_exc': url("new_param_t_fast_and_random_afferent_delays_b/l23_cortex_exc"),
-        'l23_cortex_inh': url("new_param_t_fast_and_random_afferent_delays_b/l23_cortex_inh"),
-        'retina_lgn': url("new_param_t_fast_and_random_afferent_delays_b/SpatioTemporalFilterRetinaLGN_defaults"),
+        'l4_cortex_exc': url("new_param_t_fast_and_random_afferent_delays_c/l4_cortex_exc"),
+        'l4_cortex_inh': url("new_param_t_fast_and_random_afferent_delays_c/l4_cortex_inh"),
+        'l23_cortex_exc': url("new_param_t_fast_and_random_afferent_delays_c/l23_cortex_exc"),
+        'l23_cortex_inh': url("new_param_t_fast_and_random_afferent_delays_c/l23_cortex_inh"),
+        'retina_lgn': url("new_param_t_fast_and_random_afferent_delays_c/SpatioTemporalFilterRetinaLGN_defaults"),
     },
     'only_afferent' : False,
     'l23' : True,
@@ -25,5 +25,7 @@
     'store_stimuli' : False,    
     'min_delay' : 0.1,
     'max_delay' : 100,
-    'time_step' : 0.1
+    'time_step' : 0.1,
+    'mpi_seed' : 1023,
+    'pynn_seed' : 511
 }

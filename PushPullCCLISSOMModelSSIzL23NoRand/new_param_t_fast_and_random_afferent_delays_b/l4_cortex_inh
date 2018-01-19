@@ -27,7 +27,7 @@
                             'tau_w' : ref('sheets.l4_cortex_exc.params.cell.params.tau_w'),
                         }, 
                         'initial_values': {
-                                    'v': PyNNDistribution(name='uniform',params=(-70,-51)),
+                                    'v': PyNNDistribution(name='uniform',low=-70,high=-51),
                                 },
 
                     },
@@ -118,13 +118,17 @@
                                     "f1" : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.PyNNDistributionConnectorFunction',
                                          'params' : {
-                                                                'pynn_distribution': PyNNDistribution(name='uniform',params=(0.5,1.5))
+                                                                'pynn_distribution': PyNNDistribution(name='uniform',low=0.5,high=1.5)
                                                     }
                                     }
                                 },
 
 
             'topological' : True,
+
+            'rf_jitter' : 0,
+	    'off_bias' : 1.0,
+
 	    
             'or_map' : True,
             'or_map_location' : ref('sheets.l4_cortex_exc.AfferentConnection.or_map_location'),

@@ -29,7 +29,7 @@
                         },
 
                        'initial_values': {
-                                    'v': PyNNDistribution(name='uniform',params=(-70,-51)),
+                                    'v': PyNNDistribution(name='uniform',low=-70,high=-51),
                                 },
 
                     },
@@ -47,7 +47,7 @@
         'short_term_plasticity': {
 				            'U': 0.75, 
 				            'tau_rec': 100.0, 
-	 		                'tau_psc': 0.0,
+	 		                'tau_psc': 3.0,
 				            'tau_fac': 0.0,
                         },
         'weight_functions' : {                          
@@ -119,6 +119,7 @@
         'weight_expression' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.weight_expression'),
         'delay_expression' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.delay_expression'),
         'base_weight': ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.base_weight'),
+	'annotation_reference_name' : 'aff_samples',
         'num_samples' : ref('sheets.l4_cortex_exc.L4ExcL4ExcConnection.num_samples') * ref('sheets.l4_cortex_exc.inhibitory_connection_ratio'),
     },
 
@@ -134,12 +135,17 @@
                                     "f1" : {
                                          'component' : 'mozaik.connectors.modular_connector_functions.PyNNDistributionConnectorFunction',
                                          'params' : {
-                                                                'pynn_distribution': PyNNDistribution(name='uniform',params=(1.4,2.4))
+                                                                'pynn_distribution': PyNNDistribution(name='uniform',low=1.4,high=2.4)
                                                     }
                                     }
                                 },
             'topological' : True,
 	    
+
+            'rf_jitter' : 0,
+	    'off_bias' : 1.0,
+
+
             'or_map' : True,
 	    'or_map_location' : './or_map_new_6x6',
             'phase_map' : False,
@@ -151,7 +157,7 @@
             'short_term_plasticity': {
 				            'U': 0.75, 
 				            'tau_rec': 100.0, 
-	 		                'tau_psc': 0.0,
+	 		                'tau_psc': 3.0,
 				            'tau_fac': 0.0,
                         },
 
