@@ -13,7 +13,12 @@ if True:
 #									     'sheets.l4_cortex_exc.L4ExcL4ExcConnection.short_term_plasticity.tau_rec' : [100,200],
 #									     'feedback' : [False],
 									     'sheets.l4_cortex_exc.params.cell.params.tau_syn_I' : [1.9],
-									     'with_cortical_conn' : [True],
+
+
+									     'with_cortical_conn' : [False],
+									     'sheets.l23_cortex_exc.L4ExcL23ExcConnection.base_weight' : [0],
+									     'sheets.l23_cortex_inh.L4ExcL23InhConnection.base_weight' : [0],
+
 #									     'sheets.l4_cortex_exc.K' : [1000,1480],
 #									     'sheets.retina_lgn.params.noise.stdev' : [],
 									     }).run_parameter_search()

@@ -48,10 +48,6 @@ class MRfig(Plotting):
               assert len(dsv_complex_v_F0) == 1
               assert len(dsv_complex_v_F1) == 1
           
-          
-          
-            
-            
           s_ids = dsv_simple_v_F0[0].ids
           if self.parameters.ComplexSheetName != 'None':
             c_ids = dsv_complex_v_F0[0].ids

@@ -71,6 +71,7 @@ class AAA1(Analysis):
 
 	    dsv = param_filter_query(self.datastore,analysis_algorithm='AnalogSignal_PerNeuronBetweenSignalCorrelation')	    
 	    PopulationMeanAndVar(dsv,ParameterSet({})).analyse()
+	    PopulationMedian(dsv,ParameterSet({})).analyse()
 
 	    spike_ids = param_filter_query(self.datastore,sheet_name="V1_Exc_L4").get_segments()[0].get_stored_spike_train_ids()
 	    spike_ids_inh = param_filter_query(self.datastore,sheet_name="V1_Inh_L4").get_segments()[0].get_stored_spike_train_ids()
@@ -114,6 +115,7 @@ def ana1(data_store):
     GaussianTuningCurveFit(dsv,ParameterSet({'parameter_name' : 'orientation'})).analyse()
 
     AAA1(data_store,ParameterSet({})).analyse()
+
     data_store.save()
 
 

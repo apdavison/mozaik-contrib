@@ -8,7 +8,7 @@ import time
 
 
 if True:
-    CombinationParameterSearch(SlurmSequentialBackendIoV(num_threads=12,num_mpi=1),{
+    CombinationParameterSearch(SlurmSequentialBackendIoV(num_threads=45,num_mpi=1),{
 									     'sheets.l23_cortex_exc.L23ExcL4InhConnection.base_weight' : [0.0017],
 									     'sheets.l4_cortex_exc.L4ExcL4InhConnection.base_weight' : [0.0026],
 #									     'sheets.l4_cortex_exc.inhibitory_connection_ratio' : [0.7],
