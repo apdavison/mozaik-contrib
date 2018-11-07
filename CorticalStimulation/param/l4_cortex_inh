@@ -33,7 +33,7 @@
                     },
                 'artificial_stimulators' : ref('sheets.l4_cortex_exc.params.artificial_stimulators'),
                 'recording_interval'  :  ref('sheets.l4_cortex_exc.params.recording_interval'),                                            
-                'recorders' : url("param/l4_inh_rec"),    
+                'recorders' : url("param_new/l4_inh_rec"),    
     },
         
     'L4InhL4ExcConnection': {
@@ -115,6 +115,9 @@
             'delay_expression': "1.0",    
             'delay_functions' : {},
             'topological' : True,
+            'rf_jitter' : 0,
+	    'off_bias' : 1.0,
+
 	    
             'or_map' : True,
             'or_map_location' : ref('sheets.l4_cortex_exc.AfferentConnection.or_map_location'),

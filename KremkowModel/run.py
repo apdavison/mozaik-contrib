@@ -3,7 +3,7 @@
 This is implementation of model of push-pull connectvity: 
 Jens Kremkow: Correlating Excitation and Inhibition in Visual Cortical Circuits: Functional Consequences and Biological Feasibility. PhD Thesis, 2009.
 """
-from pyNN import nest
+#from pyNN import nest
 import sys
 sys.path.insert(0,"/home/jan/cluster/mozaik/mozaik/")
 
@@ -54,9 +54,9 @@ if True:
     
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FFI_test_____', 'store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FeedForwardInhibition_test_____', 'store_stimuli' : False}),replace=True)
     logger.info('Loaded data store')
-    data_store.save()
+    #data_store.save()
     from analysis_and_visualization import perform_analysis_and_visualization
     perform_analysis_and_visualization(data_store)
 

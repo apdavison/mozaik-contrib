@@ -38,10 +38,11 @@ def create_experiments_or(model):
                            #Spontaneous Activity 
                            NoStimulation(model,ParameterSet({'duration':2*5*3*8*7})),
                            # Measure orientation tuning with full-filed sinusoidal gratins
-                           MeasureOrientationTuningFullfield(model,ParameterSet({'num_orientations':2,'spatial_frequency':0.8,'temporal_frequency':2,'grating_duration':2*143*7,'contrasts':[5,100],'num_trials':5})),
+                           MeasureOrientationTuningFullfield(model,ParameterSet({'num_orientations':2,'spatial_frequency':0.8,'temporal_frequency':2,'grating_duration':143*7,'contrasts':[5,100],'num_trials':1})),
 	       
                            # Measure response to natural image with simulated eye movement
-                           MeasureNaturalImagesWithEyeMovement(model,ParameterSet({'stimulus_duration':2*143*7,'num_trials' : 5})),
+                           MeasureNaturalImagesWithEyeMovement(model,ParameterSet({'stimulus_duration':143*7,'num_trials' : 1})),
+
 
             ]
 
@@ -53,7 +54,7 @@ def create_experiments_stc(model):
                            NoStimulation(model,ParameterSet({'duration':2*5*3*8*7})),
  
                            #Size Tuning  
-                           MeasureSizeTuning(model,ParameterSet({'num_sizes':12,'max_size':3.0,'log_spacing' : True,'orientation' : 0,'spatial_frequency' : 0.8,'temporal_frequency' : 2,'grating_duration' : 5*2*143*7,'contrasts' : [5,100],'num_trials' :1,'with_flat': False})),
+                           MeasureSizeTuning(model,ParameterSet({'num_sizes': 10,'max_size':3.0,'log_spacing' : True,'orientation' : 0,'spatial_frequency' : 0.8,'temporal_frequency' : 2,'grating_duration' : 10*2*143*7,'contrasts' : [5,100],'num_trials' : 1})),
             ]
 
 

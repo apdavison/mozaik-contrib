@@ -1,4 +1,4 @@
-{
+OD{
     #CorticalUniformSheet parameters
     'component': 'mozaik.sheets.vision.VisualCorticalUniformSheet',
     'params':{
@@ -35,7 +35,7 @@
                     },
                 'artificial_stimulators' : {},
                 'recording_interval'  :  1.0,                                                            
-                'recorders' : url("param/l4_exc_rec"),
+                'recorders' : url("param_new/l4_exc_rec"),
     },
     'layer23_aff_ratio' : 0.35,
     'K' : 1000.0, # Number of synapses per neuron
@@ -132,6 +132,9 @@
             'delay_expression': "1.0",    
             'delay_functions' : {},
             'topological' : True,
+            'rf_jitter' : 0,
+	    'off_bias' : 1.0,
+
 	    
             'or_map' : True,
             'or_map_location' : './or_map_new_2x2',
